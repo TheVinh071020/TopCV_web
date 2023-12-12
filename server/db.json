@@ -1,0 +1,71 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Vinh",
+      "email": "vinhto1a@gmail.com",
+      "password": "123123",
+      "phone": "0123456789",
+      "address": "Ha Noi",
+      "locked": false
+    },
+    {
+      "id": 2,
+      "name": "long",
+      "email": "long@gmail.com",
+      "password": "123123",
+      "phone": "0123456789",
+      "address": "Ha Noi",
+      "locked": false
+    },
+    {
+      "email": "vinh@gmail.com",
+      "password": "$2a$10$JmmazKi7MqlPoMC5Y43w1eqS1CgqTNk08diAiCWohk8tHfNpfS0Jy",
+      "id": 3
+    }
+  ],
+  "jobs": [
+    {
+      "id": 1,
+      "name": "IT Software/Network",
+      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format…mtv-khach-san-quoc-te-binh-minh-637358ca163c4.jpg",
+      "description": [
+        {
+          "description1": "Quản lý hoạt động của hệ thống CSDL của công ty bao gồm SQL server, MySQL, ..."
+        },
+        {
+          "description2": "Cài đặt và nâng cấp các hệ quản trị Cơ sở dữ liệu"
+        },
+        {
+          "description3": "Thực hiện quản lý sao lưu và phục hồi CSDL"
+        }
+      ],
+      "request": [
+        {
+          "request1": "Có kiến thức về hệ điều hành máy chủ, mạng, bảo mật thông tin"
+        },
+        {
+          "request2": "Có kiến thức về hệ điều hành máy chủ, mạng, bảo mật thông tin"
+        }
+      ],
+      "​benefit": [
+        {
+          "​benefit1": "Các chế độ và quyền lợi theo Luật Lao động được đảm bảo đầy đủ"
+        },
+        {
+          "​benefit2": "Thưởng Lương tháng 13"
+        }
+      ],
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": {
+        "city": "Hà Nội",
+        "location": "1 Mễ trì"
+      },
+      "salary": "5 - 10 triệu",
+      "level": "Nhân viên",
+      "experience": "Không yêu cầu",
+      "age": "18 - 35 tuôi",
+      "scale": "10 - 50 nhân viên"
+    }
+  ]
+}
