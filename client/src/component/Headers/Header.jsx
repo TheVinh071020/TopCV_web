@@ -9,8 +9,8 @@ import axios from "axios";
 
 function Header() {
   const navigate = useNavigate();
-  const [user, setUser] = useState([]);
-  const userLogin = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(null);
+  const userLogin = JSON.parse(localStorage.getItem("user")) || {};
   const userId = userLogin.id;
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function Header() {
       });
   }, []);
 
-  console.log(user);
+  // console.log(user);
 
   // Đăng xuất
   const handleLogout = () => {
@@ -36,7 +36,7 @@ function Header() {
       <div className="header-img">
         <Link to="/">
           <img
-            src="https://static.topcv.vn/v4/image/logo/topcv-logo-6.png"
+            src="https://static.careerbuilder.vn/themes/careerbuilder/img/logo.png"
             alt=""
           />
         </Link>
@@ -66,7 +66,7 @@ function Header() {
       </Navbar>
       <div className="header-page">
         <Link to={"/profile"} style={{ width: "20%" }}>
-          <Button variant="outline-success">
+          <Button variant="outline-success" className="profile">
             <i class="fa-solid fa-user"></i>
           </Button>
         </Link>
@@ -80,12 +80,23 @@ function Header() {
             </Button>
           </Link>
         ) : (
-          <Link
-            style={{ width: "50%", color: "white", textDecoration: "none" }}
-            to="/login"
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              color: "white",
+              textDecoration: "none",
+            }}
           >
-            <Button variant="success">Đăng nhập</Button>
-          </Link>
+            <Link to="/login" style={{ width: "47%" }}>
+              <Button variant="success">Đăng nhập</Button>
+            </Link>
+            <Link to="/register" style={{ width: "50%" }}>
+              <Button style={{ width: "73%" }} variant="success">
+                Đăng ký
+              </Button>
+            </Link>
+          </div>
         )}
       </div>
     </div>

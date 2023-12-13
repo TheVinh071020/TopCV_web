@@ -7,7 +7,7 @@ function Footer() {
       <div className="row">
         <div className="col-4">
           <img
-            src="https://static.topcv.vn/v4/image/logo/topcv-logo-footer-6.png"
+            src="https://static.careerbuilder.vn/themes/careerbuilder/img/logo.png"
             alt=""
           />
           <ul>
@@ -56,7 +56,7 @@ function Footer() {
         </div>
         <div className="col-8">
           <div>
-            <h5>Về TopCV</h5>
+            <h5>Về CareerBuilder</h5>
             <p>Giới thiệu</p>
             <p>Góc báo chí</p>
             <p>Tuyển dụng</p>
@@ -66,12 +66,12 @@ function Footer() {
           <div>
             <h5>Hồ sơ và CV</h5>
             <p>Quản lý CV của bạn</p>
-            <p>TopCV Profile</p>
+            <p>CareerBuilder Profile</p>
             <p>Hướng dẫn viết CV</p>
             <p>Thư viện CV theo ngành nghề</p>
           </div>
           <div>
-            <h5>Cộng đồng TopCV</h5>
+            <h5>Cộng đồng CareerBuilder</h5>
             <div style={{ marginTop: "20px", marginBottom: "30px" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

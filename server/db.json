@@ -1,33 +1,31 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "Vinh",
       "email": "vinhto1a@gmail.com",
-      "password": "123123",
-      "phone": "0123456789",
-      "address": "Ha Noi",
-      "locked": false
+      "password": "$2a$10$EiwMzwXYKRLqUN0P0Y.Wqe/QLoz94wTnp/pMLZttM/e2TeodOfkce",
+      "name": "Thế Vinh",
+      "phone": "09075466868",
+      "address": "Hà Nội",
+      "application": [],
+      "locked": false,
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "long",
       "email": "long@gmail.com",
-      "password": "123123",
-      "phone": "0123456789",
-      "address": "Ha Noi",
-      "locked": false
-    },
-    {
-      "email": "vinh@gmail.com",
-      "password": "$2a$10$JmmazKi7MqlPoMC5Y43w1eqS1CgqTNk08diAiCWohk8tHfNpfS0Jy",
-      "id": 3
+      "password": "$2a$10$WSfe2ypOUUGoapMFj5b74.xSWHHjYaSPX3lYjSgvI0Xj0u0mSK7yO",
+      "name": "longbede",
+      "phone": "",
+      "address": "",
+      "application": [],
+      "locked": false,
+      "id": 2
     }
   ],
   "jobs": [
     {
       "id": 1,
       "name": "IT Software/Network",
+      "company": "RikkeiSoft",
       "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format…mtv-khach-san-quoc-te-binh-minh-637358ca163c4.jpg",
       "description": [
         {
@@ -61,7 +59,7 @@
         "city": "Hà Nội",
         "location": "1 Mễ trì"
       },
-      "salary": "5 - 10 triệu",
+      "salary": 8,
       "level": "Nhân viên",
       "experience": "Không yêu cầu",
       "age": "18 - 35 tuôi",

@@ -113,6 +113,16 @@
     display: flex;
     justify-content: center;
 }
+/* CSS cho ô input với border đỏ */
+.error-input {
+    border: 1px solid red;
+}
+
+/* CSS cho thông báo lỗi */
+.error-feedback {
+    color: red;
+    /* Thêm bất kỳ kiểu định dạng thông báo lỗi khác nếu cần */
+}
 
 /* reponsive */
 /* Mobile */

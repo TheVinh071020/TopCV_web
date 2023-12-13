@@ -10,6 +10,30 @@ function Login() {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
+  const [formError, setFormError] = useState({
+    email: "",
+    password: "",
+  });
+
+  const isEmailValid = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formInput.email || !isEmailValid(formInput.email)) {
+      errors.email = "Email không hợp lệ";
+    }
+
+    if (!formInput.password) {
+      errors.password = "Nhập mật khẩu";
+    }
+
+    setFormError(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/users")
@@ -20,7 +44,6 @@ function Login() {
         console.log(err);
       });
   }, []);
-  console.log(users);
 
   // Lấy giá  trị ô input
   const [formInput, setFormInput] = useState({
@@ -39,38 +62,48 @@ function Login() {
   // Sự kiện click đăng nhập
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = users.find(
-      (user) =>
-        // console.log(user.password === formInput.password)
-        user.email === formInput.email && user.password === formInput.password
-    );
-    console.log(user);
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-      setFormInput(user);
-      //  navigate("/");
-      Swal.fire("Good job!", "Đăng Nhập Thành Công!", "success", "OK").then(
-        (result) => {
-          if (result.isConfirmed) {
+    const errors = { email: "", password: "" };
+    if (!formInput.email) {
+      errors.email = "Email không được để trống";
+    } else if (!/\S+@\S+\.\S+/.test(formInput.email)) {
+      errors.email = "Email không hợp lệ";
+    }
+
+    if (!formInput.password) {
+      errors.password = "Mật khẩu không được để trống";
+    } else if (formInput.password.length < 6) {
+      errors.password = "Mật khẩu phải có ít nhất 6 ký tự";
+    }
+
+    setFormError(errors);
+
+    if (Object.keys(errors).length !== 0) {
+      axios
+        .post("http://localhost:8000/login", formInput)
+        .then((res) => {
+          // console.log(res.data.user.locked);
+          if (res.data.user.locked === false) {
+            Swal.fire("Good job!", "Đăng nhập thành công", "success");
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+            setFormInput(res.data.user);
             navigate("/");
           }
-        }
-      );
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Đăng nhập thất bại",
-        text: "Tài khoản hoặc mật khẩu không trùng khớp !!",
-      });
+        })
+        .catch((err) => {
+          if (err.response.data === "Incorrect password") {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Tài khoản hoặc mật khẩu chưa trùng khớp",
+            });
+          }
+        });
     }
   };
 
   return (
     <div>
       <div className="img-login1">
-        <div>
-          <img className="anh" src="../src/img/topcvimg.png" alt="" />
-        </div>
         <div className="form-login">
           <h2>ĐĂNG NHẬP</h2>
           <div>
@@ -83,7 +116,11 @@ function Login() {
                   placeholder="Enter email"
                   value={formInput.email}
                   onChange={handleInputChange}
+                  className={formError.email ? "error-input" : ""}
                 />
+                {formError.email && (
+                  <div className="error-feedback">{formError.email}</div>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -94,7 +131,11 @@ function Login() {
                   placeholder="Password"
                   value={formInput.password}
                   onChange={handleInputChange}
+                  className={formError.email ? "error-input" : ""}
                 />
+                {formError.password && (
+                  <div className="error-feedback">{formError.password}</div>
+                )}
               </Form.Group>
 
               <Button className="btn-login" variant="primary" type="submit">
