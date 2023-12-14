@@ -6,8 +6,13 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 function Header() {
+  const handleContinue = () => {
+    window.scrollTo(0, 0);
+  };
+
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const userLogin = JSON.parse(localStorage.getItem("user")) || {};
@@ -43,10 +48,21 @@ function Header() {
       </div>
       <div className="header-nav">
         <ul>
-          <li>Việc làm</li>
-          <li>Hồ sơ & CV</li>
-          <li>Công ty</li>
-          <li>Phát triển sự nghiệp</li>
+          <Link
+            onClick={handleContinue}
+            to={"/"}
+            style={{ textDecoration: "none" }}
+          >
+            <li>Việc làm</li>
+          </Link>
+          <Link
+            onClick={handleContinue}
+            to={"/profile"}
+            style={{ textDecoration: "none" }}
+          >
+            <li>Hồ sơ & CV</li>
+          </Link>
+          <li>Đã ứng tuyển</li>
         </ul>
       </div>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -71,14 +87,40 @@ function Header() {
           </Button>
         </Link>
         {user ? (
-          <Link
-            style={{ width: "50%", color: "white", textDecoration: "none" }}
-            to="/login"
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              color: "black",
+              textDecoration: "none",
+            }}
           >
-            <Button onClick={handleLogout} variant="success">
-              Đăng xuất
-            </Button>
-          </Link>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                width: "50%",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              {user?.name}
+            </div>
+            <Link
+              style={{
+                width: "50%",
+                color: "white",
+                textDecoration: "none",
+                marginLeft: "20px",
+              }}
+              to="/login"
+            >
+              <Button onClick={handleLogout} variant="success">
+                Đăng xuất
+              </Button>
+            </Link>{" "}
+          </div>
         ) : (
           <div
             style={{
@@ -95,6 +137,7 @@ function Header() {
               <Button style={{ width: "73%" }} variant="success">
                 Đăng ký
               </Button>
+              <ToastContainer />
             </Link>
           </div>
         )}

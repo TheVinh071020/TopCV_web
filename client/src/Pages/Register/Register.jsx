@@ -3,8 +3,9 @@ import "./Register.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { NavLink, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const isEmptyValue = (value) => {
   return !value || value.trim().length < 1;
@@ -20,6 +21,8 @@ const isPasswordValid = (password) => {
 };
 
 function Register() {
+  const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
+
   const navigate = useNavigate();
 
   // Lấy giá  trị ô input
@@ -35,23 +38,21 @@ function Register() {
 
   const [formError, setFormError] = useState({});
 
-  const { name, email, password } = formRegister;
-
   const validateForm = () => {
     const errors = {};
 
     if (isEmptyValue(formRegister.name)) {
-      errors.name = "Nhập tên là cần thiết";
+      errors.name = "Họ và tên không được để trống";
     }
 
     if (isEmptyValue(formRegister.email)) {
-      errors.email = "Nhập Email là cần thiết";
+      errors.email = "Email không được để trống";
     } else if (!isEmailValid(formRegister.email)) {
       errors.email = "Mời nhập lại Email";
     }
 
     if (isEmptyValue(formRegister.password)) {
-      errors.password = "Nhập Password là cần thiết";
+      errors.password = "Password không được để trống";
     } else if (!isPasswordValid(formRegister.password)) {
       errors.password =
         "Mật khẩu cần chứa ít nhất 6 ký tự bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt";
@@ -61,7 +62,7 @@ function Register() {
     return Object.keys(errors).length === 0;
   };
 
-  console.log(formError);
+  // console.log(formError);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -71,6 +72,7 @@ function Register() {
     });
   };
 
+  console.log(formRegister);
   // Sự kiện click đăng nhập
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,12 +80,19 @@ function Register() {
       await axios
         .post("http://localhost:8000/users", formRegister)
         .then((res) => {
-          console.log(res.data);
-          Swal.fire("Good job!", "Đăng ký thành công!", "success");
+          toast.success(resolveAfter3Sec, {
+            success: "Đăng ký tài khoản thành công 👌",
+          });
           navigate("/login");
         })
         .catch((err) => {
-          console.log(err);
+          if (err.response.data == "Email already exists") {
+            toast.error("Email đã tồn tại. Vui lòng sử dụng email khác 🤯", {
+              position: "top-right",
+              autoClose: 3000,
+              theme: "light",
+            });
+          }
         });
     } else {
       return formError;
@@ -149,10 +158,11 @@ function Register() {
               <Button className="btn-login" variant="primary" type="submit">
                 Đăng ký
               </Button>
+              <ToastContainer />
             </Form>
           </div>
           <div className="buttonn">
-            <h4 className="btn-h4">
+            {/* <h4 className="btn-h4">
               <b>Hoặc tiếp tục với</b>
             </h4>
             <button className="btn-8">
@@ -170,7 +180,7 @@ function Register() {
               <span>
                 <i className="fa-brands fa-google"></i> Đăng nhập bằng google
               </span>
-            </button>
+            </button> */}
             <p className="add">
               Bạn đã có tài khoản?
               <NavLink to="/login">

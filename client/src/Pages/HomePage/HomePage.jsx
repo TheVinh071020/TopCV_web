@@ -1,17 +1,35 @@
-import React from "react";
-import Header from "../Headers/Header";
-import Footer from "../Footer/Footer";
+import React, { useEffect, useState } from "react";
+import Header from "../../Component/Headers/Header";
+import Footer from "../../Component/Footer/Footer";
 import Carousel from "react-bootstrap/Carousel";
 import { Select, Space } from "antd";
 import "./HomePage.css";
 import { Helmet } from "react-helmet";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function HomePage() {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
+  const [listJobs, setListJobs] = useState([]);
+  //Get list jobs
+  const getListJobs = async () => {
+    await axios
+      .get("http://localhost:8000/jobs")
+      .then((res) => {
+        setListJobs(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getListJobs();
+  }, []);
 
   return (
     <div>
@@ -65,46 +83,45 @@ function HomePage() {
                   onChange={handleChange}
                   options={[
                     {
-                      value: "Địa điểm",
+                      value: "address",
                       label: "Địa điểm",
                     },
                     {
-                      value: "Mức lương",
+                      value: "salary",
                       label: "Mức lương",
                     },
                   ]}
-                />{" "}
+                />
               </Space>
             </div>
           </div>
         </div>
         <div className="row feature_job">
           <div className="container row-detail ">
-            <div className="feature_job_item">
-              <div className="job">
-                <div className="nav1">
-                  <div className="avatar">
-                    <img
-                      src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-tnhh-nha-hang-tung-dining-6389abcfe41f9.jpg"
-                      alt=""
-                    />
+            {listJobs.map((job, i) => (
+              <div key={i} className="feature_job_item">
+                <div className="job">
+                  <div className="nav1">
+                    <div className="avatar">
+                      <img src={job.avatar} alt="" />
+                    </div>
+                    <div className="job_item1">
+                      <h5 style={{ fontSize: "15px" }}>{job.name}</h5>
+                      <div style={{ fontSize: "13px" }}>{job.company}</div>
+                    </div>
                   </div>
-                  <div className="job_item1">
-                    <h5>Công ty bla bla</h5>
-                    <div style={{ fontSize: "13px" }}>Công ty bla bla</div>
-                  </div>
-                </div>
-                <div className="nav2">
-                  <div className="job_item2">8 triệu</div>
-                  <div className="job_item3">Ha Noi</div>
-                  <div className="job_item_btn">
-                    <Link to={"/detail"}>
-                      <Button variant="outline-info">Chi tiết</Button>
-                    </Link>
+                  <div className="nav2">
+                    <div className="job_item2">{job.salary} triệu</div>
+                    <div className="job_item3">{job.address.city}</div>
+                    <div className="job_item_btn">
+                      <Link to={`/detail/${job.id}`}>
+                        <Button variant="outline-info">Chi tiết</Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -115,5 +132,3 @@ function HomePage() {
 }
 
 export default HomePage;
-{
-}

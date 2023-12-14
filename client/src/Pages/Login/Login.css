@@ -17,7 +17,7 @@
 }
 
 .form-login {
-    margin: 2% 3%;
+    margin: 8% 3%;
     width: 48%;
 }
 
@@ -113,6 +113,7 @@
     display: flex;
     justify-content: center;
 }
+
 /* CSS cho ô input với border đỏ */
 .error-input {
     border: 1px solid red;

@@ -3,36 +3,20 @@ import "./Login.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
+  const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
   const navigate = useNavigate();
+
   const [users, setUsers] = useState([]);
 
   const [formError, setFormError] = useState({
     email: "",
     password: "",
   });
-
-  const isEmailValid = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validateForm = () => {
-    const errors = {};
-
-    if (!formInput.email || !isEmailValid(formInput.email)) {
-      errors.email = "Email không hợp lệ";
-    }
-
-    if (!formInput.password) {
-      errors.password = "Nhập mật khẩu";
-    }
-
-    setFormError(errors);
-    return Object.keys(errors).length === 0;
-  };
 
   useEffect(() => {
     axios
@@ -50,6 +34,7 @@ function Login() {
     email: "",
     password: "",
   });
+  console.log(formInput);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -81,9 +66,10 @@ function Login() {
       axios
         .post("http://localhost:8000/login", formInput)
         .then((res) => {
-          // console.log(res.data.user.locked);
           if (res.data.user.locked === false) {
-            Swal.fire("Good job!", "Đăng nhập thành công", "success");
+            toast.promise(resolveAfter3Sec, {
+              success: "Đăng nhập thành công 👌",
+            });
             localStorage.setItem("user", JSON.stringify(res.data.user));
             setFormInput(res.data.user);
             navigate("/");
@@ -91,10 +77,8 @@ function Login() {
         })
         .catch((err) => {
           if (err.response.data === "Incorrect password") {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Tài khoản hoặc mật khẩu chưa trùng khớp",
+            toast.promise(resolveAfter3Sec, {
+              success: "Tài khoản hoặc mật khẩu chưa trùng khớp 🤯",
             });
           }
         });
@@ -141,10 +125,11 @@ function Login() {
               <Button className="btn-login" variant="primary" type="submit">
                 Đăng nhập
               </Button>
+              <ToastContainer />
             </Form>
           </div>
           <div className="buttonn">
-            <h4 className="btn-h4">
+            {/* <h4 className="btn-h4">
               <b>Hoặc tiếp tục với</b>
             </h4>
             <button className="btn-8">
@@ -162,7 +147,7 @@ function Login() {
               <span>
                 <i className="fa-brands fa-google"></i> Đăng nhập bằng google
               </span>
-            </button>
+            </button> */}
             <p className="add">
               Bạn đã có tài khoản?
               <Link to="/register">
