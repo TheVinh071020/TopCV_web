@@ -6,7 +6,7 @@
       "name": "Nam",
       "phone": "",
       "address": "",
-      "application": [],
+      "recruitment": [],
       "locked": false,
       "id": 2
     },
@@ -16,17 +16,17 @@
       "name": "Lâm",
       "phone": "",
       "address": "",
-      "application": [],
+      "recruitment": [],
       "locked": false,
       "id": 4
     },
     {
-      "email": "vinhto1a@gmail.com",
-      "password": "$2a$10$uNDnNP/GhIlsmz40tavvjuObRkFWx/R8X620w3RzJXOSIAKzPI5.y",
-      "name": "Vinh",
+      "email": "long@gmail.com",
+      "password": "$2a$10$VHvXYxWqj4X.5.IvNLvbieKUhlLxbiBAbx/DZYr5DW8cl5uXGTyYi",
+      "name": "グェン テヴィン",
       "phone": "0936763839",
-      "address": "ha noi",
-      "application": [],
+      "address": "4-3-5セドルハイム高円寺105",
+      "recruitment": [],
       "locked": false,
       "id": 5
     }
@@ -42,11 +42,11 @@
         "Cài đặt và nâng cấp các hệ quản trị Cơ sở dữ liệu",
         "Thực hiện quản lý sao lưu và phục hồi CSDL"
       ],
-      "request": [
+      "requirement": [
         "Có kiến thức về hệ điều hành máy chủ, mạng, bảo mật thông tin",
         "Có kiến thức về hệ điều hành máy chủ, mạng, bảo mật thông tin"
       ],
-      "​benefit": [
+      "benefit": [
         "Các chế độ và quyền lợi theo Luật Lao động được đảm bảo đầy đủ",
         "Thưởng Lương tháng 13"
       ],
@@ -73,12 +73,12 @@
         "Lập trình Java Web",
         "Phát triển phần mềm theo quy trình chuyên nghiệp: Hiểu các bước thực hiện dự án, bao gồm thiết kế ứng dụng, làm GUI, thiết kế code"
       ],
-      "request": [
+      "requirement": [
         "Tiếng Nhật: đã có hoặc sắp thi chứng chỉ N4 trở lên",
         "Nắm vững kiến thức cơ bản về Lập trình hướng đối tượng, SQL, và Java Core",
         "Có thể tham gia đào tạo/làm việc Fulltime từ thứ 2 – thứ 6"
       ],
-      "​benefit": [
+      "benefit": [
         "Trợ cấp đào tạo trong quá trình đào tạo từ 6.000.000 – 10.000.000 VNĐ/tháng",
         "Thưởng Lương tháng 13",
         "Trải nghiệm văn hóa đặc trưng, môi trường làm việc hiện đại bậc nhất Việt Nam tại các Campus của FPT Software"
@@ -105,13 +105,13 @@
         "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
         "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
       ],
-      "request": [
+      "requirement": [
         "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
         "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
         "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
         "Có kiến thức về Performance Test là một lợi thế"
       ],
-      "​benefit": [
+      "benefit": [
         "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
         "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
         "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
@@ -139,13 +139,13 @@
         "Quản lý thông tin khách hàng và liên tục cập nhật trên hệ thống quản lý dữ liệu",
         " Báo cáo kết quả công việc hằng ngày"
       ],
-      "request": [
+      "requirement": [
         "Biết sử dụng tin học văn phòng cơ bản",
         "Ưu tiên có kinh nghiệm telesale/CSKH",
         "Giọng nói dễ nghe, tự tin khi giao tiếp qua điện thoại",
         "Có kiến thức về Performance Test là một lợi thế"
       ],
-      "​benefit": [
+      "benefit": [
         "Lương cứng: 6 triệu + thưởng doanh số",
         "Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
         "Thời gian làm việc: 8h30-12h; 14h-18h; Từ thứ 2 đến thứ 6",
@@ -161,6 +161,140 @@
       "experience": "Dưới 1 năm",
       "scale": "5 nhân viên",
       "member": 100,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 5,
+      "name": "Giao Dịch Viên / Tư Vấn Viên Tài Chính",
+      "company": "Ngân hàng Vietcombank",
+      "avatar": "https://cdn.tgdd.vn/2020/04/GameApp/icon-200x200.jpg",
+      "description": [
+        "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
+        "Quản lý thông tin khách hàng và liên tục cập nhật trên hệ thống quản lý dữ liệu",
+        " Báo cáo kết quả công việc hằng ngày"
+      ],
+      "requirement": [
+        "Biết sử dụng tin học văn phòng cơ bản",
+        "Ưu tiên có kinh nghiệm telesale/CSKH",
+        "Giọng nói dễ nghe, tự tin khi giao tiếp qua điện thoại",
+        "Có kiến thức về Performance Test là một lợi thế"
+      ],
+      "benefit": [
+        "Lương cứng: 6 triệu + thưởng doanh số",
+        "Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
+        "Thời gian làm việc: 8h30-12h; 14h-18h; Từ thứ 2 đến thứ 6",
+        "Khám sức khoẻ định kỳ"
+      ],
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": {
+        "city": "Hồ Chí Minh",
+        "location": "Tầng 4 toà 06, Khu biệt thự Mahattan Vinhomes Grand Park"
+      },
+      "salary": 25,
+      "level": "Nhân viên",
+      "experience": "Dưới 1 năm",
+      "scale": "5 nhân viên",
+      "member": 100,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 6,
+      "name": "Nhân Viên Hành Chính Tiếng Nhật",
+      "company": "CÔNG TY TNHH PASONA TECH VIỆT NAM",
+      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-tnhh-pasona-tech-viet-nam-621878f0918b7.jpg",
+      "description": [
+        "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
+        "Quản lý thông tin khách hàng và liên tục cập nhật trên hệ thống quản lý dữ liệu",
+        " Báo cáo kết quả công việc hằng ngày"
+      ],
+      "requirement": [
+        "Biết sử dụng tin học văn phòng cơ bản",
+        "Ưu tiên có kinh nghiệm telesale/CSKH",
+        "Giọng nói dễ nghe, tự tin khi giao tiếp qua điện thoại",
+        "Có kiến thức về Performance Test là một lợi thế"
+      ],
+      "benefit": [
+        "Lương cứng: 6 triệu + thưởng doanh số",
+        "Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
+        "Thời gian làm việc: 8h30-12h; 14h-18h; Từ thứ 2 đến thứ 6",
+        "Khám sức khoẻ định kỳ"
+      ],
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": {
+        "city": "Hà Nội",
+        "location": " Mễ Trì, Nam Từ Liêm"
+      },
+      "salary": 13,
+      "level": "Nhân viên",
+      "experience": "1 năm",
+      "scale": "5 nhân viên",
+      "member": 100,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 7,
+      "name": "IT Comtor (Tester N2, All Level)",
+      "company": "Công ty Cổ phần Tập đoàn Omi",
+      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/ebTsOPqSzrdmqsBecL07.jpg",
+      "description": [
+        "Kiến thức về Database: Mô hình quan hệ thực thể (ERM). Hệ quản trị cơ sở dữ liệu Microsoft SQL Server – hiểu và làm việc với truy vấn SQL.",
+        "Lập trình Java Web",
+        "Phát triển phần mềm theo quy trình chuyên nghiệp: Hiểu các bước thực hiện dự án, bao gồm thiết kế ứng dụng, làm GUI, thiết kế code"
+      ],
+      "requirement": [
+        "Tiếng Nhật: đã có hoặc sắp thi chứng chỉ N4 trở lên",
+        "Nắm vững kiến thức cơ bản về Lập trình hướng đối tượng, SQL, và Java Core",
+        "Có thể tham gia đào tạo/làm việc Fulltime từ thứ 2 – thứ 6"
+      ],
+      "benefit": [
+        "Trợ cấp đào tạo trong quá trình đào tạo từ 6.000.000 – 10.000.000 VNĐ/tháng",
+        "Thưởng Lương tháng 13",
+        "Trải nghiệm văn hóa đặc trưng, môi trường làm việc hiện đại bậc nhất Việt Nam tại các Campus của FPT Software"
+      ],
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": {
+        "city": "Hà Nội",
+        "location": "Tầng 13, Tòa nhà 789, 147 đường Hoàng Quốc Việt"
+      },
+      "salary": 15,
+      "level": "Nhân viên",
+      "experience": "Không yêu cầu",
+      "scale": "10 - 50 nhân viên",
+      "member": 300,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 8,
+      "name": "Tester (Senior/Leader)",
+      "company": "Công Ty TNHH Nhà Hàng A By Tung",
+      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/SQ1Uoa5Pzd109WWWWmmQaJ6nbHFMsyUP_1636781026____90116b5e8992fa1970102d297713233b.jpg",
+      "description": [
+        "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+        "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
+        "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
+      ],
+      "requirement": [
+        "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+        "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
+        "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
+        "Có kiến thức về Performance Test là một lợi thế"
+      ],
+      "benefit": [
+        "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
+        "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
+        "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
+        "Khám sức khoẻ định kỳ"
+      ],
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": {
+        "city": "Hồ Chí Minh",
+        "location": "Tầng 22 toà nhà Keangnam Landmark 81"
+      },
+      "salary": 20,
+      "level": "Nhân viên",
+      "experience": "1 năm",
+      "scale": "5 nhân viên",
+      "member": 400,
       "status": "Chờ xét duyệt"
     }
   ]

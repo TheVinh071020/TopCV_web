@@ -8,19 +8,27 @@ import { Helmet } from "react-helmet";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 function HomePage() {
+  const handleContinue = () => {
+    window.scrollTo(0, 0);
+  };
+
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
 
   const [listJobs, setListJobs] = useState([]);
   //Get list jobs
+  let dispatch = useDispatch();
+
   const getListJobs = async () => {
     await axios
       .get("http://localhost:8000/jobs")
       .then((res) => {
         setListJobs(res.data);
+        dispatch({ type: "GET_JOBS", payload: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -29,7 +37,7 @@ function HomePage() {
 
   useEffect(() => {
     getListJobs();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
@@ -115,7 +123,9 @@ function HomePage() {
                     <div className="job_item3">{job.address.city}</div>
                     <div className="job_item_btn">
                       <Link to={`/detail/${job.id}`}>
-                        <Button variant="outline-info">Chi tiết</Button>
+                        <Button onClick={handleContinue} variant="outline-info">
+                          Chi tiết
+                        </Button>
                       </Link>
                     </div>
                   </div>

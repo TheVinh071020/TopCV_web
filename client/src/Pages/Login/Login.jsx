@@ -71,6 +71,7 @@ function Login() {
               success: "Đăng nhập thành công 👌",
             });
             localStorage.setItem("user", JSON.stringify(res.data.user));
+            localStorage.setItem("token", JSON.stringify(res.data.accessToken));
             setFormInput(res.data.user);
             navigate("/");
           }
@@ -87,6 +88,7 @@ function Login() {
 
   return (
     <div>
+      <ToastContainer />
       <div className="img-login1">
         <div className="form-login">
           <h2>ĐĂNG NHẬP</h2>
@@ -125,7 +127,6 @@ function Login() {
               <Button className="btn-login" variant="primary" type="submit">
                 Đăng nhập
               </Button>
-              <ToastContainer />
             </Form>
           </div>
           <div className="buttonn">

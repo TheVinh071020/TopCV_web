@@ -23,6 +23,18 @@ const isPasswordValid = (password) => {
 function Register() {
   const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
 
+  const [touchedFields, setTouchedFields] = useState({
+    name: false,
+    email: false,
+    password: false,
+  });
+  const handleInputFocus = (fieldName) => () => {
+    setTouchedFields((prevTouched) => ({
+      ...prevTouched,
+      [fieldName]: true,
+    }));
+  };
+
   const navigate = useNavigate();
 
   // Lấy giá  trị ô input
@@ -32,7 +44,7 @@ function Register() {
     password: "",
     phone: "",
     address: "",
-    application: [],
+    recruitment: [],
     locked: false,
   });
 
@@ -103,7 +115,7 @@ function Register() {
     <div>
       <div className="img-login1">
         <div className="form-login">
-          <h2>ĐĂNG KÍ</h2>
+          <h2>ĐĂNG KÝ</h2>
           <div>
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">

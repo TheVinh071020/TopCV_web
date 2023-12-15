@@ -25,7 +25,7 @@ function Detail() {
         console.log(err);
       });
   };
-  console.log(job);
+  console.log(job?.requirement);
 
   useEffect(() => {
     renderJobs();
@@ -126,50 +126,35 @@ function Detail() {
             </div>
             <div className="job-detail__information-detail--content">
               <div className="job-description">
-                {job?.description.map((description, i) => (
-                  <div key={i} className="job-description__item">
-                    <h3>Mô tả công việc</h3>
-                    <div className="job-description__item--content">
-                      <ul>
+                <div className="job-description__item">
+                  <h3>Mô tả công việc</h3>
+                  <div className="job-description__item--content">
+                    {job?.description.map((description, i) => (
+                      <ul key={i}>
                         <li>{description}</li>
-                        <li>aaa</li>
-                        <li>aaa</li>
-                        <li>aaa</li>
                       </ul>
-                    </div>
+                    ))}
                   </div>
-                ))}
+                </div>
                 <div className="job-description__item">
                   <h3>Yêu cầu ứng viên</h3>
                   <div className="job-description__item--content">
-                    <ul>
-                      <li>aaa</li>
-                      <li>aaa</li>
-                      <li>aaa</li>
-                      <li>aaa</li>
-                    </ul>
+                    {job?.requirement.map((requirement, i) => (
+                      <ul key={i}>
+                        <li>{requirement}</li>
+                      </ul>
+                    ))}
                   </div>
                 </div>
-                <div className="job-description__item">
-                  <h3>Phẩm chất cá nhân</h3>
-                  <div className="job-description__item--content">
-                    <ul>
-                      <li>aaa</li>
-                      <li>aaa</li>
-                      <li>aaa</li>
-                      <li>aaa</li>
-                    </ul>
-                  </div>
-                </div>
+
                 <div className="job-description__item">
                   <h3>Quyền lợi</h3>
                   <div className="job-description__item--content">
-                    <ul>
-                      <li>aaa</li>
-                      <li>aaa</li>
-                      <li>aaa</li>
-                      <li>aaa</li>
-                    </ul>
+                    {job?.benefit.map((bene, i) => (
+                      <ul key={i}>
+                        <li>{bene}</li>
+                      </ul>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -193,7 +178,7 @@ function Detail() {
                 </div>
                 <div>Quy mô</div>
               </div>
-              <div className="company-value">{job?.member}</div>
+              <div className="company-value">{job?.member} Znhân viên</div>
             </div>
             <div className="company-address">
               <div className="company-title">

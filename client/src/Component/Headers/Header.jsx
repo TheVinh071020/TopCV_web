@@ -62,7 +62,13 @@ function Header() {
           >
             <li>Hồ sơ & CV</li>
           </Link>
-          <li>Đã ứng tuyển</li>
+          <Link
+            onClick={handleContinue}
+            to={"/recruitment"}
+            style={{ textDecoration: "none" }}
+          >
+            <li>Đã ứng tuyển</li>
+          </Link>
         </ul>
       </div>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -116,7 +122,11 @@ function Header() {
               }}
               to="/login"
             >
-              <Button onClick={handleLogout} variant="success">
+              <Button
+                onClick={handleLogout}
+                variant="success"
+                style={{ backgroundColor: "#f07e1d" }}
+              >
                 Đăng xuất
               </Button>
             </Link>{" "}
@@ -130,10 +140,16 @@ function Header() {
               textDecoration: "none",
             }}
           >
-            <Link to="/login" style={{ width: "47%" }}>
+            <Link
+              to="/login"
+              style={{ width: "47%", backgroundColor: "#f07e1d" }}
+            >
               <Button variant="success">Đăng nhập</Button>
             </Link>
-            <Link to="/register" style={{ width: "50%" }}>
+            <Link
+              to="/register"
+              style={{ width: "50%", backgroundColor: "#f07e1d" }}
+            >
               <Button style={{ width: "73%" }} variant="success">
                 Đăng ký
               </Button>
