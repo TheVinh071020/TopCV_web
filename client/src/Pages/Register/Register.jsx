@@ -21,20 +21,6 @@ const isPasswordValid = (password) => {
 };
 
 function Register() {
-  const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
-
-  const [touchedFields, setTouchedFields] = useState({
-    name: false,
-    email: false,
-    password: false,
-  });
-  const handleInputFocus = (fieldName) => () => {
-    setTouchedFields((prevTouched) => ({
-      ...prevTouched,
-      [fieldName]: true,
-    }));
-  };
-
   const navigate = useNavigate();
 
   // Lấy giá  trị ô input
@@ -92,9 +78,7 @@ function Register() {
       await axios
         .post("http://localhost:8000/users", formRegister)
         .then((res) => {
-          toast.success(resolveAfter3Sec, {
-            success: "Đăng ký tài khoản thành công 👌",
-          });
+          toast.success("Đăng ký tài khoản thành công 👌");
           navigate("/login");
         })
         .catch((err) => {
@@ -170,29 +154,9 @@ function Register() {
               <Button className="btn-login" variant="primary" type="submit">
                 Đăng ký
               </Button>
-              <ToastContainer />
             </Form>
           </div>
           <div className="buttonn">
-            {/* <h4 className="btn-h4">
-              <b>Hoặc tiếp tục với</b>
-            </h4>
-            <button className="btn-8">
-              <span>
-                <i className="fa-brands fa-facebook-f"></i> Đăng nhập bằng
-                facebook
-              </span>
-            </button>
-            <button className="btn-9">
-              <span>
-                <i className="fa-brands fa-apple"></i> Đăng nhập bằng apple
-              </span>
-            </button>
-            <button className="btn-10">
-              <span>
-                <i className="fa-brands fa-google"></i> Đăng nhập bằng google
-              </span>
-            </button> */}
             <p className="add">
               Bạn đã có tài khoản?
               <NavLink to="/login">

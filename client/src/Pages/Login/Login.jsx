@@ -8,7 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
-  const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
   const navigate = useNavigate();
 
   const [users, setUsers] = useState([]);
@@ -67,9 +66,8 @@ function Login() {
         .post("http://localhost:8000/login", formInput)
         .then((res) => {
           if (res.data.user.locked === false) {
-            toast.promise(resolveAfter3Sec, {
-              success: "Đăng nhập thành công 👌",
-            });
+            console.log(res.data.accessToken);
+            toast.success("Đăng nhập thành công 👌");
             localStorage.setItem("user", JSON.stringify(res.data.user));
             localStorage.setItem("token", JSON.stringify(res.data.accessToken));
             setFormInput(res.data.user);
@@ -77,10 +75,10 @@ function Login() {
           }
         })
         .catch((err) => {
+          console.log(err.response.data);
           if (err.response.data === "Incorrect password") {
-            toast.promise(resolveAfter3Sec, {
-              success: "Tài khoản hoặc mật khẩu chưa trùng khớp 🤯",
-            });
+            console.log("aa");
+            toast.error("Tài khoản hoặc mật khẩu chưa trùng khớp 🤯");
           }
         });
     }

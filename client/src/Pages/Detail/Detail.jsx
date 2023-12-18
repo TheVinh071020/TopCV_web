@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../Component/Headers/Header";
 import Footer from "../../Component/Footer/Footer";
-import { Select, Space } from "antd";
 import { Helmet } from "react-helmet";
-import Button from "react-bootstrap/Button";
 import "./Detail.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+// import Button from "react-bootstrap/Button";
+// import Modal from "react-bootstrap/Modal";
+// import Col from "react-bootstrap/Col";
+// import FloatingLabel from "react-bootstrap/FloatingLabel";
+// import Form from "react-bootstrap/Form";
+// import Row from "react-bootstrap/Row";
+import { Button, Modal } from "antd";
+import { Input } from "antd";
+import { Col, Row } from "antd";
 
 function Detail() {
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+  const [open, setOpen] = useState(false);
+
   const [job, setJob] = useState(null);
   let { jobId } = useParams();
 
@@ -25,7 +34,7 @@ function Detail() {
         console.log(err);
       });
   };
-  console.log(job?.requirement);
+  // console.log(job?.requirement);
 
   useEffect(() => {
     renderJobs();
@@ -35,6 +44,91 @@ function Detail() {
       <Helmet>
         <title>Tuyển nhân viên</title>
       </Helmet>
+      {/* <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        with={900}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Nhập thông tin ứng tuyển của bạn</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row className="g-2">
+            <Col>
+              <FloatingLabel
+                controlId="floatingInputGrid"
+                label="Email address"
+              >
+                <Form.Control type="email" placeholder="name@example.com" />
+              </FloatingLabel>
+            </Col>
+            <Col>
+              <FloatingLabel
+                controlId="floatingInputGrid"
+                label="Email address"
+              >
+                <Form.Control type="email" placeholder="name@example.com" />
+              </FloatingLabel>
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal> */}
+      <Modal
+        title="Nhập thông tin ứng tuyển của bạn"
+        centered
+        open={open}
+        onOk={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+        width={900}
+        style={{
+          top: -130,
+        }}
+      >
+        <Row justify="space-evenly" align="middle">
+          <Col
+            span={10}
+            xs={{ span: 10, offset: 0 }}
+            lg={{ span: 10, offset: 0 }}
+            style={{ marginBottom: "15px" }}
+          >
+            <Input size="large" placeholder="Họ và tên" />
+          </Col>
+          <Col
+            span={10}
+            xs={{ span: 10, offset: 0 }}
+            lg={{ span: 10, offset: 0 }}
+            style={{ marginBottom: "15px" }}
+          >
+            <Input size="large" placeholder="Số điện thoại" />
+          </Col>
+          <Col
+            span={10}
+            xs={{ span: 10, offset: 0 }}
+            lg={{ span: 10, offset: 0 }}
+            style={{ marginBottom: "15px" }}
+          >
+            <Input width={80} size="large" placeholder="Email" />
+          </Col>
+          <Col
+            span={10}
+            xs={{ span: 10, offset: 0 }}
+            lg={{ span: 10, offset: 0 }}
+            style={{ marginBottom: "15px" }}
+          >
+            <Input width={80} size="large" placeholder="Địa chỉ" />
+          </Col>
+        </Row>
+      </Modal>
       <Header />
       <div className="list-feature-jobs">
         <div className="container">
@@ -45,28 +139,6 @@ function Detail() {
                 src="	https://static.topcv.vn/v4/image/welcome/feature-job/label-toppy-ai.png"
                 alt=""
               />
-            </div>
-            <div className="box-select">
-              <Space wrap>
-                <Select
-                  defaultValue="Lọc theo :"
-                  style={{
-                    width: 170,
-                  }}
-                  v
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "Địa điểm",
-                      label: "Địa điểm",
-                    },
-                    {
-                      value: "Mức lương",
-                      label: "Mức lương",
-                    },
-                  ]}
-                />{" "}
-              </Space>
             </div>
           </div>
         </div>
@@ -108,7 +180,13 @@ function Detail() {
             </div>
             <div className="box-apply-current">
               <div>
-                <Button className="btn-apply" variant="outline-success">
+                <Button
+                  // onClick={handleShow}
+                  className="btn-apply"
+                  variant="outline-success"
+                  type="primary"
+                  onClick={() => setOpen(true)}
+                >
                   <i
                     style={{ marginRight: "15px" }}
                     class="fa-regular fa-paper-plane"
@@ -165,10 +243,7 @@ function Detail() {
         <div className="job-detail__body-right">
           <div className="job-detail__company">
             <div className="company-name">
-              <img
-                src="https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png"
-                alt=""
-              />
+              <img src={job?.avatar} />
               <h3 className="company-name-label">{job?.company}</h3>
             </div>
             <div className="company-scale">
@@ -178,7 +253,7 @@ function Detail() {
                 </div>
                 <div>Quy mô</div>
               </div>
-              <div className="company-value">{job?.member} Znhân viên</div>
+              <div className="company-value">{job?.personnel} nhân viên</div>
             </div>
             <div className="company-address">
               <div className="company-title">

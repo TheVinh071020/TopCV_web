@@ -4,7 +4,7 @@
     width: 100%;
 }
 .list-feature-jobs{
-    margin-top: 6%;
+    margin-top: 7%;
 }
 
 .feature_job .row-detail {
@@ -161,7 +161,7 @@
     flex-direction: column;
     align-items: center;
     gap: 33px;
-    width: calc(33% - 24px);
+    width: calc(33% - -88px);
     height: 100%;
     padding: 20px 24px;
     border-radius: 8px;

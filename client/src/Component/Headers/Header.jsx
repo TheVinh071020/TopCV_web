@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./header.css";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Navbar from "react-bootstrap/Navbar";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -29,11 +26,10 @@ function Header() {
       });
   }, []);
 
-  // console.log(user);
-
   // Đăng xuất
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/login");
   };
   return (
@@ -71,21 +67,6 @@ function Header() {
           </Link>
         </ul>
       </div>
-      <Navbar expand="lg" className="bg-body-tertiary">
-        <Container fluid>
-          <Navbar.Collapse id="navbarScroll">
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
       <div className="header-page">
         <Link to={"/profile"} style={{ width: "20%" }}>
           <Button variant="outline-success" className="profile">
@@ -140,17 +121,16 @@ function Header() {
               textDecoration: "none",
             }}
           >
-            <Link
-              to="/login"
-              style={{ width: "47%", backgroundColor: "#f07e1d" }}
-            >
-              <Button variant="success">Đăng nhập</Button>
+            <Link to="/login" style={{ width: "47%" }}>
+              <Button style={{ backgroundColor: "#f07e1d" }} variant="success">
+                Đăng nhập
+              </Button>
             </Link>
-            <Link
-              to="/register"
-              style={{ width: "50%", backgroundColor: "#f07e1d" }}
-            >
-              <Button style={{ width: "73%" }} variant="success">
+            <Link to="/register" style={{ width: "50%" }}>
+              <Button
+                style={{ width: "73%", backgroundColor: "#f07e1d" }}
+                variant="success"
+              >
                 Đăng ký
               </Button>
               <ToastContainer />

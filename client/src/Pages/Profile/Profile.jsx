@@ -22,6 +22,7 @@ function Profile() {
     email: user.email,
     password: "",
     address: "",
+    gender: "",
   });
 
   console.log(formInput);
@@ -50,6 +51,7 @@ function Profile() {
     name: "",
     phone: "",
     address: "",
+    gender: "",
   });
 
   const isValidPhoneNumber = (phoneNumber) => {
@@ -59,7 +61,6 @@ function Profile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const maxNameLength = 225;
     const maxAddressLength = 225;
 
@@ -79,19 +80,17 @@ function Profile() {
         : formInput.address.length > maxAddressLength
         ? `Địa chỉ không được vượt quá ${maxAddressLength} ký tự.`
         : "",
+      gender: !formInput.gender ? "Vui lòng chọn giới tính." : "",
     };
     setValidationErrors(errors);
     if (Object.values(errors).some((error) => error !== "")) {
       return;
     }
-
     axios
       .patch(`http://localhost:8000/users/${userId}`, formInput)
       .then((res) => {
         setFormInput(res.data);
-        toast.promise(resolveAfter3Sec, {
-          success: "Cập nhật thông tin thành công 👌",
-        });
+        toast.success("Cập nhật thông tin thành công 👌");
       })
       .catch((err) => {
         console.log(err);
@@ -164,6 +163,22 @@ function Profile() {
                   {validationErrors.address}
                 </div>
               </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Giới tính</Form.Label>
+                <Form.Select
+                  name="gender"
+                  value={formInput.gender}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Giới tính</option>
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+                </Form.Select>
+
+                <div className="error-message" style={{ color: "red" }}>
+                  {validationErrors.gender}
+                </div>
+              </Form.Group>
 
               <Button
                 style={{ width: "20%", backgroundColor: "#f07e1d" }}
@@ -171,9 +186,8 @@ function Profile() {
                 variant="success"
                 type="submit"
               >
-                Lưu
+                Cập nhật
               </Button>
-              <ToastContainer />
             </Form>
           </div>
         </div>
