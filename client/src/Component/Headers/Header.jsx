@@ -4,11 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { useUserById } from "../../Hooks/user";
 
 function Header() {
   const handleContinue = () => {
     window.scrollTo(0, 0);
   };
+
+  // const [user, setUser] = useUserById(id);
+  // console.log(user);
 
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -73,7 +77,7 @@ function Header() {
             <i class="fa-solid fa-user"></i>
           </Button>
         </Link>
-        {user ? (
+        {/* {user ? (
           <div
             style={{
               display: "flex",
@@ -136,7 +140,7 @@ function Header() {
               <ToastContainer />
             </Link>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

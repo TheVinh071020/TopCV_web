@@ -6,26 +6,23 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 function Profile() {
-  const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
-
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
-  console.log(user);
+
   // Lấy giá  trị ô input
   const [formInput, setFormInput] = useState({
     name: user.name,
     phone: "",
     email: user.email,
-    password: "",
     address: "",
     gender: "",
+    applications: [],
   });
 
-  console.log(formInput);
   // load user theo id
   useEffect(() => {
     axios
@@ -89,7 +86,7 @@ function Profile() {
     axios
       .patch(`http://localhost:8000/users/${userId}`, formInput)
       .then((res) => {
-        setFormInput(res.data);
+        console.log(res.data);
         toast.success("Cập nhật thông tin thành công 👌");
       })
       .catch((err) => {
@@ -106,9 +103,6 @@ function Profile() {
         <div className="main-left">
           <div>
             <h3>Cài đặt thông tin cá nhân</h3>
-            {/* <p>
-              <span style={{ color: "red" }}>(*)</span> Các thông tin bắt buộc
-            </p> */}
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Họ và tên</Form.Label>
@@ -179,7 +173,6 @@ function Profile() {
                   {validationErrors.gender}
                 </div>
               </Form.Group>
-
               <Button
                 style={{ width: "20%", backgroundColor: "#f07e1d" }}
                 className="btn-login"

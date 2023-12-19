@@ -9,8 +9,14 @@ import PrivateRouter from "./Component/PrivateRouter/PrivateRouter";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import { jwtDecode } from "jwt-decode";
 
 function App() {
+  // Giải mã token
+  // const token = localStorage.getItem("token");
+  // const decodedToken = jwtDecode(token);
+  // console.log(decodedToken); 
+
   const navigate = useNavigate();
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

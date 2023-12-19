@@ -5,24 +5,41 @@ import { Helmet } from "react-helmet";
 import "./Detail.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-// import Button from "react-bootstrap/Button";
-// import Modal from "react-bootstrap/Modal";
-// import Col from "react-bootstrap/Col";
-// import FloatingLabel from "react-bootstrap/FloatingLabel";
-// import Form from "react-bootstrap/Form";
-// import Row from "react-bootstrap/Row";
-import { Button, Modal } from "antd";
-import { Input } from "antd";
 import { Col, Row } from "antd";
+import { Modal, Input, Button } from "antd";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 function Detail() {
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
   const [open, setOpen] = useState(false);
-
   const [job, setJob] = useState(null);
   let { jobId } = useParams();
+  let dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("user")) || null;
+
+  const [infoUser, setInfoUser] = useState(null);
+  // Form input
+  const [formData, setFormData] = useState({
+    id: "",
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    education: "",
+    certification: "",
+  });
+
+  // Lưu đơn ứng tuyển
+  const renderUser = async () =>
+    await axios
+      .get(`http://localhost:8000/users/${user.id}`)
+      .then((res) => {
+        setInfoUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  console.log(infoUser);
 
   const renderJobs = async () => {
     await axios
@@ -34,65 +51,104 @@ function Detail() {
         console.log(err);
       });
   };
-  // console.log(job?.requirement);
+
+  useEffect(() => {
+    if (infoUser && job) {
+      setFormData({
+        id: infoUser.id,
+        name: infoUser.name,
+        phone: infoUser.phone,
+        email: infoUser.email,
+        address: infoUser.address,
+        education: "",
+        certification: "",
+        createdAt: Date.now(),
+      });
+    }
+  }, [infoUser, job]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (index) => {
+    const updateUser = await axios.patch(
+      `http://localhost:8000/users/${user.id}`,
+      formData
+    );
+    const updatedUser = updateUser.data;
+    const newApplication = {
+      id: Number(jobId),
+      jobName: job?.name,
+      company: job?.company,
+      avatar: job?.avatar,
+      address: job?.address,
+      salary: job?.salary,
+      level: job?.level,
+      experience: job?.experience,
+      status: job?.status,
+      createdAt: Date.now(),
+      userId: formData.id,
+    };
+    const isAlreadyApplied = updatedUser.applications.some(
+      (application) => application.id === Number(jobId)
+    );
+    if (isAlreadyApplied) {
+      toast.warn("Bạn đã ứng tuyển cho công việc này trước đó.");
+      setOpen(false);
+    } else {
+      const updatedApplications = [...updatedUser.applications, newApplication];
+      const updatedUserWithApplications = {
+        ...updatedUser,
+        applications: updatedApplications,
+      };
+
+      const updatedUserInfo = await axios.patch(
+        `http://localhost:8000/users/${user.id}`,
+        updatedUserWithApplications
+      );
+
+      setInfoUser(updatedUserInfo.data);
+      dispatch({ type: "ADD_APPLICATION_USER", payload: updatedUserInfo.data });
+      setOpen(false);
+      toast.success("Gửi đơn ứng tuyển thành công 👌");
+    }
+  };
+
 
   useEffect(() => {
     renderJobs();
+    if (user) {
+      renderUser();
+    }
   }, []);
+
   return (
     <div>
       <Helmet>
         <title>Tuyển nhân viên</title>
       </Helmet>
-      {/* <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-        with={900}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Nhập thông tin ứng tuyển của bạn</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Row className="g-2">
-            <Col>
-              <FloatingLabel
-                controlId="floatingInputGrid"
-                label="Email address"
-              >
-                <Form.Control type="email" placeholder="name@example.com" />
-              </FloatingLabel>
-            </Col>
-            <Col>
-              <FloatingLabel
-                controlId="floatingInputGrid"
-                label="Email address"
-              >
-                <Form.Control type="email" placeholder="name@example.com" />
-              </FloatingLabel>
-            </Col>
-          </Row>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
+
       <Modal
-        title="Nhập thông tin ứng tuyển của bạn"
-        centered
-        open={open}
-        onOk={() => setOpen(false)}
+        title="Nhập thông tin ứng tuyển"
+        visible={open}
         onCancel={() => setOpen(false)}
         width={900}
         style={{
-          top: -130,
+          top: 130,
         }}
+        footer={[
+          <Button key="cancel" onClick={() => setOpen(false)}>
+            Hủy
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleSubmit}>
+            Gửi
+          </Button>,
+        ]}
       >
         <Row justify="space-evenly" align="middle">
           <Col
@@ -101,7 +157,13 @@ function Detail() {
             lg={{ span: 10, offset: 0 }}
             style={{ marginBottom: "15px" }}
           >
-            <Input size="large" placeholder="Họ và tên" />
+            <Input
+              size="large"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              placeholder="Họ và tên"
+            />
           </Col>
           <Col
             span={10}
@@ -109,7 +171,13 @@ function Detail() {
             lg={{ span: 10, offset: 0 }}
             style={{ marginBottom: "15px" }}
           >
-            <Input size="large" placeholder="Số điện thoại" />
+            <Input
+              size="large"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              placeholder="Số điện thoại"
+            />
           </Col>
           <Col
             span={10}
@@ -117,7 +185,14 @@ function Detail() {
             lg={{ span: 10, offset: 0 }}
             style={{ marginBottom: "15px" }}
           >
-            <Input width={80} size="large" placeholder="Email" />
+            <Input
+              width={80}
+              size="large"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="Email"
+            />
           </Col>
           <Col
             span={10}
@@ -125,7 +200,34 @@ function Detail() {
             lg={{ span: 10, offset: 0 }}
             style={{ marginBottom: "15px" }}
           >
-            <Input width={80} size="large" placeholder="Địa chỉ" />
+            <Input
+              width={80}
+              size="large"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              placeholder="Địa chỉ"
+            />
+          </Col>
+          <Col style={{ marginBottom: "15px", width: "89%" }}>
+            <Input
+              width={80}
+              size="large"
+              name="education"
+              value={formData.education}
+              onChange={handleInputChange}
+              placeholder="Học vấn"
+            />
+          </Col>
+          <Col style={{ marginBottom: "15px", width: "89%" }}>
+            <Input
+              width={80}
+              size="large"
+              name="certification"
+              value={formData.certification}
+              onChange={handleInputChange}
+              placeholder="Chứng chỉ"
+            />
           </Col>
         </Row>
       </Modal>
@@ -181,7 +283,6 @@ function Detail() {
             <div className="box-apply-current">
               <div>
                 <Button
-                  // onClick={handleShow}
                   className="btn-apply"
                   variant="outline-success"
                   type="primary"

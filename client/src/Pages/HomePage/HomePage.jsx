@@ -7,19 +7,16 @@ import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import { Select, Space } from "antd";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
 import ListJobs from "../../Component/PaginationListJobs/ListJobs";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const [listJobs, setListJobs] = useState([]);
   const [total, setTotal] = useState(0);
-
-  const [pageIndex, setPageIndex] = useState(1);
-  const [pageNumber, setPageNumber] = useState(6);
 
   //Get list jobs
   let dispatch = useDispatch();
@@ -43,9 +40,13 @@ function HomePage() {
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
+
   // TÌm kiếm
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
+    const inputValue = searchValue;
+    setSearchValue(inputValue);
+    console.log(inputValue);
     await axios
       .get(`http://localhost:8000/jobs?q=${searchValue}`)
       .then((res) => {
@@ -55,8 +56,6 @@ function HomePage() {
       .catch((err) => {
         console.log(err);
       });
-    console.log(listJobs);
-    console.log(total);
   };
 
   // Lọc theo địa chi

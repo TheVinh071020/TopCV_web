@@ -6,20 +6,19 @@
       "name": "Nam",
       "phone": "",
       "address": "",
-      "recruitment": [],
       "locked": false,
+      "applications": [],
       "id": 2
     },
     {
-      "email": "lam@gmail.com",
-      "password": "$2a$10$868z0Rb1pLGYS9VU40vBUOqFTCOQwMQ4mF5W/86e4e9.PoDIN0e7q",
-      "name": "Lâm",
-      "phone": "0936454545",
-      "address": "me tri",
-      "recruitment": [],
+      "email": "vinhto1a@gmail.com",
+      "password": "$2a$10$CjiAkXXIvboGSgHrZT86HuoPdzmAvcJc0nT5G7BQJ4FhlUBtkQ6bm",
+      "name": "vinhto1a@gmail.com",
+      "phone": "",
+      "address": "",
       "locked": false,
-      "id": 3,
-      "gender": "Nam"
+      "applications": [],
+      "id": 3
     }
   ],
   "jobs": [
