@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../Component/Headers/Header";
-import Footer from "../../Component/Footer/Footer";
+import Header from "../../Component/Layouts/Headers/Header";
+import Footer from "../../Component/Layouts/Footer/Footer";
 import "./Profile.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -8,8 +8,11 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { axiosConfig } from "../../axios/config";
 
 function Profile() {
+  const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
 
@@ -25,8 +28,8 @@ function Profile() {
 
   // load user theo id
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/users/${userId}`)
+    axiosConfig
+      .get(`/users/${userId}`)
       .then((res) => {
         setFormInput(res.data);
       })
@@ -56,7 +59,7 @@ function Profile() {
     return phonePattern.test(phoneNumber);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const maxNameLength = 225;
     const maxAddressLength = 225;
@@ -83,11 +86,12 @@ function Profile() {
     if (Object.values(errors).some((error) => error !== "")) {
       return;
     }
-    axios
-      .patch(`http://localhost:8000/users/${userId}`, formInput)
+    await axiosConfig
+      .patch(`/users/${userId}`, formInput)
       .then((res) => {
-        console.log(res.data);
+        dispatch({ type: "UPDATE_USER", payload: res.data });
         toast.success("Cập nhật thông tin thành công 👌");
+        localStorage.setItem("user", JSON.stringify(res.data));
       })
       .catch((err) => {
         console.log(err);

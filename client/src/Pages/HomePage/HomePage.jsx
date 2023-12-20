@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./HomePage.css";
-import Header from "../../Component/Headers/Header";
-import Footer from "../../Component/Footer/Footer";
-import axios from "axios";
-import Carousel from "react-bootstrap/Carousel";
+import Header from "../../Component/Layouts/Headers/Header";
+import Footer from "../../Component/Layouts/Footer/Footer";
+import Carousels from "../../Component/Layouts/Carousel/Carousels";
 import { Select, Space } from "antd";
 import { Helmet } from "react-helmet";
-import ListJobs from "../../Component/PaginationListJobs/ListJobs";
+import PaginationListJobs from "../../Component/Layouts/PaginationListJobs";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { axiosConfig } from "../../axios/config";
+import { useSearchParams } from "react-router-dom";
+import DetailItem from "../../Component/Layouts/DetailItem";
 
 function HomePage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const querySearch = searchParams.get("name_like");
+
   const [listJobs, setListJobs] = useState([]);
   const [total, setTotal] = useState(0);
+  const [searchValue, setSearchValue] = useState("");
+  const [prevSearchValue, setPrevSearchValue] = useState("");
 
   //Get list jobs
   let dispatch = useDispatch();
 
+  // Lấy toàn bộ job và phân trang
   const getListJobs = async (pageIndex, pageNumber) => {
-    await axios
-      .get(`http://localhost:8000/jobs?_page=${pageIndex}&_limit=${pageNumber}`)
+    await axiosConfig
+      .get(`/jobs?_page=${pageIndex}&_limit=${pageNumber}`)
       .then((res) => {
         setListJobs(res.data);
         setTotal(res.headers["x-total-count"]);
@@ -34,21 +41,12 @@ function HomePage() {
       });
   };
 
-  // Tìm kiếm
-  const [searchValue, setSearchValue] = useState("");
-
-  const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
-  };
-
-  // TÌm kiếm
-  const handleSearchSubmit = async (e) => {
-    e.preventDefault();
-    const inputValue = searchValue;
-    setSearchValue(inputValue);
-    console.log(inputValue);
-    await axios
-      .get(`http://localhost:8000/jobs?q=${searchValue}`)
+  // Lấy job theo querySearch
+  const getListJobsByQuerySearch = async (pageIndex, pageNumber) => {
+    axiosConfig
+      .get(
+        `/jobs?_page=${pageIndex}&_limit=${pageNumber}&&name_like=${querySearch}`
+      )
       .then((res) => {
         setListJobs(res.data);
         setTotal(res.headers["x-total-count"]);
@@ -57,11 +55,34 @@ function HomePage() {
         console.log(err);
       });
   };
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  // TÌm kiếm
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    if (searchValue === prevSearchValue) {
+      return;
+    }
+    setSearchParams({ name_like: searchValue });
+    await axiosConfig
+      .get(`/jobs?name_like=${searchValue}`)
+      .then((res) => {
+        setListJobs(res.data);
+        setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setPrevSearchValue(searchValue);
+  };
+  console.log(listJobs);
 
   // Lọc theo địa chi
   const handleFilterByAddress = async (value) => {
-    await axios
-      .get(`http://localhost:8000/jobs?address.city_like=${value}`)
+    await axiosConfig
+      .get(`/jobs?address.city_like=${value}`)
       .then((res) => {
         setListJobs(res.data);
         setTotal(res.headers["x-total-count"]);
@@ -74,8 +95,8 @@ function HomePage() {
   // Lọc theo lương
   const handleFilterBySalary = async (value) => {
     console.log(value);
-    await axios
-      .get(`http://localhost:8000/jobs?_sort=salary&_order=${value}`)
+    await axiosConfig
+      .get(`/jobs?_sort=salary&_order=${value}`)
       .then((res) => {
         setListJobs(res.data);
         setTotal(res.headers["x-total-count"]);
@@ -86,8 +107,13 @@ function HomePage() {
   };
 
   useEffect(() => {
-    getListJobs(1, 6);
-  }, [dispatch]);
+    if (querySearch) {
+      setSearchValue(querySearch);
+      getListJobsByQuerySearch(1, 6);
+    } else {
+      getListJobs(1, 6);
+    }
+  }, [searchParams, dispatch, querySearch]);
 
   return (
     <div>
@@ -96,29 +122,7 @@ function HomePage() {
       </Helmet>
       <Header />
       <div className="carousel">
-        <Carousel>
-          <Carousel.Item>
-            <img
-              style={{ width: "100%" }}
-              src="https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fimages%2Fseeker-banner%2F2023%2F12%2F11%2Fbanner-website-Xmas-06_170226725619.jpg&w=1920&q=75"
-              alt=""
-            />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              style={{ width: "100%" }}
-              src="https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fimages%2Fseeker-banner%2F2023%2F12%2F11%2Fbanner-website-Xmas-07_170226691718.jpg&w=1920&q=75"
-              alt=""
-            />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              style={{ width: "100%" }}
-              src="https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fimages%2Fseeker-banner%2F2023%2F12%2F11%2Fbanner-website-Xmas-07_170226691718.jpg&w=1920&q=75"
-              alt=""
-            />
-          </Carousel.Item>
-        </Carousel>
+        <Carousels />
       </div>
       <div className="list-feature-jobss">
         <div className="container">
@@ -195,38 +199,34 @@ function HomePage() {
         </div>
         <div className="row feature_job">
           <div className="container row-detail ">
-            {listJobs.map((job, i) => (
-              <div key={i} className="feature_job_item">
+            {listJobs.length > 0 ? (
+              listJobs.map((job, i) => <DetailItem job={job} key={i} />)
+            ) : (
+              <div
+                className="feature_job_item"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 <div className="job">
-                  <div className="nav1">
-                    <div className="avatar">
-                      <img src={job.avatar} alt="" />
-                    </div>
-                    <div className="job_item1">
-                      <h5 style={{ fontSize: "15px" }}>{job.name}</h5>
-                      <div style={{ fontSize: "13px" }}>{job.company}</div>
-                    </div>
-                  </div>
                   <div className="nav2">
-                    <div className="job_item2">{job.salary} triệu</div>
-                    <div className="job_item3">{job.address.city}</div>
-                    <div className="job_item_btn">
-                      <Link to={`/detail/${job.id}`}>
-                        <Button variant="outline-info">Chi tiết</Button>
-                      </Link>
-                    </div>
+                    <h4>Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn</h4>
                   </div>
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
         <div className="d-flex justify-content-center align-items-center">
-          <ListJobs
+          <PaginationListJobs
             total={total}
             listJobs={listJobs}
             pageNumber={6}
             getListJobs={getListJobs}
+            querySearch={querySearch}
+            getListJobsByQuerySearch={getListJobsByQuerySearch}
           />
         </div>
       </div>

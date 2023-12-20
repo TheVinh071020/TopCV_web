@@ -1,6 +1,6 @@
 import React from "react";
 import "./Login.css";
-import LoginUser from "../../screens/LoginUser";
+import LoginUser from "../../Component/screens/LoginUser";
 
 function Login() {
   const token = localStorage.getItem("token") || null;

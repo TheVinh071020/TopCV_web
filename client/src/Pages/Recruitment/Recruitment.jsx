@@ -1,15 +1,26 @@
 import React from "react";
-import Header from "../../Component/Headers/Header";
-import Footer from "../../Component/Footer/Footer";
-import { Button, Select, Space } from "antd";
+import Header from "../../Component/Layouts/Headers/Header";
+import Footer from "../../Component/Layouts/Footer/Footer";
+import { Select, Space } from "antd";
 import "./Recruitment.css";
+import { Helmet } from "react-helmet";
+import { useSelector } from "react-redux";
 
 function Recruitment() {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
+  const applicationInfo = useSelector(
+    (state) => state.userReducer.applications.applications
+  );
+
+  console.log(applicationInfo);
   return (
     <div>
+      <Helmet>
+        <title>Ứng tuyển</title>
+      </Helmet>
       <Header />
       <div
         className="container job-detail-body"
@@ -54,36 +65,66 @@ function Recruitment() {
               </Space>
             </div>
           </div>
-          <div className="job-detail__box--left" style={{width: "85%", marginLeft: "47px" }}>
-            <div className="info-detail">
-              <div className="info-detail-img">
-                <img
-                  src="https://techviec.com/wp-content/uploads/2019/09/rikkeisoft-logo-1.png"
-                  alt=""
-                />
-              </div>
-              <div className="body">
-                <div className="info-detail-title">
-                  <h4 className="titles">Thuc tap sinh</h4>
-                  <div className="salary">
-                    <div className="icon-salary">
-                      <i class="fa-solid fa-dollar-sign"></i>
-                    </div>
-                    <div style={{ fontWeight: "bold" }}>8 triệu</div>
-                  </div>
-                </div>
-                <div className="info-detail-title">
-                  <div className="titless">Cong ty</div>
-                </div>
-                <div className="info-detail-title">
-                  <div className="titless">Thời gian ứng tuyển </div>
-                </div>
-                <div className="info-detail-title">
-                  <div className="titless">Thuc tap sinh</div>
-                </div>
+          {applicationInfo === undefined ? (
+            <div
+              className="job-detail__box--left"
+              style={{ width: "85%", marginLeft: "47px" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <h4>Chưa có đơn ứng tuyển nào</h4>
               </div>
             </div>
-          </div>
+          ) : (
+            applicationInfo.map((item, i) => (
+              <div
+                key={i}
+                className="job-detail__box--left"
+                style={{ width: "85%", marginLeft: "47px" }}
+              >
+                <div className="info-detail">
+                  <div className="info-detail-img">
+                    <img src={item.avatar} alt="" />
+                  </div>
+                  <div className="body">
+                    <div className="info-detail-title">
+                      <div className="titles">
+                        <div width={{ width: "250px" }}>{item.jobName}</div>
+                      </div>
+                      <div className="salary">
+                        <div className="icon-salary">
+                          <i class="fa-solid fa-dollar-sign"></i>
+                        </div>
+                        <div style={{ fontWeight: "bold" }}>
+                          {item.salary} triệu
+                        </div>
+                      </div>
+                    </div>
+                    <div className="info-detail-title">
+                      <div className="titless">Công ty: {item.company}</div>
+                    </div>
+                    <div className="info-detail-title">
+                      <div className="titless">{item.level}</div>
+                    </div>
+                    <div className="info-detail-title">
+                      <div className="titless">
+                        Thời gian ứng tuyển:
+                        {new Date(item.createdAt).toLocaleString()}
+                      </div>
+                    </div>
+                    <div className="info-detail-title">
+                      <div className="titless">Trạng thái:{item.status}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
       <Footer />

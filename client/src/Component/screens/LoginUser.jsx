@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { axiosConfig } from "../../../src/axios/config";
+import { useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
 
 function LoginUser() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [users, setUsers] = useState([]);
 
@@ -17,8 +20,8 @@ function LoginUser() {
   });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/users")
+    axiosConfig
+      .get("/users")
       .then((res) => {
         setUsers(res.data);
       })
@@ -43,7 +46,7 @@ function LoginUser() {
   };
 
   // Sự kiện click đăng nhập
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = { email: "", password: "" };
     if (!formInput.email) {
@@ -61,12 +64,12 @@ function LoginUser() {
     setFormError(errors);
 
     if (Object.keys(errors).length !== 0) {
-      axios
-        .post("http://localhost:8000/login", formInput)
+      await axiosConfig
+        .post("/login", formInput)
         .then((res) => {
           if (res.data.user.locked === false) {
-            // console.log(res.data.accessToken);
             toast.success("Đăng nhập thành công 👌");
+            dispatch({ type: "UPDATE_USER", payload: res.data.user });
             localStorage.setItem("user", JSON.stringify(res.data.user));
             localStorage.setItem("token", JSON.stringify(res.data.accessToken));
             setFormInput(res.data.user);
@@ -74,9 +77,7 @@ function LoginUser() {
           }
         })
         .catch((err) => {
-          // console.log(err.response.data);
           if (err.response.data === "Incorrect password") {
-            // console.log("aa");
             toast.error("Tài khoản hoặc mật khẩu chưa trùng khớp 🤯");
           }
         });
@@ -84,6 +85,9 @@ function LoginUser() {
   };
   return (
     <div>
+      <Helmet>
+        <title>Trang chủ đăng nhập</title>
+      </Helmet>
       <ToastContainer />
       <div className="img-login1">
         <div className="form-login">

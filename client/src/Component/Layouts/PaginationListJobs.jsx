@@ -1,8 +1,18 @@
-function ListJobs({ total, pageNumber, getListJobs }) {
+function PaginationListJobs({
+  total,
+  pageNumber,
+  getListJobs,
+  querySearch,
+  getListJobsByQuerySearch,
+}) {
   const totalPages = Math.ceil(total / pageNumber);
 
   const goToPage = (page) => {
-    getListJobs(page, pageNumber); // Gọi hàm getListJobs khi người dùng chuyển trang
+    if (querySearch) {
+      getListJobsByQuerySearch(page, pageNumber);
+    } else {
+      getListJobs(page, pageNumber);
+    }
   };
 
   const pageNumbers = Array.from(
@@ -37,4 +47,4 @@ function ListJobs({ total, pageNumber, getListJobs }) {
   );
 }
 
-export default ListJobs;
+export default PaginationListJobs;

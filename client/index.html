@@ -1,44 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tuyển dụng </title>
     <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            charset="UTF-8"
-            href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-        />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
-        />
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/png;base64,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"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tuyển dụng TV</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      charset="UTF-8"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
   </head>
   <body>
     <div id="root"></div>

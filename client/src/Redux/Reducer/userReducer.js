@@ -1,5 +1,6 @@
 let initialState = {
-  applications: [],
+  applications: JSON.parse(localStorage.getItem("applications")) || [],
+  user: JSON.parse(localStorage.getItem("user")) || [],
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -8,15 +9,21 @@ export const userReducer = (state = initialState, action) => {
       console.log(action.payload);
       return {
         ...state,
-        applications: [...state.applications, action.payload],
+        applications: action.payload,
       };
-    
+
     case "GET_USER":
       return {
         ...state,
         user: action.payload,
-      }
+      };
 
+    case "UPDATE_USER":
+      console.log(action.payload);
+      return {
+        ...state,
+        user: action.payload,
+      };
     default:
       return state;
   }

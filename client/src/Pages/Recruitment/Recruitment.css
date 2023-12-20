@@ -43,11 +43,12 @@
     justify-content:flex-start  ;
     align-items: center;
     width: 100%;
-    gap: 55%;
+    gap: 8%;
 }
 .info-detail-title .titles{
-   font-size: 20px;
-   font-weight: 700;
+    size: 25px;
+    font-weight: 650;
+    width: 75%;
 }
 .info-detail-title .titless{
    font-size: 14px;

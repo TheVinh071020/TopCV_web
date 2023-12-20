@@ -4,21 +4,23 @@
       "email": "nam@gmail.com",
       "password": "$2a$10$SyunABMYTUvWJcSveRxMDeEGslextvPbDS9hXzaB.KUU2G0D12evK",
       "name": "Nam",
+      "confirmPassword": "Nam123",
+      "phone": "",
+      "address": "",
+      "locked": false,
+      "applications": [],
+      "id": 1
+    },
+    {
+      "email": "long@gmail.com",
+      "password": "$2a$10$HE8LVl5BLO3FGxgYSqRDDu4SWHbt13nbn0RgpwuEmLrkb29CetZoq",
+      "name": "long",
+      "confirmPassword": "Long123",
       "phone": "",
       "address": "",
       "locked": false,
       "applications": [],
       "id": 2
-    },
-    {
-      "email": "vinhto1a@gmail.com",
-      "password": "$2a$10$CjiAkXXIvboGSgHrZT86HuoPdzmAvcJc0nT5G7BQJ4FhlUBtkQ6bm",
-      "name": "vinhto1a@gmail.com",
-      "phone": "",
-      "address": "",
-      "locked": false,
-      "applications": [],
-      "id": 3
     }
   ],
   "jobs": [
@@ -49,7 +51,7 @@
       "level": "Nhân viên",
       "experience": "Không yêu cầu",
       "age": "18 - 35 tuôi",
-      "scale": "10 - 50 nhân viên",
+      "scale": 10,
       "personnel": 500,
       "status": "Chờ xét duyệt"
     },
@@ -81,7 +83,7 @@
       "salary": 9,
       "level": "Nhân viên",
       "experience": "Không yêu cầu",
-      "scale": "10 - 50 nhân viên",
+      "scale": 10,
       "personnel": 300,
       "status": "Chờ xét duyệt"
     },
@@ -115,7 +117,7 @@
       "salary": 20,
       "level": "Trưởng nhóm",
       "experience": "3 năm",
-      "scale": "5 nhân viên",
+      "scale": 5,
       "personnel": 400,
       "status": "Chờ xét duyệt"
     },
@@ -149,7 +151,7 @@
       "salary": 28,
       "level": "Nhân viên",
       "experience": "Dưới 1 năm",
-      "scale": "5 nhân viên",
+      "scale": 5,
       "personnel": 100,
       "status": "Chờ xét duyệt"
     },
@@ -183,7 +185,7 @@
       "salary": 25,
       "level": "Nhân viên",
       "experience": "Dưới 1 năm",
-      "scale": "5 nhân viên",
+      "scale": 5,
       "personnel": 100,
       "status": "Chờ xét duyệt"
     },
@@ -217,7 +219,7 @@
       "salary": 13,
       "level": "Nhân viên",
       "experience": "1 năm",
-      "scale": "5 nhân viên",
+      "scale": 10,
       "personnel": 100,
       "status": "Chờ xét duyệt"
     },
@@ -249,7 +251,7 @@
       "salary": 15,
       "level": "Nhân viên",
       "experience": "Không yêu cầu",
-      "scale": "10 - 50 nhân viên",
+      "scale": 10,
       "personnel": 300,
       "status": "Chờ xét duyệt"
     },
@@ -283,7 +285,7 @@
       "salary": 18,
       "level": "Nhân viên",
       "experience": "1 năm",
-      "scale": "5 nhân viên",
+      "scale": 10,
       "personnel": 400,
       "status": "Chờ xét duyệt"
     },
@@ -317,7 +319,7 @@
       "salary": 16,
       "level": "Nhân viên",
       "experience": "1 năm",
-      "scale": "5 nhân viên",
+      "scale": 15,
       "personnel": 400,
       "status": "Chờ xét duyệt"
     },
@@ -351,7 +353,7 @@
       "salary": 21,
       "level": "Quản lý",
       "experience": "1 năm",
-      "scale": "15 nhân viên",
+      "scale": 15,
       "personnel": 400,
       "status": "Chờ xét duyệt"
     },
@@ -385,7 +387,7 @@
       "salary": 22,
       "level": "Nhân viên",
       "experience": "1 năm",
-      "scale": "1 nhân viên",
+      "scale": 6,
       "personnel": 300,
       "status": "Chờ xét duyệt"
     },
@@ -419,7 +421,7 @@
       "salary": 26,
       "level": "Nhân viên",
       "experience": "1 năm",
-      "scale": "5 nhân viên",
+      "scale": 5,
       "personnel": 400,
       "status": "Chờ xét duyệt"
     },
@@ -453,7 +455,7 @@
       "salary": 12,
       "level": "Nhân viên",
       "experience": "1 năm",
-      "scale": "5 nhân viên",
+      "scale": 5,
       "personnel": 400,
       "status": "Chờ xét duyệt"
     },

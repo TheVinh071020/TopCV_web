@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../Component/Headers/Header";
-import Footer from "../../Component/Footer/Footer";
+import Header from "../../Component/Layouts/Headers/Header";
+import Footer from "../../Component/Layouts/Footer/Footer";
 import { Helmet } from "react-helmet";
 import "./Detail.css";
 import { useParams } from "react-router-dom";
@@ -9,6 +9,8 @@ import { Col, Row } from "antd";
 import { Modal, Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import * as yup from "yup";
+import { axiosConfig } from "../../axios/config";
 
 function Detail() {
   const [open, setOpen] = useState(false);
@@ -29,21 +31,62 @@ function Detail() {
     certification: "",
   });
 
+  const schema = yup.object().shape({
+    name: yup.string().required("Vui lòng nhập tên"),
+    phone: yup
+      .string()
+      .matches(/^[0-9]+$/, "Số điện thoại không hợp lệ")
+      .required("Vui lòng nhập số điện thoại"),
+    // email: yup
+    //   .string()
+    //   .email("Email không hợp lệ")
+    //   .required("Vui lòng nhập email"),
+    address: yup.string().required("Vui lòng nhập địa chỉ"),
+    education: yup.string().required("Vui lòng nhập học vấn"),
+    certification: yup.string().required("Vui lòng nhập chứng chỉ"),
+  });
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    education: "",
+    certification: "",
+  });
+  // Validate function
+  const validateField = async (name, value) => {
+    try {
+      await schema.validateAt(name, { [name]: value });
+      setFormErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    } catch (error) {
+      setFormErrors((prevErrors) => ({ ...prevErrors, [name]: error.message }));
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    validateField(name, value);
+  };
+
   // Lưu đơn ứng tuyển
   const renderUser = async () =>
-    await axios
-      .get(`http://localhost:8000/users/${user.id}`)
+    await axiosConfig
+      .get(`/users/${user.id}`)
       .then((res) => {
         setInfoUser(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  console.log(infoUser);
+  // console.log(infoUser);
 
   const renderJobs = async () => {
-    await axios
-      .get(`http://localhost:8000/jobs/${jobId}`)
+    await axiosConfig
+      .get(`/jobs/${jobId}`)
       .then((res) => {
         setJob(res.data);
       })
@@ -67,58 +110,73 @@ function Detail() {
     }
   }, [infoUser, job]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await schema.validate(formData, { abortEarly: false });
 
-  const handleSubmit = async (index) => {
-    const updateUser = await axios.patch(
-      `http://localhost:8000/users/${user.id}`,
-      formData
-    );
-    const updatedUser = updateUser.data;
-    const newApplication = {
-      id: Number(jobId),
-      jobName: job?.name,
-      company: job?.company,
-      avatar: job?.avatar,
-      address: job?.address,
-      salary: job?.salary,
-      level: job?.level,
-      experience: job?.experience,
-      status: job?.status,
-      createdAt: Date.now(),
-      userId: formData.id,
-    };
-    const isAlreadyApplied = updatedUser.applications.some(
-      (application) => application.id === Number(jobId)
-    );
-    if (isAlreadyApplied) {
-      toast.warn("Bạn đã ứng tuyển cho công việc này trước đó.");
-      setOpen(false);
-    } else {
-      const updatedApplications = [...updatedUser.applications, newApplication];
-      const updatedUserWithApplications = {
-        ...updatedUser,
-        applications: updatedApplications,
+      const updateUser = await axiosConfig.patch(`/users/${user.id}`, formData);
+
+      const updatedUser = updateUser.data;
+      const newApplication = {
+        id: Number(jobId),
+        jobName: job?.name,
+        company: job?.company,
+        avatar: job?.avatar,
+        address: job?.address,
+        salary: job?.salary,
+        level: job?.level,
+        experience: job?.experience,
+        scale: job?.scale,
+        status: job?.status,
+        createdAt: Date.now(),
+        userId: formData.id,
       };
-
-      const updatedUserInfo = await axios.patch(
-        `http://localhost:8000/users/${user.id}`,
-        updatedUserWithApplications
+      const isAlreadyApplied = updatedUser.applications.some(
+        (application) => application.id === Number(jobId)
       );
+      if (isAlreadyApplied) {
+        toast.warn("Bạn đã ứng tuyển cho công việc này trước đó.");
+        setOpen(false);
+      } else {
+        const updatedApplications = [
+          ...updatedUser.applications,
+          newApplication,
+        ];
+        const updatedUserWithApplications = {
+          ...updatedUser,
+          applications: updatedApplications,
+        };
 
-      setInfoUser(updatedUserInfo.data);
-      dispatch({ type: "ADD_APPLICATION_USER", payload: updatedUserInfo.data });
-      setOpen(false);
-      toast.success("Gửi đơn ứng tuyển thành công 👌");
+        const updatedUserInfo = await axiosConfig.patch(
+          `/users/${user.id}`,
+          updatedUserWithApplications
+        );
+
+        setInfoUser(updatedUserInfo.data);
+        dispatch({
+          type: "ADD_APPLICATION_USER",
+          payload: updatedUserInfo.data,
+        });
+        localStorage.setItem(
+          "applications",
+          JSON.stringify(updatedUserInfo.data)
+        );
+        setOpen(false);
+        toast.success("Gửi đơn ứng tuyển thành công 👌");
+      }
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        const validationErrors = {};
+        error.inner.forEach((e) => {
+          validationErrors[e.path] = e.message;
+        });
+        setFormErrors(validationErrors);
+      } else {
+        console.error("Có lỗi xảy ra khi gửi đơn ứng tuyển:", error);
+      }
     }
   };
-
 
   useEffect(() => {
     renderJobs();
@@ -164,6 +222,9 @@ function Detail() {
               onChange={handleInputChange}
               placeholder="Họ và tên"
             />
+            {formErrors.name && (
+              <span style={{ color: "red" }}>{formErrors.name}</span>
+            )}
           </Col>
           <Col
             span={10}
@@ -178,6 +239,9 @@ function Detail() {
               onChange={handleInputChange}
               placeholder="Số điện thoại"
             />
+            {formErrors.phone && (
+              <span style={{ color: "red" }}>{formErrors.phone}</span>
+            )}
           </Col>
           <Col
             span={10}
@@ -192,7 +256,11 @@ function Detail() {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
+              disabled={formData.email !== ""}
             />
+            {formErrors.email && (
+              <span style={{ color: "red" }}>{formErrors.email}</span>
+            )}
           </Col>
           <Col
             span={10}
@@ -208,6 +276,9 @@ function Detail() {
               onChange={handleInputChange}
               placeholder="Địa chỉ"
             />
+            {formErrors.address && (
+              <span style={{ color: "red" }}>{formErrors.address}</span>
+            )}
           </Col>
           <Col style={{ marginBottom: "15px", width: "89%" }}>
             <Input
@@ -218,6 +289,9 @@ function Detail() {
               onChange={handleInputChange}
               placeholder="Học vấn"
             />
+            {formErrors.education && (
+              <span style={{ color: "red" }}>{formErrors.education}</span>
+            )}
           </Col>
           <Col style={{ marginBottom: "15px", width: "89%" }}>
             <Input
@@ -228,6 +302,9 @@ function Detail() {
               onChange={handleInputChange}
               placeholder="Chứng chỉ"
             />
+            {formErrors.certification && (
+              <span style={{ color: "red" }}>{formErrors.certification}</span>
+            )}
           </Col>
         </Row>
       </Modal>

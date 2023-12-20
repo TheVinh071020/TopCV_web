@@ -1,6 +1,6 @@
 import React from "react";
 import "./Register.css";
-import RegisterUser from "../../screens/RegisterUser";
+import RegisterUser from "../../Component/screens/RegisterUser";
 
 function Register() {
   const token = localStorage.getItem("token") || null;

@@ -2,38 +2,49 @@ import React, { useEffect, useState } from "react";
 import "./header.css";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { useUserById } from "../../Hooks/user";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 function Header() {
+  const navigate = useNavigate();
   const handleContinue = () => {
     window.scrollTo(0, 0);
   };
 
-  // const [user, setUser] = useUserById(id);
-  // console.log(user);
+  const users = useSelector((state) => state.userReducer.user);
 
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const userLogin = JSON.parse(localStorage.getItem("user")) || {};
-  const userId = userLogin.id;
+  const isUser = JSON.parse(localStorage.getItem("user"));
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/users/${userId}`)
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
+  // gotoProfile
+  const gotoProfile = () => {
+    if (isUser) {
+      navigate("/profile");
+    } else {
+      Swal.fire({
+        text: "Bạn cần phải đăng nhập",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Đồng ý!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Chuyển qua trang đăng nhập!",
+            icon: "success",
+          });
+          navigate("/login");
+        }
       });
-  }, []);
+    }
+  };
 
   // Đăng xuất
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("applications");
     navigate("/login");
   };
   return (
@@ -72,12 +83,15 @@ function Header() {
         </ul>
       </div>
       <div className="header-page">
-        <Link to={"/profile"} style={{ width: "20%" }}>
-          <Button variant="outline-success" className="profile">
-            <i class="fa-solid fa-user"></i>
-          </Button>
-        </Link>
-        {/* {user ? (
+        <Button
+          onClick={gotoProfile}
+          variant="outline-success"
+          className="profile"
+          style={{ width: "12%" }}
+        >
+          <i class="fa-solid fa-user"></i>
+        </Button>
+        {users ? (
           <div
             style={{
               display: "flex",
@@ -94,9 +108,10 @@ function Header() {
                 width: "50%",
                 color: "black",
                 textDecoration: "none",
+                marginLeft: "15px",
               }}
             >
-              {user?.name}
+              {users?.name}
             </div>
             <Link
               style={{
@@ -140,7 +155,7 @@ function Header() {
               <ToastContainer />
             </Link>
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );

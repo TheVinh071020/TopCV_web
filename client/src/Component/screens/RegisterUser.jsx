@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 // import "./Register.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { axiosConfig } from "../../../src/axios/config";
+import { Helmet } from "react-helmet";
 
 const isEmptyValue = (value) => {
   return !value || value.trim().length < 1;
@@ -19,6 +20,9 @@ const isEmailValid = (email) => {
 const isPasswordValid = (password) => {
   return /^(?=.*?[a-z])(?=.*?[0-9]).{6,}$/.test(password);
 };
+const isConfirmPasswordValid = (password, confirmPassword) => {
+  return password === confirmPassword;
+};
 
 function RegisterUser() {
   const navigate = useNavigate();
@@ -28,6 +32,7 @@ function RegisterUser() {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
     phone: "",
     address: "",
     locked: false,
@@ -50,10 +55,20 @@ function RegisterUser() {
     }
 
     if (isEmptyValue(formRegister.password)) {
-      errors.password = "Password không được để trống";
+      errors.password = "Mật khẩu không được để trống";
     } else if (!isPasswordValid(formRegister.password)) {
       errors.password =
         "Mật khẩu cần chứa ít nhất 6 ký tự bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt";
+    }
+    if (isEmptyValue(formRegister.confirmPassword)) {
+      errors.confirmPassword = "Mật khẩu không được để trống";
+    } else if (
+      !isConfirmPasswordValid(
+        formRegister.password,
+        formRegister.confirmPassword
+      )
+    ) {
+      errors.confirmPassword = "Mật khẩu không trùng khớp";
     }
 
     setFormError(errors);
@@ -75,8 +90,8 @@ function RegisterUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      await axios
-        .post("http://localhost:8000/users", formRegister)
+      await axiosConfig
+        .post("/users", formRegister)
         .then((res) => {
           toast.success("Đăng ký tài khoản thành công 👌");
           navigate("/login");
@@ -96,6 +111,9 @@ function RegisterUser() {
   };
   return (
     <div>
+      <Helmet>
+        <title>Trang chủ đăng ký</title>
+      </Helmet>
       <div className="img-login1">
         <div className="form-login">
           <h2>ĐĂNG KÝ</h2>
@@ -136,17 +154,35 @@ function RegisterUser() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
+                <Form.Label style={{ width: "150px" }}>Mật khẩu</Form.Label>
                 <Form.Control
                   type="password"
                   name="password"
-                  placeholder="Password"
+                  placeholder="Mật khẩu"
                   value={formRegister.password}
                   onChange={handleInputChange}
                   className={formError.password ? "error-input" : ""}
                 />
                 {formError.password && (
                   <div className="error-feedback">{formError.password}</div>
+                )}
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label style={{ width: "150px" }}>
+                  Nhập lại mật khẩu
+                </Form.Label>
+                <Form.Control
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Nhập lại mật khẩu"
+                  value={formRegister.confirmPassword}
+                  onChange={handleInputChange}
+                  className={formError.confirmPassword ? "error-input" : ""}
+                />
+                {formError.confirmPassword && (
+                  <div className="error-feedback">
+                    {formError.confirmPassword}
+                  </div>
                 )}
               </Form.Group>
 
