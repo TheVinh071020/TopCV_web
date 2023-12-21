@@ -1,13 +1,12 @@
 .img-login1 {
     display: flex;
     justify-content: center;
-    /* padding-top: 7%; */
     margin: 0 10%;
     height: auto;
 }
 
 .btn-login {
-    margin: 3% 0;
+    margin: 1% 0;
 }
 
 .img-login img {
@@ -17,7 +16,7 @@
 }
 
 .form-login {
-    margin: 8% 3%;
+    margin: 4% 3%;
     width: 48%;
 }
 

@@ -3,12 +3,17 @@ function PaginationListJobs({
   pageNumber,
   getListJobs,
   querySearch,
+  queryAddress,
   getListJobsByQuerySearch,
 }) {
   const totalPages = Math.ceil(total / pageNumber);
 
   const goToPage = (page) => {
     if (querySearch) {
+      getListJobsByQuerySearch(page, pageNumber);
+    } else if (queryAddress) {
+      getListJobsByQuerySearch(page, pageNumber);
+    } else if (querySalary) {
       getListJobsByQuerySearch(page, pageNumber);
     } else {
       getListJobs(page, pageNumber);

@@ -8,8 +8,10 @@ import Recruitment from "./Pages/Recruitment/Recruitment";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import PrivateRouter from "./Component/PrivateRouter/PrivateRouter";
-import UnPrivateRouter from "./Component/PrivateRouter/UnPrivateRouter";
+import PrivateRouter from "./components/PrivateRouter/PrivateRouter";
+import UnPrivateRouter from "./components/PrivateRouter/UnPrivateRouter";
+import AdminPage from "./Admin/AdminPage";
+import UserAdmin from "./Admin/UserAdmin/UserAdmin";
 // import { jwtDecode } from "jwt-decode";
 
 function App() {
@@ -28,6 +30,9 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/admin" element={<AdminPage />}>
+          <Route path="/admin/user" element={<UserAdmin />} />
+        </Route>
         <Route element={<PrivateRouter />}>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

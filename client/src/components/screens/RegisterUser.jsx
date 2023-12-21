@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import "./Register.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -7,6 +6,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { axiosConfig } from "../../../src/axios/config";
 import { Helmet } from "react-helmet";
+import CustomInput from "../common/CustomInput";
+import CustomButton from "../common/CustomButton";
 
 const isEmptyValue = (value) => {
   return !value || value.trim().length < 1;
@@ -75,7 +76,7 @@ function RegisterUser() {
     return Object.keys(errors).length === 0;
   };
 
-  // console.log(formError);
+  console.log(formError);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -85,7 +86,7 @@ function RegisterUser() {
     });
   };
 
-  console.log(formRegister);
+  // console.log(formRegister);
   // Sự kiện click đăng nhập
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,6 +110,7 @@ function RegisterUser() {
       return formError;
     }
   };
+
   return (
     <div>
       <Helmet>
@@ -119,76 +121,51 @@ function RegisterUser() {
           <h2>ĐĂNG KÝ</h2>
           <div>
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  placeholder="Họ và tên"
-                  value={formRegister.name}
-                  onChange={handleInputChange}
-                  className={formError.name ? "error-input" : ""}
-                />
-                {formError.name && (
-                  <div
-                    className="error-feedback"
-                    style={{ color: "red", borderColor: "red" }}
-                  >
-                    {formError.name}
-                  </div>
-                )}
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="email"
-                  placeholder="Nhập email"
-                  value={formRegister.email}
-                  onChange={handleInputChange}
-                  className={formError.email ? "error-input" : ""}
-                />
-                {formError.email && (
-                  <div className="error-feedback">{formError.email}</div>
-                )}
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label style={{ width: "150px" }}>Mật khẩu</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Mật khẩu"
-                  value={formRegister.password}
-                  onChange={handleInputChange}
-                  className={formError.password ? "error-input" : ""}
-                />
-                {formError.password && (
-                  <div className="error-feedback">{formError.password}</div>
-                )}
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label style={{ width: "150px" }}>
-                  Nhập lại mật khẩu
-                </Form.Label>
-                <Form.Control
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Nhập lại mật khẩu"
-                  value={formRegister.confirmPassword}
-                  onChange={handleInputChange}
-                  className={formError.confirmPassword ? "error-input" : ""}
-                />
-                {formError.confirmPassword && (
-                  <div className="error-feedback">
-                    {formError.confirmPassword}
-                  </div>
-                )}
-              </Form.Group>
-
-              <Button className="btn-login" variant="primary" type="submit">
-                Đăng ký
-              </Button>
+              <CustomInput
+                label={"Name"}
+                type={"text"}
+                name={"name"}
+                value={formRegister.name}
+                handleInputChange={handleInputChange}
+                formError={formError.name}
+                placeholder={"Họ và tên"}
+              />
+              <CustomInput
+                label={"Email"}
+                type={"text"}
+                name={"email"}
+                value={formRegister.email}
+                handleInputChange={handleInputChange}
+                formError={formError.email}
+                placeholder={"Nhập email"}
+              />
+              <CustomInput
+                label={"Nhập mật khẩu"}
+                type={"password"}
+                name={"password"}
+                value={formRegister.password}
+                handleInputChange={handleInputChange}
+                formError={formError.password}
+                placeholder={"Nhập mật khẩu"}
+                style={{ width: "150px" }}
+              />
+              <CustomInput
+                label={"Nhập lại mật khẩu"}
+                type={"password"}
+                name={"confirmPassword"}
+                value={formRegister.confirmPassword}
+                handleInputChange={handleInputChange}
+                formError={formError.confirmPassword}
+                placeholder={"Nhập lại mật khẩu"}
+                style={{ width: "150px" }}
+                className={formError.email ? "error-input" : ""}
+              />
+              <CustomButton
+                className={"btn-login"}
+                variant={"primary"}
+                type={"submit"}
+                label={"Đăng ký"}
+              />
             </Form>
           </div>
           <div className="buttonn">

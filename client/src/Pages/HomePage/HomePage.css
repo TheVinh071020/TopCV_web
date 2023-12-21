@@ -12,6 +12,7 @@
 
 .container .title{
     display: flex;
+    align-items: center;
     color: #ff8000;
     font-size: 24px;
     font-weight: 600;

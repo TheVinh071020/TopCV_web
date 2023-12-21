@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import CustomButton from "../../common/CustomButton";
 
 function Header() {
   const navigate = useNavigate();
@@ -83,14 +84,14 @@ function Header() {
         </ul>
       </div>
       <div className="header-page">
-        <Button
+        <CustomButton
+          className={"profile"}
+          variant={"outline-success"}
+          label={<i class="fa-solid fa-user"></i>}
+          style={{ width: "40px" }}
           onClick={gotoProfile}
-          variant="outline-success"
-          className="profile"
-          style={{ width: "12%" }}
-        >
-          <i class="fa-solid fa-user"></i>
-        </Button>
+        />
+
         {users ? (
           <div
             style={{
@@ -122,13 +123,12 @@ function Header() {
               }}
               to="/login"
             >
-              <Button
+              <CustomButton
                 onClick={handleLogout}
-                variant="success"
+                variant={"success"}
                 style={{ backgroundColor: "#f07e1d" }}
-              >
-                Đăng xuất
-              </Button>
+                label={"Đăng xuất"}
+              />
             </Link>{" "}
           </div>
         ) : (

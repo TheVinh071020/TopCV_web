@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { axiosConfig } from "../../../src/axios/config";
 import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
+import CustomInput from "../common/CustomInput";
+import CustomButton from "../common/CustomButton";
 
 function LoginUser() {
   const navigate = useNavigate();
@@ -94,39 +96,31 @@ function LoginUser() {
           <h2>ĐĂNG NHẬP</h2>
           <div>
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="email"
-                  placeholder="Enter email"
-                  value={formInput.email}
-                  onChange={handleInputChange}
-                  className={formError.email ? "error-input" : ""}
-                />
-                {formError.email && (
-                  <div className="error-feedback">{formError.email}</div>
-                )}
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={formInput.password}
-                  onChange={handleInputChange}
-                  className={formError.email ? "error-input" : ""}
-                />
-                {formError.password && (
-                  <div className="error-feedback">{formError.password}</div>
-                )}
-              </Form.Group>
-
-              <Button className="btn-login" variant="primary" type="submit">
-                Đăng nhập
-              </Button>
+              <CustomInput
+                label={"Email"}
+                type={"text"}
+                name={"email"}
+                value={formInput.email}
+                handleInputChange={handleInputChange}
+                formError={formError.email}
+                placeholder={"Nhập email"}
+              />
+              <CustomInput
+                label={"Nhập mật khẩu"}
+                type={"password"}
+                name={"password"}
+                value={formInput.password}
+                handleInputChange={handleInputChange}
+                formError={formError.password}
+                placeholder={"Nhập mật khẩu"}
+                style={{ width: "150px" }}
+              />
+              <CustomButton
+                type={"submit"}
+                className={"btn-login"}
+                variant={"primary"}
+                label={"Đăng nhập"}
+              />
             </Form>
           </div>
           <div className="buttonn">

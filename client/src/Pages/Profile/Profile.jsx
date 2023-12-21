@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../Component/Layouts/Headers/Header";
-import Footer from "../../Component/Layouts/Footer/Footer";
+import Header from "../../components/Layouts/Headers/Header";
+import Footer from "../../components/Layouts/Footer/Footer";
 import "./Profile.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { axiosConfig } from "../../axios/config";
+import CustomInput from "../../components/common/CustomInput";
+import CustomButton from "../../components/common/CustomButton";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -108,59 +110,42 @@ function Profile() {
           <div>
             <h3>Cài đặt thông tin cá nhân</h3>
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Họ và tên</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  placeholder="Họ và tên"
-                  value={formInput.name}
-                  onChange={handleInputChange}
-                />
-                <div className="error-message" style={{ color: "red" }}>
-                  {validationErrors.name}
-                </div>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="email"
-                  placeholder="Nhập Email"
-                  value={formInput.email}
-                  onChange={handleInputChange}
-                  disabled={formInput.email !== ""}
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Số điện thoại</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="phone"
-                  placeholder="Nhập số điện thoại"
-                  value={formInput.phone}
-                  onChange={handleInputChange}
-                />
-                <div className="error-message" style={{ color: "red" }}>
-                  {validationErrors.phone}
-                </div>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Địa chỉ</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="address"
-                  placeholder="Nhập địa chỉ"
-                  value={formInput.address}
-                  onChange={handleInputChange}
-                />
-                <div className="error-message" style={{ color: "red" }}>
-                  {validationErrors.address}
-                </div>
-              </Form.Group>
+              <CustomInput
+                label={"Họ và tên"}
+                type={"text"}
+                name={"name"}
+                placeholder={"Họ và tên"}
+                value={formInput.name}
+                handleInputChange={handleInputChange}
+                formError={validationErrors.name}
+              />
+              <CustomInput
+                label={"Email"}
+                type={"text"}
+                name={"email"}
+                placeholder={"Nhập Email"}
+                value={formInput.email}
+                handleInputChange={handleInputChange}
+                disabled={formInput.email !== ""}
+              />
+              <CustomInput
+                label={"Số điện thoại"}
+                type={"text"}
+                name={"phone"}
+                placeholder={"Nhập số điện thoại"}
+                value={formInput.phone}
+                handleInputChange={handleInputChange}
+                formError={validationErrors.phone}
+              />
+              <CustomInput
+                label={"Địa chỉ"}
+                type={"text"}
+                name={"address"}
+                placeholder={"Nhập địa chỉ"}
+                value={formInput.address}
+                handleInputChange={handleInputChange}
+                formError={validationErrors.address}
+              />
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Giới tính</Form.Label>
                 <Form.Select
@@ -177,14 +162,13 @@ function Profile() {
                   {validationErrors.gender}
                 </div>
               </Form.Group>
-              <Button
+              <CustomButton
                 style={{ width: "20%", backgroundColor: "#f07e1d" }}
-                className="btn-login"
-                variant="success"
-                type="submit"
-              >
-                Cập nhật
-              </Button>
+                className={"btn-login"}
+                variant={"success"}
+                type={"submit"}
+                label={"Cập nhật"}
+              />
             </Form>
           </div>
         </div>

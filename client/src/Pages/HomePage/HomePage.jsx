@@ -1,30 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./HomePage.css";
-import Header from "../../Component/Layouts/Headers/Header";
-import Footer from "../../Component/Layouts/Footer/Footer";
-import Carousels from "../../Component/Layouts/Carousel/Carousels";
+import Header from "../../components/Layouts/Headers/Header";
+import Footer from "../../components/Layouts/Footer/Footer";
+import Carousels from "../../components/Layouts/Carousel/Carousels";
 import { Select, Space } from "antd";
 import { Helmet } from "react-helmet";
-import PaginationListJobs from "../../Component/Layouts/PaginationListJobs";
+import PaginationListJobs from "../../components/Layouts/PaginationListJobs";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import { axiosConfig } from "../../axios/config";
 import { useSearchParams } from "react-router-dom";
-import DetailItem from "../../Component/Layouts/DetailItem";
+import DetailItem from "../../components/Layouts/DetailItem";
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const querySearch = searchParams.get("name_like");
+  const queryAddress = searchParams.get("address");
+  const querySalary = searchParams.get("salary");
 
   const [listJobs, setListJobs] = useState([]);
   const [total, setTotal] = useState(0);
   const [searchValue, setSearchValue] = useState("");
+  const [valueAddress, setValueAddress] = useState(["Hà Nội", "Hồ Chí Minh"]);
+  const [valueSalary, setValueSalary] = useState("");
+
   const [prevSearchValue, setPrevSearchValue] = useState("");
 
-  //Get list jobs
   let dispatch = useDispatch();
 
   // Lấy toàn bộ job và phân trang
@@ -41,11 +45,15 @@ function HomePage() {
       });
   };
 
-  // Lấy job theo querySearch
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  // Lấy job theo querySearch, queryAddress, querySalary khi search sort sẽ render
   const getListJobsByQuerySearch = async (pageIndex, pageNumber) => {
     axiosConfig
       .get(
-        `/jobs?_page=${pageIndex}&_limit=${pageNumber}&&name_like=${querySearch}`
+        `/jobs?_page=${pageIndex}&_limit=${pageNumber}&&name_like=${querySearch}&address.city_like=${queryAddress}&&_sort=salary&_order=${querySalary}`
       )
       .then((res) => {
         setListJobs(res.data);
@@ -55,9 +63,6 @@ function HomePage() {
         console.log(err);
       });
   };
-  const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
-  };
 
   // TÌm kiếm
   const handleSearchSubmit = async (e) => {
@@ -65,7 +70,11 @@ function HomePage() {
     if (searchValue === prevSearchValue) {
       return;
     }
-    setSearchParams({ name_like: searchValue });
+    setSearchParams({
+      name_like: searchValue,
+      address: valueAddress,
+      salary: valueSalary,
+    });
     await axiosConfig
       .get(`/jobs?name_like=${searchValue}`)
       .then((res) => {
@@ -75,12 +84,18 @@ function HomePage() {
       .catch((err) => {
         console.log(err);
       });
+
     setPrevSearchValue(searchValue);
   };
-  console.log(listJobs);
 
   // Lọc theo địa chi
   const handleFilterByAddress = async (value) => {
+    setValueAddress(value);
+    setSearchParams({
+      address: value,
+      name_like: searchValue,
+      salary: valueSalary,
+    });
     await axiosConfig
       .get(`/jobs?address.city_like=${value}`)
       .then((res) => {
@@ -94,7 +109,12 @@ function HomePage() {
 
   // Lọc theo lương
   const handleFilterBySalary = async (value) => {
-    console.log(value);
+    setValueSalary(value);
+    setSearchParams({
+      salary: value,
+      address: valueAddress,
+      name_like: searchValue,
+    });
     await axiosConfig
       .get(`/jobs?_sort=salary&_order=${value}`)
       .then((res) => {
@@ -110,10 +130,16 @@ function HomePage() {
     if (querySearch) {
       setSearchValue(querySearch);
       getListJobsByQuerySearch(1, 6);
+    } else if (queryAddress) {
+      setValueAddress(queryAddress);
+      getListJobsByQuerySearch(1, 6);
+    } else if (querySalary) {
+      setValueSalary(querySalary);
+      getListJobsByQuerySearch(1, 6);
     } else {
       getListJobs(1, 6);
     }
-  }, [searchParams, dispatch, querySearch]);
+  }, [searchParams, dispatch, querySearch, queryAddress]);
 
   return (
     <div>
@@ -127,74 +153,68 @@ function HomePage() {
       <div className="list-feature-jobss">
         <div className="container">
           <div className="title">
-            <h2>Việc làm tốt nhất</h2>
-            <div className="box-label">
-              <img
-                src="	https://static.topcv.vn/v4/image/welcome/feature-job/label-toppy-ai.png"
-                alt=""
-              />
+            <div className="box-select">
+              <Navbar expand="lg" className="bg-body-tertiary">
+                <Container fluid>
+                  <Navbar.Collapse id="navbarScroll">
+                    <Form onSubmit={handleSearchSubmit} className="d-flex">
+                      <Form.Control
+                        type="search"
+                        placeholder="Search"
+                        className="me-2"
+                        aria-label="Search"
+                        value={searchValue}
+                        onChange={handleSearchChange}
+                      />
+                      <Button variant="outline-success" type="submit">
+                        Search
+                      </Button>
+                    </Form>
+                  </Navbar.Collapse>
+                </Container>
+              </Navbar>
             </div>
-            <div className="box-select"></div>
-            <Navbar expand="lg" className="bg-body-tertiary">
-              <Container fluid>
-                <Navbar.Collapse id="navbarScroll">
-                  <Form onSubmit={handleSearchSubmit} className="d-flex">
-                    <Form.Control
-                      type="search"
-                      placeholder="Search"
-                      className="me-2"
-                      aria-label="Search"
-                      value={searchValue}
-                      onChange={handleSearchChange}
-                    />
-                    <Button variant="outline-success" type="submit">
-                      Search
-                    </Button>
-                  </Form>
-                </Navbar.Collapse>
-              </Container>
-            </Navbar>
-          </div>
-          <div className="box-select">
-            <Space wrap>
-              <Select
-                defaultValue="Lọc theo địa chỉ:"
-                style={{
-                  width: 200,
-                  marginRight: 20,
-                }}
-                onChange={handleFilterByAddress}
-                options={[
-                  {
-                    value: "Hà Nội",
-                    label: "Hà Nội",
-                  },
-                  {
-                    value: "Hồ Chí Minh",
-                    label: "Hồ Chí Minh",
-                  },
-                ]}
-              />
-            </Space>
-            <Space wrap>
-              <Select
-                defaultValue="Lọc theo mức lương:"
-                style={{
-                  width: 200,
-                }}
-                onChange={handleFilterBySalary}
-                options={[
-                  {
-                    value: "desc",
-                    label: "Mức lương cao đến thấp",
-                  },
-                  {
-                    value: "asc",
-                    label: "Mức lương thấp đến cao",
-                  },
-                ]}
-              />
-            </Space>
+            <div className="box-select">
+              <Space wrap>
+                <Select
+                  defaultValue="Lọc theo địa chỉ:"
+                  style={{
+                    width: 200,
+                    marginRight: 20,
+                  }}
+                  onChange={handleFilterByAddress}
+                  options={[
+                    {
+                      value: "Hà Nội",
+                      label: "Hà Nội",
+                    },
+                    {
+                      value: "Hồ Chí Minh",
+                      label: "Hồ Chí Minh",
+                    },
+                  ]}
+                />
+              </Space>
+              <Space wrap>
+                <Select
+                  defaultValue="Lọc theo mức lương:"
+                  style={{
+                    width: 200,
+                  }}
+                  onChange={handleFilterBySalary}
+                  options={[
+                    {
+                      value: "desc",
+                      label: "Mức lương cao đến thấp",
+                    },
+                    {
+                      value: "asc",
+                      label: "Mức lương thấp đến cao",
+                    },
+                  ]}
+                />
+              </Space>
+            </div>
           </div>
         </div>
         <div className="row feature_job">
@@ -226,6 +246,8 @@ function HomePage() {
             pageNumber={6}
             getListJobs={getListJobs}
             querySearch={querySearch}
+            queryAddress={queryAddress}
+            querySalary={querySalary}
             getListJobsByQuerySearch={getListJobsByQuerySearch}
           />
         </div>

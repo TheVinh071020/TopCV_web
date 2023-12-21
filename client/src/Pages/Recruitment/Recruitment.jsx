@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../../Component/Layouts/Headers/Header";
-import Footer from "../../Component/Layouts/Footer/Footer";
+import Header from "../../components/Layouts/Headers/Header";
+import Footer from "../../components/Layouts/Footer/Footer";
 import { Select, Space } from "antd";
 import "./Recruitment.css";
 import { Helmet } from "react-helmet";

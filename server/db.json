@@ -12,15 +12,26 @@
       "id": 1
     },
     {
-      "email": "long@gmail.com",
-      "password": "$2a$10$HE8LVl5BLO3FGxgYSqRDDu4SWHbt13nbn0RgpwuEmLrkb29CetZoq",
-      "name": "long",
-      "confirmPassword": "Long123",
+      "email": "vinhto1a@gmail.com",
+      "password": "$2a$10$.loEdObPhwviRYNsMMV.uO2kAv9aKUOWiWvNlEzbt7no9r7vZgW46",
+      "name": "vinh",
+      "confirmPassword": "Vinh123",
       "phone": "",
       "address": "",
       "locked": false,
       "applications": [],
       "id": 2
+    },
+    {
+      "email": "long@gmail.com",
+      "password": "$2a$10$Ov.fyQjDebGrZ9OYtOpOFuwofncB2mCgEL2DL1X0EvGcmGsipelXe",
+      "name": "lnog",
+      "confirmPassword": "Long123",
+      "phone": "",
+      "address": "",
+      "locked": false,
+      "applications": [],
+      "id": 3
     }
   ],
   "jobs": [
