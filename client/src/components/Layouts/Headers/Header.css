@@ -32,9 +32,9 @@
 
 .header-page {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     width: 23%;
-    justify-content: space-between;
 }
 
 .header-page svg {

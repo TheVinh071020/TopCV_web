@@ -15,7 +15,6 @@ function Recruitment() {
     (state) => state.userReducer.applications.applications
   );
 
-  console.log(applicationInfo);
   return (
     <div>
       <Helmet>

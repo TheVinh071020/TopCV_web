@@ -23,6 +23,8 @@ function Profile() {
     name: user.name,
     phone: "",
     email: user.email,
+    education: "",
+    certification: "",
     address: "",
     gender: "",
     applications: [],
@@ -53,6 +55,8 @@ function Profile() {
     name: "",
     phone: "",
     address: "",
+    education: "",
+    certification: "",
     gender: "",
   });
 
@@ -63,14 +67,13 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const maxNameLength = 225;
-    const maxAddressLength = 225;
+    const maxValue = 225;
 
     const errors = {
       name: !formInput.name
         ? "Vui lòng nhập họ và tên."
-        : formInput.name.length > maxNameLength
-        ? `Tên không được vượt quá ${maxNameLength} ký tự.`
+        : formInput.name.length > maxValue
+        ? `Tên không được vượt quá ${maxValue} ký tự.`
         : "",
       phone: !formInput.phone
         ? "Vui lòng nhập số điện thoại."
@@ -79,8 +82,18 @@ function Profile() {
         : "",
       address: !formInput.address
         ? "Vui lòng nhập địa chỉ."
-        : formInput.address.length > maxAddressLength
-        ? `Địa chỉ không được vượt quá ${maxAddressLength} ký tự.`
+        : formInput.address.length > maxValue
+        ? `Địa chỉ không được vượt quá ${maxValue} ký tự.`
+        : "",
+      education: !formInput.education
+        ? "Vui là chọn học vấn"
+        : formInput.education.length > maxValue
+        ? `Học vấn không được viết quá ${maxValue} ký tự.`
+        : "",
+      certification: !formInput.certification
+        ? "Vui là chọn chứng dụ"
+        : formInput.certification.length > maxValue
+        ? `Chứng dụ không được viết quá ${maxValue} ký tự.`
         : "",
       gender: !formInput.gender ? "Vui lòng chọn giới tính." : "",
     };
@@ -88,17 +101,31 @@ function Profile() {
     if (Object.values(errors).some((error) => error !== "")) {
       return;
     }
-    await axiosConfig
-      .patch(`/users/${userId}`, formInput)
+    axiosConfig
+      .get(`/users/${userId}`)
       .then((res) => {
-        dispatch({ type: "UPDATE_USER", payload: res.data });
-        toast.success("Cập nhật thông tin thành công 👌");
-        localStorage.setItem("user", JSON.stringify(res.data));
+        const currentUserData = res.data;
+        const currentPassword = currentUserData.password;
+
+        const { password, ...rest } = formInput;
+
+        axiosConfig
+          .patch(`/users/${userId}`, rest)
+          .then((res) => {
+            res.data.password = currentPassword;
+            dispatch({ type: "UPDATE_USER", payload: res.data });
+            toast.success("Cập nhật thông tin thành công 👌");
+            localStorage.setItem("user", JSON.stringify(res.data));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   return (
     <div>
       <Helmet>
@@ -145,6 +172,24 @@ function Profile() {
                 value={formInput.address}
                 handleInputChange={handleInputChange}
                 formError={validationErrors.address}
+              />
+              <CustomInput
+                label={"Học vấn"}
+                type={"text"}
+                name={"education"}
+                placeholder={"Nhập học vấn"}
+                value={formInput.education}
+                handleInputChange={handleInputChange}
+                formError={validationErrors.education}
+              />
+              <CustomInput
+                label={"Chứng chỉ"}
+                type={"text"}
+                name={"certification"}
+                placeholder={"Nhập chứng chỉ"}
+                value={formInput.certification}
+                handleInputChange={handleInputChange}
+                formError={validationErrors.certification}
               />
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Giới tính</Form.Label>

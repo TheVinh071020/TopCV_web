@@ -6,14 +6,11 @@ import Footer from "../../components/Layouts/Footer/Footer";
 import Carousels from "../../components/Layouts/Carousel/Carousels";
 import { Select, Space } from "antd";
 import { Helmet } from "react-helmet";
-import PaginationListJobs from "../../components/Layouts/PaginationListJobs";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Navbar from "react-bootstrap/Navbar";
 import { axiosConfig } from "../../axios/config";
 import { useSearchParams } from "react-router-dom";
 import DetailItem from "../../components/Layouts/DetailItem";
+import Pagination from "../../components/common/Pagination";
+import SearchInput from "../../components/common/SearchInput";
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,7 +21,7 @@ function HomePage() {
   const [listJobs, setListJobs] = useState([]);
   const [total, setTotal] = useState(0);
   const [searchValue, setSearchValue] = useState("");
-  const [valueAddress, setValueAddress] = useState(["Hà Nội", "Hồ Chí Minh"]);
+  const [valueAddress, setValueAddress] = useState("");
   const [valueSalary, setValueSalary] = useState("");
 
   const [prevSearchValue, setPrevSearchValue] = useState("");
@@ -139,7 +136,28 @@ function HomePage() {
     } else {
       getListJobs(1, 6);
     }
-  }, [searchParams, dispatch, querySearch, queryAddress]);
+  }, [searchParams, dispatch, querySearch, queryAddress, querySalary]);
+
+  // Phân trang
+  let pageNumber = 6;
+  const totalPages = Math.ceil(total / pageNumber);
+
+  const goToPage = (page) => {
+    if (querySearch) {
+      getListJobsByQuerySearch(page, pageNumber);
+    } else if (queryAddress) {
+      getListJobsByQuerySearch(page, pageNumber);
+    } else if (querySalary) {
+      getListJobsByQuerySearch(page, pageNumber);
+    } else {
+      getListJobs(page, pageNumber);
+    }
+  };
+
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
 
   return (
     <div>
@@ -154,36 +172,26 @@ function HomePage() {
         <div className="container">
           <div className="title">
             <div className="box-select">
-              <Navbar expand="lg" className="bg-body-tertiary">
-                <Container fluid>
-                  <Navbar.Collapse id="navbarScroll">
-                    <Form onSubmit={handleSearchSubmit} className="d-flex">
-                      <Form.Control
-                        type="search"
-                        placeholder="Search"
-                        className="me-2"
-                        aria-label="Search"
-                        value={searchValue}
-                        onChange={handleSearchChange}
-                      />
-                      <Button variant="outline-success" type="submit">
-                        Search
-                      </Button>
-                    </Form>
-                  </Navbar.Collapse>
-                </Container>
-              </Navbar>
+              <SearchInput
+                onSubmit={handleSearchSubmit}
+                onChange={handleSearchChange}
+                value={searchValue}
+              />
             </div>
             <div className="box-select">
               <Space wrap>
                 <Select
-                  defaultValue="Lọc theo địa chỉ:"
+                  defaultValue="Địa chỉ"
                   style={{
-                    width: 200,
+                    width: 120,
                     marginRight: 20,
                   }}
                   onChange={handleFilterByAddress}
                   options={[
+                    {
+                      value: "",
+                      label: "Địa chỉ",
+                    },
                     {
                       value: "Hà Nội",
                       label: "Hà Nội",
@@ -197,19 +205,23 @@ function HomePage() {
               </Space>
               <Space wrap>
                 <Select
-                  defaultValue="Lọc theo mức lương:"
+                  defaultValue="Mức lương"
                   style={{
-                    width: 200,
+                    width: 120,
                   }}
                   onChange={handleFilterBySalary}
                   options={[
                     {
+                      value: "",
+                      label: "Mức lương",
+                    },
+                    {
                       value: "desc",
-                      label: "Mức lương cao đến thấp",
+                      label: "Cao đến thấp",
                     },
                     {
                       value: "asc",
-                      label: "Mức lương thấp đến cao",
+                      label: "Thấp đến cao",
                     },
                   ]}
                 />
@@ -240,16 +252,7 @@ function HomePage() {
           </div>
         </div>
         <div className="d-flex justify-content-center align-items-center">
-          <PaginationListJobs
-            total={total}
-            listJobs={listJobs}
-            pageNumber={6}
-            getListJobs={getListJobs}
-            querySearch={querySearch}
-            queryAddress={queryAddress}
-            querySalary={querySalary}
-            getListJobsByQuerySearch={getListJobsByQuerySearch}
-          />
+          <Pagination pageNumbers={pageNumbers} goToPage={goToPage} />
         </div>
       </div>
 

@@ -100,8 +100,8 @@ function Detail() {
         phone: infoUser.phone,
         email: infoUser.email,
         address: infoUser.address,
-        education: "",
-        certification: "",
+        education: infoUser.education,
+        certification: infoUser.certification,
         createdAt: Date.now(),
       });
     }
@@ -112,9 +112,20 @@ function Detail() {
     try {
       await schema.validate(formData, { abortEarly: false });
 
-      const updateUser = await axiosConfig.patch(`/users/${user.id}`, formData);
+      const currentUser = await axiosConfig.get(`/users/${user.id}`);
+      const currentPassword = currentUser.data.password;
+
+      const { password, ...formDataWithoutPassword } = formData;
+
+      const updateUser = await axiosConfig.patch(
+        `/users/${user.id}`,
+        formDataWithoutPassword
+      );
+
+      updateUser.data.password = currentPassword;
 
       const updatedUser = updateUser.data;
+
       const newApplication = {
         id: Number(jobId),
         jobName: job?.name,
@@ -129,9 +140,11 @@ function Detail() {
         createdAt: Date.now(),
         userId: formData.id,
       };
+
       const isAlreadyApplied = updatedUser.applications.some(
         (application) => application.id === Number(jobId)
       );
+
       if (isAlreadyApplied) {
         toast.warn("Bạn đã ứng tuyển cho công việc này trước đó.");
         setOpen(false);
@@ -145,11 +158,16 @@ function Detail() {
           applications: updatedApplications,
         };
 
+        const { password, ...updatedUserWithoutPassword } =
+          updatedUserWithApplications;
+
         const updatedUserInfo = await axiosConfig.patch(
           `/users/${user.id}`,
-          updatedUserWithApplications
+          updatedUserWithoutPassword
         );
-
+        updatedUserInfo.data.password = currentPassword;
+        console.log(updatedUserInfo.data.password);
+        console.log(currentPassword);
         setInfoUser(updatedUserInfo.data);
         dispatch({
           type: "ADD_APPLICATION_USER",

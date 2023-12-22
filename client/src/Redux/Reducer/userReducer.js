@@ -12,12 +12,6 @@ export const userReducer = (state = initialState, action) => {
         applications: action.payload,
       };
 
-    case "GET_USER":
-      return {
-        ...state,
-        user: action.payload,
-      };
-
     case "UPDATE_USER":
       console.log(action.payload);
       return {

@@ -12,14 +12,8 @@ import PrivateRouter from "./components/PrivateRouter/PrivateRouter";
 import UnPrivateRouter from "./components/PrivateRouter/UnPrivateRouter";
 import AdminPage from "./Admin/AdminPage";
 import UserAdmin from "./Admin/UserAdmin/UserAdmin";
-// import { jwtDecode } from "jwt-decode";
 
 function App() {
-  // Giải mã token
-  // const token = localStorage.getItem("token");
-  // const decodedToken = jwtDecode(token);
-  // console.log(decodedToken);
-
   const navigate = useNavigate();
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

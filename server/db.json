@@ -5,33 +5,41 @@
       "password": "$2a$10$SyunABMYTUvWJcSveRxMDeEGslextvPbDS9hXzaB.KUU2G0D12evK",
       "name": "Nam",
       "confirmPassword": "Nam123",
-      "phone": "",
+      "phone": "0944444444",
       "address": "",
       "locked": false,
       "applications": [],
-      "id": 1
-    },
-    {
-      "email": "vinhto1a@gmail.com",
-      "password": "$2a$10$.loEdObPhwviRYNsMMV.uO2kAv9aKUOWiWvNlEzbt7no9r7vZgW46",
-      "name": "vinh",
-      "confirmPassword": "Vinh123",
-      "phone": "",
-      "address": "",
-      "locked": false,
-      "applications": [],
-      "id": 2
+      "id": 1,
+      "gender": "Nữ"
     },
     {
       "email": "long@gmail.com",
       "password": "$2a$10$Ov.fyQjDebGrZ9OYtOpOFuwofncB2mCgEL2DL1X0EvGcmGsipelXe",
-      "name": "lnog",
+      "name": "long",
       "confirmPassword": "Long123",
-      "phone": "",
-      "address": "",
+      "phone": "0936763839",
+      "address": "Thanh aa1",
       "locked": false,
       "applications": [],
-      "id": 3
+      "id": 3,
+      "education": "đại học neu",
+      "certification": "n3",
+      "createdAt": 1703237110781,
+      "gender": "Nam"
+    },
+    {
+      "email": "vinhto1a@gmail.com",
+      "password": "$2a$10$a1yxx/dL/LiCdM0uYnOEVOWbPOFLyPqYgTElSXRk6l5I75zcb2hPS",
+      "name": "vinhto1a",
+      "confirmPassword": "Vinh123",
+      "phone": "0963333111",
+      "address": "thanh xuân",
+      "locked": false,
+      "applications": [],
+      "id": 4,
+      "gender": "Nam",
+      "education": "đại học neu",
+      "certification": "n3"
     }
   ],
   "jobs": [

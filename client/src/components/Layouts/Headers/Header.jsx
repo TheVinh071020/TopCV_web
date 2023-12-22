@@ -1,21 +1,48 @@
 import React, { useEffect, useState } from "react";
 import "./header.css";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import CustomButton from "../../common/CustomButton";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import { axiosConfig } from "../../../axios/config";
 
 function Header() {
-  const navigate = useNavigate();
   const handleContinue = () => {
     window.scrollTo(0, 0);
   };
 
-  const users = useSelector((state) => state.userReducer.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const [isUser, setIsUser] = useState(false);
+  // Giải mã token
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-  const isUser = JSON.parse(localStorage.getItem("user"));
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        axiosConfig
+          .get(`/users/${decodedToken.sub}`)
+          .then((res) => {
+            setIsUser(true);
+            setUsers(res.data)
+          })
+          .catch((err) => {
+            setIsUser(false);
+            console.log(err);
+          });
+      } catch (error) {
+        setIsUser(false);
+        console.log("Invalid token");
+      }
+    } else {
+      setIsUser(false);
+    }
+  }, [dispatch]);
 
   // gotoProfile
   const gotoProfile = () => {
@@ -92,7 +119,7 @@ function Header() {
           onClick={gotoProfile}
         />
 
-        {users ? (
+        {isUser ? (
           <div
             style={{
               display: "flex",
@@ -137,25 +164,27 @@ function Header() {
               display: "flex",
               width: "100%",
               color: "white",
+              marginLeft: "25px",
               textDecoration: "none",
             }}
           >
             <Link to="/login" style={{ width: "47%" }}>
-              <Button style={{ backgroundColor: "#f07e1d" }} variant="success">
-                Đăng nhập
-              </Button>
+              <CustomButton
+                style={{ backgroundColor: "#f07e1d" }}
+                variant={"success"}
+                label={"Đăng nhập"}
+              />
             </Link>
             <Link to="/register" style={{ width: "50%" }}>
-              <Button
+              <CustomButton
                 style={{ width: "73%", backgroundColor: "#f07e1d" }}
-                variant="success"
-              >
-                Đăng ký
-              </Button>
-              <ToastContainer />
+                variant={"success"}
+                label={"Đăng ký"}
+              />
             </Link>
           </div>
         )}
+        <ToastContainer />
       </div>
     </div>
   );

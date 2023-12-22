@@ -1,30 +1,6 @@
-function PaginationListJobs({
-  total,
-  pageNumber,
-  getListJobs,
-  querySearch,
-  queryAddress,
-  getListJobsByQuerySearch,
-}) {
-  const totalPages = Math.ceil(total / pageNumber);
+import React from "react";
 
-  const goToPage = (page) => {
-    if (querySearch) {
-      getListJobsByQuerySearch(page, pageNumber);
-    } else if (queryAddress) {
-      getListJobsByQuerySearch(page, pageNumber);
-    } else if (querySalary) {
-      getListJobsByQuerySearch(page, pageNumber);
-    } else {
-      getListJobs(page, pageNumber);
-    }
-  };
-
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
-  );
-
+function Pagination({ pageNumbers, goToPage }) {
   return (
     <div>
       <nav aria-label="Page navigation example">
@@ -52,4 +28,4 @@ function PaginationListJobs({
   );
 }
 
-export default PaginationListJobs;
+export default Pagination;

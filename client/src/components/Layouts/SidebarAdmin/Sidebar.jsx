@@ -20,7 +20,7 @@ const Sidebar = () => {
           id="menu"
         >
           <li>
-            <Link to="/admin/user" className="nav-link px-0 align-middle">
+            <Link to="/admin" className="nav-link px-0 align-middle">
               <i className="fs-4 bi-people" />
               <span className="ms-1 d-none d-sm-inline">Users</span>
             </Link>
