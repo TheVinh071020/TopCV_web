@@ -5,13 +5,17 @@ import HomePage from "./Pages/HomePage/HomePage";
 import Profile from "./Pages/Profile/Profile";
 import Detail from "./Pages/Detail/Detail";
 import Recruitment from "./Pages/Recruitment/Recruitment";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRouter from "./components/PrivateRouter/PrivateRouter";
 import UnPrivateRouter from "./components/PrivateRouter/UnPrivateRouter";
-import AdminPage from "./Admin/AdminPage";
-import UserAdmin from "./Admin/UserAdmin/UserAdmin";
+import AdminPage from "./Admin/UserAdmin/AdminPage";
+import UserAdmin from "./Admin/UserAdmin/UserAD/UserAdmin";
+import AdminCompany from "./Admin/AdminCompany/AdminCompany";
+import CompanyProfile from "./Pages/CompanyProfile/CompanyProfile";
+import ProductCompany from "./Admin/AdminCompany/ProductCompany";
+import EditJobCompany from "./Admin/AdminCompany/EditJobCompany";
 
 function App() {
   const navigate = useNavigate();
@@ -21,12 +25,33 @@ function App() {
   useEffect(() => {
     scrollToTop();
   }, [navigate]);
+
+  const [isUser, setIsUser] = useState(false);
+  const [isCompany, setIsCompany] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.role === "User") {
+      setIsUser(true);
+    }
+    if (user && user.role === "Admin") {
+      setIsCompany(true);
+    }
+  }, []);
+
   return (
     <>
       <Routes>
         <Route path="/admin" element={<AdminPage />}>
           <Route path="/admin/user" element={<UserAdmin />} />
         </Route>
+        <Route path="/admin-company" element={<AdminCompany />}>
+          <Route path="/admin-company/product" element={<ProductCompany />} />
+          <Route path="/admin-company/edit/:id" element={<EditJobCompany />} />
+        </Route>
+
+        <Route path="/company-profile" element={<CompanyProfile />} />
+
         <Route element={<PrivateRouter />}>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

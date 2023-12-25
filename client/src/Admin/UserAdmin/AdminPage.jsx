@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/Layouts/SidebarAdmin/Sidebar";
-import UserAdmin from "./UserAdmin/UserAdmin";
+import Sidebar from "../../components/Layouts/SidebarAdmin/Sidebar";
+import UserAdmin from "./UserAD/UserAdmin";
 
 function AdminPage() {
   return (

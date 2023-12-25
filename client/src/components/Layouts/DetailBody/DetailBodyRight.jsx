@@ -15,7 +15,7 @@ function DetailBodyRight({job}) {
             </div>
             <div>Quy mô</div>
           </div>
-          <div className="company-value">{job?.personnel} nhân viên</div>
+          <div className="company-value">{job?.scale} nhân viên</div>
         </div>
         <div className="company-address">
           <div className="company-title">
@@ -25,7 +25,7 @@ function DetailBodyRight({job}) {
             ></i>
             <div>Địa chỉ</div>
           </div>
-          <div className="company-value">{job?.address.city}</div>
+          <div className="company-value">{job?.address}</div>
         </div>
       </div>
       <div className="job-detail__body-info">

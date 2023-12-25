@@ -13,7 +13,7 @@ import { axiosConfig } from "../../axios/config";
 import CustomInput from "../../components/common/CustomInput";
 import CustomButton from "../../components/common/CustomButton";
 
-function Profile() {
+function Profile({ isUser, isCompany }) {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;

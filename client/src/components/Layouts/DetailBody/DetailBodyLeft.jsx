@@ -1,7 +1,8 @@
 import React from "react";
 import { Modal, Input, Button } from "antd";
 
-function DetailBodyLeft({ job, setOpen }) {
+function DetailBodyLeft({ job, setOpen, isUserRole, isCompanyRole }) {
+  console.log(job);
   return (
     <div className="job-detail__body-left">
       <div className="job-detail__info">
@@ -24,7 +25,7 @@ function DetailBodyLeft({ job, setOpen }) {
             </div>
             <div className="content-section">
               <div className="title">Địa điểm</div>
-              <div className="value">{job?.address.city}</div>
+              <div className="value">{job?.address}</div>
             </div>
           </div>
           <div className="info-sections">
@@ -39,18 +40,34 @@ function DetailBodyLeft({ job, setOpen }) {
         </div>
         <div className="box-apply-current">
           <div>
-            <Button
-              className="btn-apply"
-              variant="outline-success"
-              type="primary"
-              onClick={() => setOpen(true)}
-            >
-              <i
-                style={{ marginRight: "15px" }}
-                class="fa-regular fa-paper-plane"
-              ></i>
-              Ứng tuyển ngay
-            </Button>
+            {isUserRole === true ? (
+              <Button
+                className="btn-apply"
+                variant="outline-success"
+                type="primary"
+                onClick={() => setOpen(true)}
+              >
+                <i
+                  style={{ marginRight: "15px" }}
+                  class="fa-regular fa-paper-plane"
+                ></i>
+                Ứng tuyển ngay
+              </Button>
+            ) : (
+              <Button
+                className="btn-apply"
+                variant="outline-success"
+                type="primary"
+                onClick={() => setOpen(true)}
+                disabled
+              >
+                <i
+                  style={{ marginRight: "15px" }}
+                  class="fa-regular fa-paper-plane"
+                ></i>
+                Ứng tuyển ngay
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -65,32 +82,26 @@ function DetailBodyLeft({ job, setOpen }) {
             <div className="job-description__item">
               <h3>Mô tả công việc</h3>
               <div className="job-description__item--content">
-                {job?.description.map((description, i) => (
-                  <ul key={i}>
-                    <li>{description}</li>
-                  </ul>
-                ))}
+                <ul>
+                  <li>{job?.description}</li>
+                </ul>
               </div>
             </div>
             <div className="job-description__item">
               <h3>Yêu cầu ứng viên</h3>
               <div className="job-description__item--content">
-                {job?.requirement.map((requirement, i) => (
-                  <ul key={i}>
-                    <li>{requirement}</li>
-                  </ul>
-                ))}
+                <ul>
+                  <li>{job?.requirement}</li>
+                </ul>
               </div>
             </div>
 
             <div className="job-description__item">
               <h3>Quyền lợi</h3>
               <div className="job-description__item--content">
-                {job?.benefit.map((bene, i) => (
-                  <ul key={i}>
-                    <li>{bene}</li>
-                  </ul>
-                ))}
+                <ul>
+                  <li>{job?.benefit}</li>
+                </ul>
               </div>
             </div>
           </div>

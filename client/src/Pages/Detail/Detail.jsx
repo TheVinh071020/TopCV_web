@@ -14,6 +14,20 @@ import DetailBodyRight from "../../components/Layouts/DetailBody/DetailBodyRight
 import DetailBodyLeft from "../../components/Layouts/DetailBody/DetailBodyLeft";
 
 function Detail() {
+  // Chia role user và company
+  const [isUserRole, setIsUserRole] = useState(false);
+  const [isCompanyRole, setIsCompanyRole] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.role === "User") {
+      setIsUserRole(true);
+    }
+    if (user && user.role === "Admin") {
+      setIsCompanyRole(true);
+    }
+  }, []);
+
   const [open, setOpen] = useState(false);
   const [job, setJob] = useState(null);
   let { jobId } = useParams();
@@ -339,7 +353,7 @@ function Detail() {
       </div>
       <div className="container job-detail-body">
         <div className="job-detail__body-left">
-          <DetailBodyLeft job={job} setOpen={setOpen} />
+          <DetailBodyLeft job={job} setOpen={setOpen} isUserRole={isUserRole} isCompanyRole={isCompanyRole}/>
         </div>
         <DetailBodyRight job={job} />
       </div>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
+import React, { useState } from "react";
+import { Select, Space } from "antd";
 import Form from "react-bootstrap/Form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -40,6 +40,14 @@ function RegisterUser() {
     applications: [],
   });
 
+  console.log(formRegister);
+  const handleChangeSelect = (value) => {
+    setFormRegister({
+      ...formRegister,
+      role: value,
+    });
+  };
+
   const [formError, setFormError] = useState({});
 
   const validateForm = () => {
@@ -76,8 +84,6 @@ function RegisterUser() {
     return Object.keys(errors).length === 0;
   };
 
-  console.log(formError);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormRegister({
@@ -86,7 +92,6 @@ function RegisterUser() {
     });
   };
 
-  // console.log(formRegister);
   // Sự kiện click đăng nhập
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -160,6 +165,26 @@ function RegisterUser() {
                 style={{ width: "150px" }}
                 className={formError.email ? "error-input" : ""}
               />
+              <Space wrap>
+                <Select
+                  defaultValue="Vai trò"
+                  style={{
+                    width: 120,
+                    marginRight: 20,
+                  }}
+                  onChange={handleChangeSelect}
+                  options={[
+                    {
+                      value: "User",
+                      label: "User",
+                    },
+                    {
+                      value: "Admin",
+                      label: "Admin",
+                    },
+                  ]}
+                />
+              </Space>
               <CustomButton
                 className={"btn-login"}
                 variant={"primary"}

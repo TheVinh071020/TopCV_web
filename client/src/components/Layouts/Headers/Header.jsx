@@ -10,18 +10,27 @@ import axios from "axios";
 import { axiosConfig } from "../../../axios/config";
 
 function Header() {
-  const handleContinue = () => {
-    window.scrollTo(0, 0);
-  };
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [isUser, setIsUser] = useState(false);
+
+  const [isUserRole, setIsUserRole] = useState(false);
+  const [isCompanyRole, setIsCompanyRole] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.role === "User") {
+      setIsUserRole(true);
+    }
+    if (user && user.role === "Admin") {
+      setIsCompanyRole(true);
+    }
+  }, []);
+
   // Giải mã token
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
@@ -29,7 +38,7 @@ function Header() {
           .get(`/users/${decodedToken.sub}`)
           .then((res) => {
             setIsUser(true);
-            setUsers(res.data)
+            setUsers(res.data);
           })
           .catch((err) => {
             setIsUser(false);
@@ -44,30 +53,32 @@ function Header() {
     }
   }, [dispatch]);
 
-  // gotoProfile
   const gotoProfile = () => {
     if (isUser) {
-      navigate("/profile");
-    } else {
-      Swal.fire({
-        text: "Bạn cần phải đăng nhập",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Đồng ý!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: "Chuyển qua trang đăng nhập!",
-            icon: "success",
-          });
-          navigate("/login");
-        }
-      });
+      if (isUserRole) {
+        navigate("/profile");
+      } else if (isCompanyRole) {
+        navigate("/company-profile");
+      } else {
+        Swal.fire({
+          text: "Bạn cần phải đăng nhập",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Đồng ý!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: "Chuyển qua trang đăng nhập!",
+              icon: "success",
+            });
+            navigate("/login");
+          }
+        });
+      }
     }
   };
-
   // Đăng xuất
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -87,25 +98,19 @@ function Header() {
       </div>
       <div className="header-nav">
         <ul>
-          <Link
-            onClick={handleContinue}
-            to={"/"}
-            style={{ textDecoration: "none" }}
-          >
+          <Link to={"/"} style={{ textDecoration: "none" }}>
             <li>Việc làm</li>
           </Link>
-          <Link
-            onClick={handleContinue}
-            to={"/profile"}
-            style={{ textDecoration: "none" }}
-          >
-            <li>Hồ sơ & CV</li>
-          </Link>
-          <Link
-            onClick={handleContinue}
-            to={"/recruitment"}
-            style={{ textDecoration: "none" }}
-          >
+          {isUserRole === true ? (
+            <Link to={"/profile"} style={{ textDecoration: "none" }}>
+              <li>Hồ sơ & CV</li>
+            </Link>
+          ) : (
+            <Link to={"/company-profile"} style={{ textDecoration: "none" }}>
+              <li>Thông tin Công ty</li>
+            </Link>
+          )}
+          <Link to={"/recruitment"} style={{ textDecoration: "none" }}>
             <li>Đã ứng tuyển</li>
           </Link>
         </ul>

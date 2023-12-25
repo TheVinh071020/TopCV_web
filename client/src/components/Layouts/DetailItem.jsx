@@ -17,7 +17,7 @@ function DetailItem({ job, i }) {
         </div>
         <div className="nav2">
           <div className="job_item2">{job.salary} triệu</div>
-          <div className="job_item3">{job.address.city}</div>
+          <div className="job_item3">{job.address}</div>
           <div className="job_item_btn">
             <Link to={`/detail/${job.id}`}>
               <Button variant="outline-info">Chi tiết</Button>

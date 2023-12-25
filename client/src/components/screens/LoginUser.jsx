@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,13 +14,14 @@ function LoginUser() {
   const dispatch = useDispatch();
 
   const [users, setUsers] = useState([]);
+  const [company, setCompany] = useState([]);
 
   const [formError, setFormError] = useState({
     email: "",
     password: "",
   });
 
-  useEffect(() => {
+  const getUser = async () => {
     axiosConfig
       .get("/users")
       .then((res) => {
@@ -30,6 +30,23 @@ function LoginUser() {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const getCompany = async () => {
+    axiosConfig
+      .get("/companies")
+      .then((res) => {
+        setCompany(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log();
+
+  useEffect(() => {
+    getUser();
+    getCompany();
   }, []);
 
   // Lấy giá  trị ô input
@@ -75,7 +92,12 @@ function LoginUser() {
             localStorage.setItem("user", JSON.stringify(res.data.user));
             localStorage.setItem("token", JSON.stringify(res.data.accessToken));
             setFormInput(res.data.user);
-            navigate("/");
+            if (res.data.user.role === "Admin") {
+              navigate("/admin-company");
+              toast.success("Đăng nhập Admin Company thành công 👌");
+            } else {
+              navigate("/");
+            }
           }
         })
         .catch((err) => {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import CustomButton from "../../components/common/CustomButton";
-import { axiosConfig } from "../../axios/config";
+import CustomButton from "../../../components/common/CustomButton";
+import { axiosConfig } from "../../../axios/config";
 import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined";
 import Modal from "react-bootstrap/Modal";
-import Pagination from "../../components/common/Pagination";
+import Pagination from "../../../components/common/Pagination";
 import { Select, Space } from "antd";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
@@ -42,6 +42,9 @@ function UserAdmin() {
         setTotal(res.headers["x-total-count"]);
       });
   };
+
+  const filteredUsers = users.filter((user) => user.role === "User");
+  console.log(filteredUsers);
 
   // Lấy job theo querySearch, queryAddress, querySalary khi search sort sẽ render
   const getListUsersByQuerySearch = async (pageIndex, pageNumber) => {
@@ -82,6 +85,7 @@ function UserAdmin() {
     setSearchParams({
       name_like: searchValue,
       gioi_tinh: genderValue,
+      sort_name: sortNameValue,
     });
     await axiosConfig
       .get(
@@ -103,6 +107,7 @@ function UserAdmin() {
     setSearchParams({
       name_like: searchValue,
       gioi_tinh: value,
+      sort_name: sortNameValue,
     });
     await axiosConfig
       .get(`/users?gender_like=${value}`)
@@ -280,7 +285,7 @@ function UserAdmin() {
             </tr>
           </thead>
           <tbody>
-            {users?.map((user, index) => (
+            {filteredUsers?.map((user, index) => (
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{user.id}</td>

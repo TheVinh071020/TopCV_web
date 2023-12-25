@@ -1,0 +1,141 @@
+.feature_job {
+    margin: 20px auto;
+    padding-bottom: 1px;
+    width: 100%;
+}
+
+.list-feature-jobs {
+    margin-top: 7%;
+}
+
+.feature_job .row-detail {
+    width: 1170px;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.job-detail-body {
+    display: flex;
+    gap: 24px;
+}
+
+.company-feature {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    padding: 20px 24px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.job-detail__body-right {
+    background: #f4f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 33px;
+    width: calc(33% - -88px);
+    height: 100%;
+    padding: 20px 24px;
+    border-radius: 8px;
+}
+
+.job-detail__company {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: fit-content;
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+}
+
+.jobs{
+    padding: 0 10px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 30px;
+}
+.jobs .nav1 {
+    box-sizing: border-box;
+    min-height: 50px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.jobs .nav1 .avatar {
+    width:100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    border: 1px ridge;
+    border-radius: 15%;
+    background-color: white;
+}
+
+.jobs .nav1 .avatar img {
+    max-width: 110px;
+    height: auto;
+}
+
+.jobs .nav1 .job_item1 {
+    margin: 0 10px;
+    padding: 0 5px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.jobs .nav2 {
+    box-sizing: border-box;
+    min-height: 25px;
+    padding-left: 12px;
+    margin: 5px 0;
+    
+    
+}
+
+.jobs .nav3{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 40px;
+}
+
+.jobs .nav2 .job_item2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    border: 1px ridge;
+    border-radius: 7px;
+    background-color: white;
+    width: 80px;
+    height: 25px;
+    font-size: 14px;
+    
+}
+.jobs .nav2 .job_item3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    border: 1px ridge;
+    border-radius: 7px;
+    background-color: white;
+    width: 80px;
+    height: 25px;
+    font-size: 14px;
+    
+} 

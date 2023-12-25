@@ -9,6 +9,7 @@
       "address": "",
       "locked": false,
       "applications": [],
+      "role": "User",
       "id": 1,
       "gender": "Nữ"
     },
@@ -21,6 +22,7 @@
       "address": "Thanh aa1",
       "locked": false,
       "applications": [],
+      "role": "User",
       "id": 3,
       "education": "đại học neu",
       "certification": "n3",
@@ -36,80 +38,71 @@
       "address": "thanh xuân",
       "locked": false,
       "applications": [],
+      "role": "User",
       "id": 4,
       "gender": "Nam",
       "education": "đại học neu",
       "certification": "n3"
+    },
+    {
+      "email": "rikkeiisoft@gmail.com",
+      "password": "$2a$10$vgXn/8KtvHZxmOH/k7tHSu3IEYWaoTJZzgCvnn2YmPAS5VMtQ883a",
+      "name": "RikkeiSoft",
+      "confirmPassword": "Company123",
+      "phone": "",
+      "address": "",
+      "locked": false,
+      "applications": [],
+      "role": "Admin",
+      "id": 5
     }
   ],
   "jobs": [
     {
       "id": 1,
+      "idCompany": 1,
       "name": "IT Software/Network",
       "company": "RikkeiSoft",
       "avatar": "https://techviec.com/wp-content/uploads/2019/09/rikkeisoft-logo-1.png",
-      "description": [
-        "Quản lý hoạt động của hệ thống CSDL của công ty bao gồm SQL server, MySQL, ...",
-        "Cài đặt và nâng cấp các hệ quản trị Cơ sở dữ liệu",
-        "Thực hiện quản lý sao lưu và phục hồi CSDL"
-      ],
-      "requirement": [
-        "Có kiến thức về hệ điều hành máy chủ, mạng, bảo mật thông tin",
-        "Có kiến thức về hệ điều hành máy chủ, mạng, bảo mật thông tin"
-      ],
-      "benefit": [
-        "Các chế độ và quyền lợi theo Luật Lao động được đảm bảo đầy đủ",
-        "Thưởng Lương tháng 13"
-      ],
+      "description": "Quản lý hoạt động của hệ thống CSDL của công ty bao gồm SQL server, MySQL, ... Cài đặt và nâng cấp các hệ quản trị Cơ sở dữ liệu.Thực hiện quản lý sao lưu và phục hồi CSDL",
+      "requirement": "Có kiến thức về hệ điều hành máy chủ, mạng, bảo mật thông tin",
+      "benefit": "Các chế độ và quyền lợi theo Luật Lao động được đảm bảo đầy đủ.Thưởng Lương tháng 13",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hà Nội",
-        "location": "1 Mễ trì"
-      },
-      "salary": 8,
+      "address": "Hà Nội",
+      "location": "1 Mễ trì",
+      "salary": "9",
       "level": "Nhân viên",
-      "experience": "Không yêu cầu",
-      "age": "18 - 35 tuôi",
+      "experience": "Chưa có kinh nghiệm",
       "scale": 10,
-      "personnel": 500,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 2,
       "name": "FPT Software/Networks",
       "company": "FPT",
+      "idCompany": 2,
       "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/fpt-software-6073b38a10cb4.jpg",
-      "description": [
-        "Kiến thức về Database: Mô hình quan hệ thực thể (ERM). Hệ quản trị cơ sở dữ liệu Microsoft SQL Server – hiểu và làm việc với truy vấn SQL.",
-        "Lập trình Java Web",
-        "Phát triển phần mềm theo quy trình chuyên nghiệp: Hiểu các bước thực hiện dự án, bao gồm thiết kế ứng dụng, làm GUI, thiết kế code"
-      ],
-      "requirement": [
-        "Tiếng Nhật: đã có hoặc sắp thi chứng chỉ N4 trở lên",
-        "Nắm vững kiến thức cơ bản về Lập trình hướng đối tượng, SQL, và Java Core",
-        "Có thể tham gia đào tạo/làm việc Fulltime từ thứ 2 – thứ 6"
-      ],
+      "description": "Kiến thức về Database: Mô hình quan hệ thực thể (ERM). Hệ quản trị cơ sở dữ liệu Microsoft SQL Server – hiểu và làm việc với truy vấn SQL.",
+      "requirement": "Tiếng Nhật: đã có hoặc sắp thi chứng chỉ N4 trở lên, Nắm vững kiến thức cơ bản về Lập trình hướng đối tượng, SQL, và Java Core",
       "benefit": [
         "Trợ cấp đào tạo trong quá trình đào tạo từ 6.000.000 – 10.000.000 VNĐ/tháng",
         "Thưởng Lương tháng 13",
         "Trải nghiệm văn hóa đặc trưng, môi trường làm việc hiện đại bậc nhất Việt Nam tại các Campus của FPT Software"
       ],
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hà Nội",
-        "location": "Tòa nhà FPT Building, số 17 Duy Tân, Cầu Giấy"
-      },
+      "address": "Hà Nội",
+      "location": "Tòa nhà FPT Building, số 17 Duy Tân, Cầu Giấy",
       "salary": 9,
       "level": "Nhân viên",
       "experience": "Không yêu cầu",
       "scale": 10,
-      "personnel": 300,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 3,
       "name": "Tester (Senior/Leader)",
       "company": "FPT",
+      "idCompany": 2,
       "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/fpt-software-6073b38a10cb4.jpg",
       "description": [
         "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
@@ -129,422 +122,461 @@
         "Khám sức khoẻ định kỳ"
       ],
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hồ Chí Minh",
-        "location": "Tầng 22 toà nhà Keangnam Landmark 81"
-      },
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
       "salary": 20,
       "level": "Trưởng nhóm",
       "experience": "3 năm",
       "scale": 5,
-      "personnel": 400,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 4,
       "name": "Giao Dịch Viên / Tư Vấn Viên Tài Chính",
       "company": "Ngân hàng MB",
+      "idCompany": 3,
       "avatar": "https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png",
-      "description": [
-        "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
-        "Quản lý thông tin khách hàng và liên tục cập nhật trên hệ thống quản lý dữ liệu",
-        " Báo cáo kết quả công việc hằng ngày"
-      ],
-      "requirement": [
-        "Biết sử dụng tin học văn phòng cơ bản",
-        "Ưu tiên có kinh nghiệm telesale/CSKH",
-        "Giọng nói dễ nghe, tự tin khi giao tiếp qua điện thoại",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Lương cứng: 6 triệu + thưởng doanh số",
-        "Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
-        "Thời gian làm việc: 8h30-12h; 14h-18h; Từ thứ 2 đến thứ 6",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "description": "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
+      "requirement": "Biết sử dụng tin học văn phòng cơ bản",
+      "benefit": "Lương cứng: 6 triệu + thưởng doanh số. Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hồ Chí Minh",
-        "location": "Tầng 4 toà 06, Khu biệt thự Mahattan Vinhomes Grand Park"
-      },
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 4 toà 06, Khu biệt thự Mahattan Vinhomes Grand Park",
       "salary": 28,
       "level": "Nhân viên",
       "experience": "Dưới 1 năm",
       "scale": 5,
-      "personnel": 100,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 5,
       "name": "Giao Dịch Viên / Tư Vấn Viên Tài Chính",
       "company": "Ngân hàng Vietcombank",
+      "idCompany": 4,
       "avatar": "https://cdn.tgdd.vn/2020/04/GameApp/icon-200x200.jpg",
-      "description": [
-        "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
-        "Quản lý thông tin khách hàng và liên tục cập nhật trên hệ thống quản lý dữ liệu",
-        " Báo cáo kết quả công việc hằng ngày"
-      ],
-      "requirement": [
-        "Biết sử dụng tin học văn phòng cơ bản",
-        "Ưu tiên có kinh nghiệm telesale/CSKH",
-        "Giọng nói dễ nghe, tự tin khi giao tiếp qua điện thoại",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Lương cứng: 6 triệu + thưởng doanh số",
-        "Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
-        "Thời gian làm việc: 8h30-12h; 14h-18h; Từ thứ 2 đến thứ 6",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "description": "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
+      "requirement": "Biết sử dụng tin học văn phòng cơ bản",
+      "benefit": "Lương cứng: 6 triệu + thưởng doanh số. Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hồ Chí Minh",
-        "location": "Tầng 4 toà 06, Khu biệt thự Mahattan Vinhomes Grand Park"
-      },
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 4 toà 06, Khu biệt thự Mahattan Vinhomes Grand Park",
       "salary": 25,
       "level": "Nhân viên",
       "experience": "Dưới 1 năm",
       "scale": 5,
-      "personnel": 100,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 6,
-      "name": "Nhân Viên Hành Chính Tiếng Nhật",
-      "company": "CÔNG TY TNHH PASONA TECH VIỆT NAM",
-      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-tnhh-pasona-tech-viet-nam-621878f0918b7.jpg",
-      "description": [
-        "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
-        "Quản lý thông tin khách hàng và liên tục cập nhật trên hệ thống quản lý dữ liệu",
-        " Báo cáo kết quả công việc hằng ngày"
-      ],
-      "requirement": [
-        "Biết sử dụng tin học văn phòng cơ bản",
-        "Ưu tiên có kinh nghiệm telesale/CSKH",
-        "Giọng nói dễ nghe, tự tin khi giao tiếp qua điện thoại",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Lương cứng: 6 triệu + thưởng doanh số",
-        "Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
-        "Thời gian làm việc: 8h30-12h; 14h-18h; Từ thứ 2 đến thứ 6",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "name": "IT Comtor Tiếng Nhật",
+      "company": "RikkeiSoft",
+      "idCompany": 1,
+      "avatar": "https://techviec.com/wp-content/uploads/2019/09/rikkeisoft-logo-1.png",
+      "description": "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
+      "requirement": "Biết sử dụng tin học văn phòng cơ bản",
+      "benefit": "Lương cứng: 6 triệu + thưởng doanh số",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hà Nội",
-        "location": " Mễ Trì, Nam Từ Liêm"
-      },
+      "address": "Hà Nội",
+      "location": " Mễ Trì, Nam Từ Liêm",
       "salary": 13,
       "level": "Nhân viên",
-      "experience": "1 năm",
+      "experience": "Chưa có kinh nghiệm",
       "scale": 10,
-      "personnel": 100,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 7,
       "name": "IT Comtor (Tester N2, All Level)",
-      "company": "Công ty Cổ phần Tập đoàn Omi",
-      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/ebTsOPqSzrdmqsBecL07.jpg",
-      "description": [
-        "Kiến thức về Database: Mô hình quan hệ thực thể (ERM). Hệ quản trị cơ sở dữ liệu Microsoft SQL Server – hiểu và làm việc với truy vấn SQL.",
-        "Lập trình Java Web",
-        "Phát triển phần mềm theo quy trình chuyên nghiệp: Hiểu các bước thực hiện dự án, bao gồm thiết kế ứng dụng, làm GUI, thiết kế code"
-      ],
-      "requirement": [
-        "Tiếng Nhật: đã có hoặc sắp thi chứng chỉ N4 trở lên",
-        "Nắm vững kiến thức cơ bản về Lập trình hướng đối tượng, SQL, và Java Core",
-        "Có thể tham gia đào tạo/làm việc Fulltime từ thứ 2 – thứ 6"
-      ],
-      "benefit": [
-        "Trợ cấp đào tạo trong quá trình đào tạo từ 6.000.000 – 10.000.000 VNĐ/tháng",
-        "Thưởng Lương tháng 13",
-        "Trải nghiệm văn hóa đặc trưng, môi trường làm việc hiện đại bậc nhất Việt Nam tại các Campus của Omi Software"
-      ],
+      "company": "FPT",
+      "idCompany": 2,
+      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/fpt-software-6073b38a10cb4.jpg",
+      "description": "Kiến thức về Database: Mô hình quan hệ thực thể (ERM). Hệ quản trị cơ sở dữ liệu Microsoft SQL Server – hiểu và làm việc với truy vấn SQL.",
+      "requirement": "Tiếng Nhật: đã có hoặc sắp thi chứng chỉ N4 trở lên",
+      "benefit": "Trợ cấp đào tạo trong quá trình đào tạo từ 6.000.000 – 10.000.000 VNĐ/tháng",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hà Nội",
-        "location": "Tầng 13, Tòa nhà 789, 147 đường Hoàng Quốc Việt"
-      },
+      "address": "Hà Nội",
+      "location": "Tầng 13, Tòa nhà 789, 147 đường Hoàng Quốc Việt",
       "salary": 15,
       "level": "Nhân viên",
       "experience": "Không yêu cầu",
       "scale": 10,
-      "personnel": 300,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 8,
       "name": "Tester (Senior/Leader)",
-      "company": "Công ty APTECH",
-      "avatar": "https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/63ac8da57b305231cd5c5bce7b25c442-656d3e7738d72.jpg",
-      "description": [
-        "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
-        "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
-        "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
-      ],
-      "requirement": [
-        "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
-        "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
-        "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
-        "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
-        "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "company": "RikkeiSoft",
+      "idCompany": 1,
+      "avatar": "https://techviec.com/wp-content/uploads/2019/09/rikkeisoft-logo-1.png",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hồ Chí Minh",
-        "location": "Tầng 22 toà nhà Keangnam Landmark 81"
-      },
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
       "salary": 18,
       "level": "Nhân viên",
-      "experience": "1 năm",
+      "experience": "6 tháng - 1 năm",
       "scale": 10,
-      "personnel": 400,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 9,
-      "name": "Nhân Viên Kinh Doanh IT- Đi Làm Ngay",
-      "company": "Công ty Đầu Tư LBM",
-      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-dau-tu-lbm-609355d6ee0e5.jpg",
-      "description": [
-        "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
-        "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
-        "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
-      ],
-      "requirement": [
-        "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
-        "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
-        "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
-        "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
-        "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "name": "Nhân Viên Kinh Doanh ",
+      "company": "Ngân hàng MB",
+      "idCompany": 3,
+      "avatar": "https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hồ Chí Minh",
-        "location": "Tầng 22 toà nhà Keangnam Landmark 81"
-      },
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
       "salary": 16,
       "level": "Nhân viên",
       "experience": "1 năm",
       "scale": 15,
-      "personnel": 400,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 10,
-      "name": "Quản Lý Giám Sát Nhà Hàng/ Quản Lý",
-      "company": "Công Ty TNHH 1986 Việt Nam",
-      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/NjCmizklrp6ekYI1iwZ8VyAjPpTQhSdX_1663750505____5b499ca1203f97b8f013c0a3c46da766.png",
-      "description": [
-        "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
-        "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
-        "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
-      ],
-      "requirement": [
-        "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
-        "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
-        "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
-        "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
-        "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "name": "Quản Lý Giám Sát ",
+      "company": "Ngân hàng Vietcombank",
+      "idCompany": 4,
+      "avatar": "https://cdn.tgdd.vn/2020/04/GameApp/icon-200x200.jpg",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hà Nội",
-        "location": "Số 10 Nguyễn Văn Huyên - Cầu Giấy - Hà Nội"
-      },
+      "address": "Hà Nội",
+      "location": "Số 10 Nguyễn Văn Huyên - Cầu Giấy - Hà Nội",
       "salary": 21,
       "level": "Quản lý",
       "experience": "1 năm",
       "scale": 15,
-      "personnel": 400,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 11,
-      "name": "Nhân Viên Marketing - Tổ Chức Sự Kiện",
-      "company": "Công Ty Cổ Phần Tập Đoàn Babylons",
-      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-tap-doan-babylons-63e5c8d6e9a4a.jpg",
-      "description": [
-        "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
-        "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
-        "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
-      ],
-      "requirement": [
-        "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
-        "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
-        "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
-        "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
-        "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "name": "Nhân Viên Marketing ",
+      "company": "Hệ thống Anh ngữ AMES",
+      "idCompany": 5,
+      "avatar": "https://cdn-new.topcv.vn/unsafe/135x/filters:format(webp)/https://static.topcv.vn/company_logos/he-thong-anh-ngu-ames-5ce6414e090e0.jpg",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hà Nội",
-        "location": "25 đường Láng, Láng Thượng, Đống Đa"
-      },
+      "address": "Hà Nội",
+      "location": "25 đường Láng, Láng Thượng, Đống Đa",
       "salary": 22,
       "level": "Nhân viên",
       "experience": "1 năm",
       "scale": 6,
-      "personnel": 300,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 12,
       "name": "Nhân Viên Kinh Doanh",
-      "company": "CÔNG TY CP ĐÁ THẠCH ANH KHANG MINH",
-      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-cp-da-thach-anh-khang-minh-52c7a08f34f63bc8d9c2a7281a0e4d03-657c3044aaf0c.jpg",
-      "description": [
-        "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
-        "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
-        "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
-      ],
-      "requirement": [
-        "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
-        "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
-        "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
-        "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
-        "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "company": "Hệ thống Anh ngữ AMES",
+      "idCompany": 5,
+      "avatar": "https://cdn-new.topcv.vn/unsafe/135x/filters:format(webp)/https://static.topcv.vn/company_logos/he-thong-anh-ngu-ames-5ce6414e090e0.jpg",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hồ Chí Minh",
-        "location": "Hai Bà Trưng"
-      },
+      "address": "Hồ Chí Minh",
+      "location": "Hai Bà Trưng",
       "salary": 26,
       "level": "Nhân viên",
       "experience": "1 năm",
       "scale": 5,
-      "personnel": 400,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 13,
       "name": "Nhân Viên Tư Vấn Tuyển Sinh",
       "company": "Hệ thống Anh ngữ AMES",
+      "idCompany": 5,
       "avatar": "https://cdn-new.topcv.vn/unsafe/135x/filters:format(webp)/https://static.topcv.vn/company_logos/he-thong-anh-ngu-ames-5ce6414e090e0.jpg",
-      "description": [
-        "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
-        "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
-        "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
-      ],
-      "requirement": [
-        "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
-        "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
-        "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
-        "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
-        "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hồ Chí Minh",
-        "location": "Tầng 22 toà nhà Keangnam Landmark 81"
-      },
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
       "salary": 12,
       "level": "Nhân viên",
       "experience": "1 năm",
       "scale": 5,
-      "personnel": 400,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 14,
-      "name": "Nhân Viên Kinh Doanh Thời Trang",
-      "company": "CÔNG TY CỔ PHẦN THƯƠNG MẠI NAM ANH",
-      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-thuong-mai-nam-anh-9d4810e5d93b58ae3ec7a129fe6a74b0-6465c6ba71a05.jpg",
-      "description": [
-        "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
-        "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
-        "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
-      ],
-      "requirement": [
-        "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
-        "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
-        "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
-        "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
-        "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "name": "Nhân Viên Sale",
+      "company": "Ngân hàng MB",
+      "idCompany": 3,
+      "avatar": "https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hồ Chí Minh",
-        "location": "Tầng 22 toà nhà Keangnam Landmark 81"
-      },
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
       "salary": 15,
       "level": "Nhân viên",
       "experience": "1 năm",
       "scale": "5 nhân viên",
-      "personnel": 400,
       "status": "Chờ xét duyệt"
     },
     {
       "id": 15,
-      "name": "Branding Executive (Media)",
-      "company": "Công ty Cổ phần Công nghệ Prep",
-      "avatar": "https://cdn-new.topcv.vn/unsafe/135x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-prep-9e0e05f147c67e222533732301419855-64990515c754f.jpg",
-      "description": [
-        "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
-        "Thiết lập môi trường kiểm thử, thực thi và báo cáo kết quả.",
-        "Nghiên cứu, ứng dụng các công cụ test phục vụ cho việc kiểm thử."
-      ],
-      "requirement": [
-        "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
-        "Có ít nhất 03 năm kinh nghiệm Tester và đã tham gia các dự án thực tế",
-        "Nắm vững quy trình và các công cụ kiểm thử phần mềm",
-        "Có kiến thức về Performance Test là một lợi thế"
-      ],
-      "benefit": [
-        "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
-        "Được tham gia không giới hạn các khóa đào tạo kỹ năng và nghiệp vụ nâng cao",
-        "15 ngày phép/năm và các ngày nghỉ Lễ theo quy định",
-        "Khám sức khoẻ định kỳ"
-      ],
+      "name": "Marketing Manager",
+      "company": "Fpt",
+      "idCompany": 2,
+      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/fpt-software-6073b38a10cb4.jpg",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": {
-        "city": "Hà Nội",
-        "location": "C2 KĐT Nam Trung Yên, Phường Trung Hoà, Cầu Giấy"
-      },
+      "address": "Hà Nội",
+      "location": "C2 KĐT Nam Trung Yên, Phường Trung Hoà, Cầu Giấy",
       "salary": 13,
       "level": "Nhân viên",
       "experience": "1 năm",
       "scale": "2 nhân viên",
-      "personnel": 200,
       "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 16,
+      "name": "Nhân Viên Sale",
+      "company": "Ngân hàng Vietcombank",
+      "idCompany": 4,
+      "avatar": "https://cdn.tgdd.vn/2020/04/GameApp/icon-200x200.jpg",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
+      "salary": 10,
+      "level": "Nhân viên",
+      "experience": "1 năm",
+      "scale": "5 nhân viên",
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 17,
+      "name": "Tester ",
+      "company": "FPT",
+      "idCompany": 2,
+      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/fpt-software-6073b38a10cb4.jpg",
+      "description": "Kiến thức về Database: Mô hình quan hệ thực thể (ERM). Hệ quản trị cơ sở dữ liệu Microsoft SQL Server – hiểu và làm việc với truy vấn SQL.",
+      "requirement": "Tiếng Nhật: đã có hoặc sắp thi chứng chỉ N4 trở lên",
+      "benefit": "Trợ cấp đào tạo trong quá trình đào tạo từ 6.000.000 – 10.000.000 VNĐ/tháng",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hà Nội",
+      "location": "Tầng 13, Tòa nhà 789, 147 đường Hoàng Quốc Việt",
+      "salary": 19,
+      "level": "Nhân viên",
+      "experience": "Không yêu cầu",
+      "scale": 4,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 18,
+      "name": "Lead Tester",
+      "company": "RikkeiSoft",
+      "idCompany": 1,
+      "avatar": "https://techviec.com/wp-content/uploads/2019/09/rikkeisoft-logo-1.png",
+      "description": "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
+      "requirement": "Biết sử dụng tin học văn phòng cơ bản",
+      "benefit": "Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hà Nội",
+      "location": " Mễ Trì, Nam Từ Liêm",
+      "salary": 13,
+      "level": "Nhân viên",
+      "experience": "Chưa có kinh nghiệm",
+      "scale": 10,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 19,
+      "name": "BRSE Lead",
+      "company": "RikkeiSoft",
+      "idCompany": 1,
+      "avatar": "https://techviec.com/wp-content/uploads/2019/09/rikkeisoft-logo-1.png",
+      "description": "Gọi điện thoại cho các khách hàng tiềm năng để chào hàng về sản phẩm/dịch vụ",
+      "requirement": "Biết sử dụng tin học văn phòng cơ bản",
+      "benefit": "Môi trường làm việc trẻ trung, năng động, đồng nghiệp hỗ trợ nhau nhiệt tình.",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hà Nội",
+      "location": " Mễ Trì, Nam Từ Liêm",
+      "salary": 13,
+      "level": "Nhân viên",
+      "experience": "6 tháng - 1 năm",
+      "scale": 10,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 20,
+      "name": "Trưởng kế toán",
+      "company": "Ngân hàng MB",
+      "idCompany": 3,
+      "avatar": "https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
+      "salary": 16,
+      "level": "Nhân viên",
+      "experience": "1 năm",
+      "scale": 15,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 21,
+      "name": "Chuyên Viên Điều Tra Nội Bộ",
+      "company": "Ngân hàng MB",
+      "idCompany": 3,
+      "avatar": "https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
+      "salary": 16,
+      "level": "Nhân viên",
+      "experience": "1 năm",
+      "scale": 15,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 22,
+      "name": "Chuyên Viên Giám Sát Và Kiểm Tra Tuân Thủ",
+      "company": "Ngân hàng MB",
+      "idCompany": 3,
+      "avatar": "https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
+      "salary": 16,
+      "level": "Nhân viên",
+      "experience": "1 năm",
+      "scale": 15,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 23,
+      "name": "Kinh Doanh Dịch Vụ Tài Chính",
+      "company": "Ngân hàng Vietcombank",
+      "idCompany": 4,
+      "avatar": "https://cdn.tgdd.vn/2020/04/GameApp/icon-200x200.jpg",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
+      "salary": 16,
+      "level": "Nhân viên",
+      "experience": "1 năm",
+      "scale": 15,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 24,
+      "name": "Tư Vấn Viên Tài Chính ",
+      "company": "Ngân hàng Vietcombank",
+      "idCompany": 4,
+      "avatar": "https://cdn.tgdd.vn/2020/04/GameApp/icon-200x200.jpg",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
+      "salary": 16,
+      "level": "Nhân viên",
+      "experience": "1 năm",
+      "scale": 15,
+      "status": "Chờ xét duyệt"
+    },
+    {
+      "id": 25,
+      "name": "Nhân Viên Quản Lý Lớp Học ",
+      "company": "Hệ thống Anh ngữ AMES",
+      "idCompany": 5,
+      "avatar": "https://cdn-new.topcv.vn/unsafe/135x/filters:format(webp)/https://static.topcv.vn/company_logos/he-thong-anh-ngu-ames-5ce6414e090e0.jpg",
+      "description": "Tạo test plan, test case theo tài liệu thiết kế hệ thống và tài liệu đặc tả nghiệp vụ.",
+      "requirement": "Tốt nghiệp Đại học chuyên ngành Công nghệ thông tin hoặc Hệ thống thông tin",
+      "benefit": "Mức lương hấp dẫn, thỏa thuận theo năng lực. Lương tháng 13 và thưởng Hiệu quả kinh doanh",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hồ Chí Minh",
+      "location": "Tầng 22 toà nhà Keangnam Landmark 81",
+      "salary": 12,
+      "level": "Nhân viên",
+      "experience": "1 năm",
+      "scale": 5,
+      "status": "Chờ xét duyệt"
+    }
+  ],
+  "companies": [
+    {
+      "idCompany": 1,
+      "name": "RikkeiSoft",
+      "introduce": "Nối dài giấc mơ ấy bằng tinh thần đoàn kết, quyết tâm cao cùng khát khao chinh phục cháy bỏng, Ban lãnh đạo Công ty đồng lòng cùng toàn thể cán bộ nhân viên cam kết đưa con thuyền Rikkeisoft cán mốc 10 000 nhân sự vào năm 2025.",
+      "address": "Hà Nội",
+      "location": "Tầng 21, tòa nhà Handico",
+      "personnel": 400,
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "avatar": "https://techviec.com/wp-content/uploads/2019/09/rikkeisoft-logo-1.png"
+    },
+    {
+      "idCompany": 2,
+      "name": "FPT",
+      "introduce": "FPT Software là công ty thành viên thuộc Tập đoàn FPT. Được thành lập từ năm 1999, FPT Software hiện là công ty chuyên cung cấp các dịch vụ và giải pháp phần mềm cho các khách hàng quốc tế, với hơn 28000 nhân viên, hiện diện tại 27 quốc gia trên toàn cầu. Nhiều năm liền, FPT Software được bình chọn là Nhà Tuyển dụng được yêu thích nhất và nằm trong TOP các công ty có môi trường làm việc tốt nhất châu Á",
+      "address": "Hà Nội",
+      "location": "1 Mễ trì",
+      "personnel": 400,
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/fpt-software-6073b38a10cb4.jpg"
+    },
+    {
+      "idCompany": 3,
+      "name": "Ngân hàng MB ",
+      "introduce": "Ngân hàng TMCP Quân Đội- MBBank Top 3 Môi trường làm việc tốt nhất ngành ngân hàng",
+      "address": "Hà Nội",
+      "location": "34 Láng Hạ, Đống Đa",
+      "personnel": 400,
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "avatar": "https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png"
+    },
+    {
+      "idCompany": 4,
+      "name": "Ngân hàng Vietcombank",
+      "introduce": "Ngân hàng số 1 tại Việt Nam, một trong 100 ngân hàng lớn nhất khu vực Châu Á, một trong 300 tập đoàn tài chính ngân hàng lớn nhất thế giới, một trong 1000 doanh nghiệp niêm yết lớn nhất toàn cầu, đóng góp lớn vào sự phát triển bền vững của Việt Nam",
+      "address": "Hà Nội",
+      "location": "34 Tây Sơn, Đống Đa",
+      "personnel": 400,
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "avatar": "https://cdn.tgdd.vn/2020/04/GameApp/icon-200x200.jpg"
+    },
+    {
+      "idCompany": 5,
+      "name": "Hệ thống Anh ngữ AMES",
+      "introduce": "Được thành lập từ năm 2003, đến nay, sau hơn 17 năm phát triển, Hệ thống trung tâm Anh ngữ AMES ENGLISH đã được công nhận là một trong những thương hiệu hàng đầu về học tiếng Anh chất lượng cao tại Việt Nam. Hiện nay, AMES ENGLISH đã xây dựng thành công hệ thống 40+ trung tâm trên toàn quốc, chuyên cung cấp các khóa đào tạo tiếng Anh dành cho mọi đối tượng từ thiếu nhi đến người lớn.",
+      "address": "Hà Nội",
+      "location": "12 Hoàn Kiếm",
+      "personnel": 400,
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "avatar": "https://cdn-new.topcv.vn/unsafe/135x/filters:format(webp)/https://static.topcv.vn/company_logos/he-thong-anh-ngu-ames-5ce6414e090e0.jpg"
     }
   ]
 }
