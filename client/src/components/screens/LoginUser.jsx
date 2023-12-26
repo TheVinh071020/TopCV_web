@@ -92,12 +92,13 @@ function LoginUser() {
             localStorage.setItem("user", JSON.stringify(res.data.user));
             localStorage.setItem("token", JSON.stringify(res.data.accessToken));
             setFormInput(res.data.user);
-            if (res.data.user.role === "Admin") {
+            if (res.data.user.role === "Company") {
               navigate("/admin-company");
-              toast.success("Đăng nhập Admin Company thành công 👌");
+            } else if (res.data.user.role === "Admin") {
+              navigate("/admin");
             } else {
               navigate("/");
-            }
+            } 
           }
         })
         .catch((err) => {

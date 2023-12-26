@@ -18,6 +18,12 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+
+    case "ADMIN_COMPANY":
+      return {
+        ...state,
+        user: action.payload,
+      };
     default:
       return state;
   }

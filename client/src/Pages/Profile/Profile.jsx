@@ -13,7 +13,7 @@ import { axiosConfig } from "../../axios/config";
 import CustomInput from "../../components/common/CustomInput";
 import CustomButton from "../../components/common/CustomButton";
 
-function Profile({ isUser, isCompany }) {
+function Profile() {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
@@ -64,7 +64,6 @@ function Profile({ isUser, isCompany }) {
     const phonePattern = /^\d{10}$/;
     return phonePattern.test(phoneNumber);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const maxValue = 225;
@@ -108,10 +107,11 @@ function Profile({ isUser, isCompany }) {
         const currentPassword = currentUserData.password;
 
         const { password, ...rest } = formInput;
-
+        rest.applications = [];
         axiosConfig
           .patch(`/users/${userId}`, rest)
           .then((res) => {
+            console.log(res.data);
             res.data.password = currentPassword;
             dispatch({ type: "UPDATE_USER", payload: res.data });
             toast.success("Cập nhật thông tin thành công 👌");

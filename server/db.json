@@ -23,7 +23,7 @@
       "locked": false,
       "applications": [],
       "role": "User",
-      "id": 3,
+      "id": 2,
       "education": "đại học neu",
       "certification": "n3",
       "createdAt": 1703237110781,
@@ -39,13 +39,13 @@
       "locked": false,
       "applications": [],
       "role": "User",
-      "id": 4,
+      "id": 3,
       "gender": "Nam",
       "education": "đại học neu",
       "certification": "n3"
     },
     {
-      "email": "rikkeiisoft@gmail.com",
+      "email": "rikkeisoft@gmail.com",
       "password": "$2a$10$vgXn/8KtvHZxmOH/k7tHSu3IEYWaoTJZzgCvnn2YmPAS5VMtQ883a",
       "name": "RikkeiSoft",
       "confirmPassword": "Company123",
@@ -53,8 +53,32 @@
       "address": "",
       "locked": false,
       "applications": [],
+      "role": "Company",
+      "id": 4
+    },
+    {
+      "email": "admin@gmail.com",
+      "password": "$2a$10$fU4cJhVHSbaGp08tJyspC.1HTKB7h0D.qO.SY1Sj06L4ZmUAJMUtG",
+      "name": "admin",
+      "confirmPassword": "Admin123",
+      "phone": "",
+      "address": "",
+      "locked": false,
       "role": "Admin",
+      "applications": [],
       "id": 5
+    },
+    {
+      "email": "mbs@gmail.com",
+      "password": "$2a$10$Frb5BuvTHBQ9VD.Dqenp2ubGuLvKUt791Aa5m1uNZryaup0JvoEA2",
+      "name": "MBS",
+      "confirmPassword": "Company123",
+      "phone": "",
+      "address": "",
+      "locked": false,
+      "role": "Company",
+      "applications": [],
+      "id": 6
     }
   ],
   "jobs": [
@@ -68,7 +92,7 @@
       "requirement": "Có kiến thức về hệ điều hành máy chủ, mạng, bảo mật thông tin",
       "benefit": "Các chế độ và quyền lợi theo Luật Lao động được đảm bảo đầy đủ.Thưởng Lương tháng 13",
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
-      "address": "Hà Nội",
+      "address": "Hồ Chí Minh",
       "location": "1 Mễ trì",
       "salary": "9",
       "level": "Nhân viên",
@@ -178,7 +202,7 @@
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
       "address": "Hà Nội",
       "location": " Mễ Trì, Nam Từ Liêm",
-      "salary": 13,
+      "salary": 11,
       "level": "Nhân viên",
       "experience": "Chưa có kinh nghiệm",
       "scale": 10,
@@ -394,7 +418,7 @@
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
       "address": "Hà Nội",
       "location": " Mễ Trì, Nam Từ Liêm",
-      "salary": 13,
+      "salary": 15,
       "level": "Nhân viên",
       "experience": "Chưa có kinh nghiệm",
       "scale": 10,
@@ -529,7 +553,8 @@
   ],
   "companies": [
     {
-      "idCompany": 1,
+      "id": 1,
+      "userId": 4,
       "name": "RikkeiSoft",
       "introduce": "Nối dài giấc mơ ấy bằng tinh thần đoàn kết, quyết tâm cao cùng khát khao chinh phục cháy bỏng, Ban lãnh đạo Công ty đồng lòng cùng toàn thể cán bộ nhân viên cam kết đưa con thuyền Rikkeisoft cán mốc 10 000 nhân sự vào năm 2025.",
       "address": "Hà Nội",
@@ -539,7 +564,7 @@
       "avatar": "https://techviec.com/wp-content/uploads/2019/09/rikkeisoft-logo-1.png"
     },
     {
-      "idCompany": 2,
+      "id": 2,
       "name": "FPT",
       "introduce": "FPT Software là công ty thành viên thuộc Tập đoàn FPT. Được thành lập từ năm 1999, FPT Software hiện là công ty chuyên cung cấp các dịch vụ và giải pháp phần mềm cho các khách hàng quốc tế, với hơn 28000 nhân viên, hiện diện tại 27 quốc gia trên toàn cầu. Nhiều năm liền, FPT Software được bình chọn là Nhà Tuyển dụng được yêu thích nhất và nằm trong TOP các công ty có môi trường làm việc tốt nhất châu Á",
       "address": "Hà Nội",
@@ -549,7 +574,7 @@
       "avatar": "https://cdn-new.topcv.vn/unsafe/80x/filters:format(webp)/https://static.topcv.vn/company_logos/fpt-software-6073b38a10cb4.jpg"
     },
     {
-      "idCompany": 3,
+      "id": 3,
       "name": "Ngân hàng MB ",
       "introduce": "Ngân hàng TMCP Quân Đội- MBBank Top 3 Môi trường làm việc tốt nhất ngành ngân hàng",
       "address": "Hà Nội",
@@ -559,7 +584,7 @@
       "avatar": "https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png"
     },
     {
-      "idCompany": 4,
+      "id": 4,
       "name": "Ngân hàng Vietcombank",
       "introduce": "Ngân hàng số 1 tại Việt Nam, một trong 100 ngân hàng lớn nhất khu vực Châu Á, một trong 300 tập đoàn tài chính ngân hàng lớn nhất thế giới, một trong 1000 doanh nghiệp niêm yết lớn nhất toàn cầu, đóng góp lớn vào sự phát triển bền vững của Việt Nam",
       "address": "Hà Nội",
@@ -569,7 +594,7 @@
       "avatar": "https://cdn.tgdd.vn/2020/04/GameApp/icon-200x200.jpg"
     },
     {
-      "idCompany": 5,
+      "id": 5,
       "name": "Hệ thống Anh ngữ AMES",
       "introduce": "Được thành lập từ năm 2003, đến nay, sau hơn 17 năm phát triển, Hệ thống trung tâm Anh ngữ AMES ENGLISH đã được công nhận là một trong những thương hiệu hàng đầu về học tiếng Anh chất lượng cao tại Việt Nam. Hiện nay, AMES ENGLISH đã xây dựng thành công hệ thống 40+ trung tâm trên toàn quốc, chuyên cung cấp các khóa đào tạo tiếng Anh dành cho mọi đối tượng từ thiếu nhi đến người lớn.",
       "address": "Hà Nội",
@@ -577,6 +602,18 @@
       "personnel": 400,
       "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
       "avatar": "https://cdn-new.topcv.vn/unsafe/135x/filters:format(webp)/https://static.topcv.vn/company_logos/he-thong-anh-ngu-ames-5ce6414e090e0.jpg"
+    },
+    {
+      "userId": 6,
+      "name": "MBS",
+      "email": "mbs@gmail.com",
+      "phone": "0936763839",
+      "time": "Thứ 2 - Thứ 6 (từ 08:00 đến 17:00)",
+      "address": "Hà Nội",
+      "location": "asdasda",
+      "introduce": "affqqfsa",
+      "avatar": "https://firebasestorage.googleapis.com/v0/b/topcv-10a1d.appspot.com/o/images%2Fmbs.png?alt=media&token=5d4084c4-4c68-4c94-9518-67f0f55bc4d1",
+      "id": 6
     }
   ]
 }

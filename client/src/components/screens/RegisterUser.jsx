@@ -37,6 +37,7 @@ function RegisterUser() {
     phone: "",
     address: "",
     locked: false,
+    role: "",
     applications: [],
   });
 
@@ -78,6 +79,9 @@ function RegisterUser() {
       )
     ) {
       errors.confirmPassword = "Mật khẩu không trùng khớp";
+    }
+    if (isEmptyValue(formRegister.role)) {
+      errors.role = "Vui lòng chọn vai trò";
     }
 
     setFormError(errors);
@@ -171,6 +175,8 @@ function RegisterUser() {
                   style={{
                     width: 120,
                     marginRight: 20,
+                    border: formError.role ? "1px ridge red" : "",
+                    borderRadius: formError.role ? "8px" : "",
                   }}
                   onChange={handleChangeSelect}
                   options={[
@@ -179,11 +185,20 @@ function RegisterUser() {
                       label: "User",
                     },
                     {
+                      value: "Company",
+                      label: "Company",
+                    },
+                    {
                       value: "Admin",
                       label: "Admin",
                     },
                   ]}
                 />
+                {formError.role && (
+                  <p style={{ color: "red", marginTop: "14px" }}>
+                    {formError.role}
+                  </p>
+                )}
               </Space>
               <CustomButton
                 className={"btn-login"}

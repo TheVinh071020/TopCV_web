@@ -16,6 +16,9 @@ import AdminCompany from "./Admin/AdminCompany/AdminCompany";
 import CompanyProfile from "./Pages/CompanyProfile/CompanyProfile";
 import ProductCompany from "./Admin/AdminCompany/ProductCompany";
 import EditJobCompany from "./Admin/AdminCompany/EditJobCompany";
+import Company from "./Admin/UserAdmin/Company/Company";
+import CreateCompany from "./Admin/AdminCompany/CreateCompany";
+import ProfileCompany from "./Admin/AdminCompany/ProfileCompany";
 
 function App() {
   const navigate = useNavigate();
@@ -44,10 +47,17 @@ function App() {
       <Routes>
         <Route path="/admin" element={<AdminPage />}>
           <Route path="/admin/user" element={<UserAdmin />} />
+          <Route path="/admin/company" element={<Company />} />
         </Route>
         <Route path="/admin-company" element={<AdminCompany />}>
           <Route path="/admin-company/product" element={<ProductCompany />} />
+          <Route path="/admin-company/add" element={<EditJobCompany />} />
           <Route path="/admin-company/edit/:id" element={<EditJobCompany />} />
+          <Route path="/admin-company/profile" element={<ProfileCompany />} />
+          <Route
+            path="/admin-company/create-profile"
+            element={<CreateCompany />}
+          />
         </Route>
 
         <Route path="/company-profile" element={<CompanyProfile />} />

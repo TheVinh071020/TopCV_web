@@ -22,9 +22,12 @@ function Header() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.role === "User") {
       setIsUserRole(true);
-    }
-    if (user && user.role === "Admin") {
+    } else if (user && user.role === "Company") {
       setIsCompanyRole(true);
+    } else if (user && user.role === "Admin") {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      setIsUserRole(true);
     }
   }, []);
 
@@ -102,11 +105,19 @@ function Header() {
             <li>Việc làm</li>
           </Link>
           {isUserRole === true ? (
-            <Link to={"/profile"} style={{ textDecoration: "none" }}>
+            <Link
+              onClick={gotoProfile}
+              // to={"/profile"}
+              style={{ textDecoration: "none" }}
+            >
               <li>Hồ sơ & CV</li>
             </Link>
           ) : (
-            <Link to={"/company-profile"} style={{ textDecoration: "none" }}>
+            <Link
+              onClick={gotoProfile}
+              // to={"/company-profile"}
+              style={{ textDecoration: "none" }}
+            >
               <li>Thông tin Công ty</li>
             </Link>
           )}

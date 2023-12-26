@@ -34,18 +34,20 @@ function AdminCompany() {
               >
                 <li>
                   <Link
+                    to="/admin-company/create-profile"
+                    className="nav-link px-0 align-middle"
+                  >
+                    <i className="fs-4 bi-table" />
+                    <span className="ms-1 d-none d-sm-inline">Profile</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to="/admin-company/product"
                     className="nav-link px-0 align-middle"
                   >
                     <i className="fs-4 bi-grid" />
                     <span className="ms-1 d-none d-sm-inline">Products</span>
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="" className="nav-link px-0 align-middle">
-                    <i className="fs-4 bi-table" />
-                    <span className="ms-1 d-none d-sm-inline">Profile</span>
                   </Link>
                 </li>
               </ul>

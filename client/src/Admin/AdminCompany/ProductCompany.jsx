@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function ProductCompany() {
   // View Add job
@@ -20,10 +21,6 @@ function ProductCompany() {
   const [view, setView] = useState(false);
   const handleCloseView = () => setView(false);
   const handleShowView = () => setView(true);
-  // Edit job
-  const [edit, setEdit] = useState(false);
-  const handleCloseEdit = () => setEdit(false);
-  const handleShowEdit = () => setEdit(true);
 
   const navigate = useNavigate();
 
@@ -36,6 +33,20 @@ function ProductCompany() {
 
   const [viewJobs, setViewJobs] = useState(null);
 
+  const [prevSearchValue, setPrevSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [valueAddress, setValueAddress] = useState("");
+  const [valueSalary, setValueSalary] = useState("");
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const querySearch = searchParams.get("name_like");
+  const queryAddress = searchParams.get("address");
+  const querySalary = searchParams.get("salary");
+
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
   const getListProducts = (pageNumber, pageIndex) => {
     // Lấy idCompany theo cty
     axiosConfig
@@ -45,7 +56,7 @@ function ProductCompany() {
         setCompany(fetchedCompany);
         setFormInput({
           ...formInput,
-          idCompany: fetchedCompany.idCompany,
+          idCompany: fetchedCompany.id,
           company: fetchedCompany.name,
           avatar: fetchedCompany.avatar,
           address: fetchedCompany.address,
@@ -72,7 +83,7 @@ function ProductCompany() {
 
   const [formInput, setFormInput] = useState({
     name: "",
-    idCompany: company.idCompany,
+    idCompany: company.id,
     company: company.name,
     level: "",
     experience: "",
@@ -87,6 +98,65 @@ function ProductCompany() {
     status: "Chờ xét duyệt",
   });
 
+  //validate
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    level: "",
+    experience: "",
+    salary: "",
+    scale: "",
+    description: "",
+    requirement: "",
+    benefit: "",
+    time: "",
+    location: "",
+    address: "",
+  });
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formInput.name.trim()) {
+      errors.name = "Name is required";
+    }
+    if (!formInput.level.trim()) {
+      errors.level = "Level is required";
+    }
+    if (!formInput.experience.trim()) {
+      errors.experience = "Experience is required";
+    }
+    if (!formInput.salary.trim()) {
+      errors.salary = "Salary is required";
+    } else if (isNaN(formInput.salary)) {
+      errors.salary = "Salary must be a number";
+    }
+    if (!formInput.scale.trim()) {
+      errors.scale = "Scale is required";
+    } else if (isNaN(formInput.scale)) {
+      errors.scale = "Scale must be a number";
+    }
+    if (!formInput.description.trim()) {
+      errors.description = "Description is required";
+    }
+    if (!formInput.requirement.trim()) {
+      errors.requirement = "Requirement is required";
+    }
+    if (!formInput.benefit.trim()) {
+      errors.benefit = "Benefit is required";
+    }
+    if (!formInput.time.trim()) {
+      errors.time = "Time is required";
+    }
+    if (!formInput.location.trim()) {
+      errors.location = "Location is required";
+    }
+    if (!formInput.address.trim()) {
+      errors.address = "Address is required";
+    }
+    setFormErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormInput({
@@ -97,33 +167,40 @@ function ProductCompany() {
 
   // Add job
   const handleAddProduct = () => {
-    // Tạo payload từ formInput để gửi thông tin mới
-    const payload = {
-      name: formInput.name,
-      idCompany: formInput.idCompany,
-      company: formInput.company,
-      level: formInput.level,
-      experience: formInput.experience,
-      salary: Number(formInput.salary),
-      scale: Number(formInput.scale),
-      time: formInput.time,
-      description: formInput.description,
-      requirement: formInput.requirement,
-      benefit: formInput.benefit,
-      address: formInput.address,
-      location: formInput.location,
-      status: formInput.status,
-    };
-    axiosConfig
-      .post("/jobs", payload)
-      .then((response) => {
-        console.log("Công việc đã được thêm:", response.data);
-        handleClose();
-        getListProducts();
-      })
-      .catch((error) => {
-        console.error("Lỗi khi thêm công việc:", error);
-      });
+    // navigate(`/admin-company/add`);
+
+    const isFormValid = validateForm();
+    if (isFormValid) {
+      const payload = {
+        name: formInput.name,
+        idCompany: formInput.id,
+        company: formInput.company,
+        level: formInput.level,
+        experience: formInput.experience,
+        salary: Number(formInput.salary),
+        scale: Number(formInput.scale),
+        time: formInput.time,
+        description: formInput.description,
+        requirement: formInput.requirement,
+        benefit: formInput.benefit,
+        address: formInput.address,
+        location: formInput.location,
+        status: formInput.status,
+      };
+      axiosConfig
+        .post("/jobs", payload)
+        .then((response) => {
+          console.log("Công việc đã được thêm:", response.data);
+          toast.success("Tạo mới công việc thành công 👌");
+          handleClose();
+          getListProducts();
+        })
+        .catch((error) => {
+          console.error("Lỗi khi thêm công việc:", error);
+        });
+    } else {
+      console.log("Form has errors. Please check the fields.");
+    }
   };
 
   const handleEditProduct = (id) => {
@@ -143,9 +220,118 @@ function ProductCompany() {
       });
   };
 
+  const getListJobByQuerySearch = async (pageIndex, pageNumber) => {
+    await axiosConfig
+      .get(
+        `/jobs?_page=${pageIndex}&_limit=${pageNumber}&company_like=${companyName}&&name_like=${querySearch}&&address_like=${queryAddress}&&_sort=salary&_order=${querySalary}`
+      )
+      .then((res) => {
+        setProducts(res.data);
+        setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log(querySearch);
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    if (searchValue === prevSearchValue) {
+      return;
+    }
+    setSearchParams({
+      name_like: searchValue,
+      address: valueAddress,
+      salary: valueSalary,
+    });
+    await axiosConfig
+      .get(
+        `/jobs?name_like=${searchValue}&&address_like=${valueAddress}&company_like=${companyName}`
+      )
+      .then((res) => {
+        setProducts(res.data);
+        setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setPrevSearchValue(searchValue);
+  };
+
+  const handleFilterByAddress = async (value) => {
+    setValueAddress(value);
+    setSearchParams({
+      name_like: searchValue,
+      address: value,
+      salary: valueSalary,
+    });
+    await axiosConfig
+      .get(`/jobs?address_like=${value}&company_like=${companyName}`)
+      .then((res) => {
+        setProducts(res.data);
+        setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleFilterBySalary = async (value) => {
+    setValueSalary(value);
+    setSearchParams({
+      salary: value,
+      name_like: searchValue,
+      address: valueAddress,
+    });
+    await axiosConfig
+      .get(`/jobs?salary=${value}&company_like=${companyName}`)
+      .then((res) => {
+        setProducts(res.data);
+        setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleClear = () => {
+    if (!searchValue && !valueAddress && !valueSalary) {
+      return;
+    }
+    setSearchValue("");
+    setValueAddress("");
+    setValueSalary("");
+    setSearchParams("");
+  };
+
   useEffect(() => {
-    getListProducts(1, 4);
-  }, []);
+    if (querySearch) {
+      setSearchValue(querySearch);
+      getListJobByQuerySearch(1, 4);
+    } else if (queryAddress) {
+      setValueAddress(queryAddress);
+      getListJobByQuerySearch(1, 4);
+    } else if (querySalary) {
+      setValueSalary(querySalary);
+      getListJobByQuerySearch(1, 4);
+    } else {
+      getListProducts(1, 4);
+    }
+  }, [searchParams, querySearch, queryAddress]);
+
+  // Delete job
+  const handleDeleteProduct = (id) => {
+    axiosConfig
+      .delete(`/jobs/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        getListProducts(1, 4);
+        toast.success("Xóa công việc thành công 👌");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // Pagination
   let pageNumber = 4;
@@ -180,6 +366,11 @@ function ProductCompany() {
                 type="text"
                 placeholder="Tên CV"
               />
+              {formErrors.name && (
+                <span className="error" style={{ color: "red" }}>
+                  {formErrors.name}
+                </span>
+              )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Control
@@ -204,6 +395,11 @@ function ProductCompany() {
                 <option value="Quản lý">Quản lý</option>
                 <option value="Trưởng bộ phận">Trưởng bộ phận</option>
               </Form.Select>
+              {formErrors.level && (
+                <span className="error" style={{ color: "red" }}>
+                  {formErrors.level}
+                </span>
+              )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Select
@@ -220,6 +416,11 @@ function ProductCompany() {
                 <option value="1 - 2 năm">1 - 2 năm</option>
                 <option value="trên 2 năm">trên 2 năm</option>
               </Form.Select>
+              {formErrors.experience && (
+                <span className="error" style={{ color: "red" }}>
+                  {formErrors.experience}
+                </span>
+              )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Control
@@ -229,6 +430,11 @@ function ProductCompany() {
                 type="text"
                 placeholder="Lương"
               />
+              {formErrors.salary && (
+                <span className="error" style={{ color: "red" }}>
+                  {formErrors.salary}
+                </span>
+              )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Control
@@ -238,6 +444,11 @@ function ProductCompany() {
                 type="text"
                 placeholder="Số lượng tuyển"
               />
+              {formErrors.scale && (
+                <span className="error" style={{ color: "red" }}>
+                  {formErrors.scale}
+                </span>
+              )}
             </Form.Group>
 
             <Form.Group
@@ -253,6 +464,11 @@ function ProductCompany() {
                 as="textarea"
                 rows={3}
               />
+              {formErrors.description && (
+                <span className="error" style={{ color: "red" }}>
+                  {formErrors.description}
+                </span>
+              )}
             </Form.Group>
 
             <Form.Group
@@ -268,6 +484,11 @@ function ProductCompany() {
                 as="textarea"
                 rows={3}
               />
+              {formErrors.requirement && (
+                <span className="error" style={{ color: "red" }}>
+                  {formErrors.requirement}
+                </span>
+              )}
             </Form.Group>
             <Form.Group
               className="mb-3"
@@ -282,6 +503,11 @@ function ProductCompany() {
                 as="textarea"
                 rows={3}
               />
+              {formErrors.benefit && (
+                <span className="error" style={{ color: "red" }}>
+                  {formErrors.benefit}
+                </span>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formGroupPassword">
@@ -292,6 +518,9 @@ function ProductCompany() {
                 type="text"
                 placeholder="Thời gian làm việc"
               />
+              {formErrors.time && (
+                <span className="error">{formErrors.time}</span>
+              )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Control
@@ -301,6 +530,9 @@ function ProductCompany() {
                 type="text"
                 placeholder="Địa chỉ"
               />
+              {formErrors.location && (
+                <span className="error">{formErrors.location}</span>
+              )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Control
@@ -310,6 +542,9 @@ function ProductCompany() {
                 type="text"
                 placeholder="Thành phố"
               />
+              {formErrors.address && (
+                <span className="error">{formErrors.address}</span>
+              )}
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -329,7 +564,7 @@ function ProductCompany() {
         <div className="d-flex justify-content-center align-items-center">
           <h2>Quản lý công việc</h2>
         </div>
-        <div className="container d-flex justify-content-flex-start align-items-center">
+        <div className="container d-flex justify-content-flex-start align-items-center gap-3">
           <div>
             <Navbar expand="lg" className="bg-body-tertiary">
               <Container fluid>
@@ -340,10 +575,14 @@ function ProductCompany() {
                       placeholder="Nhập vào để tìm kiếm"
                       className="me-2"
                       aria-label="Search"
-                      //   value={searchValue}
-                      //   onChange={handleSearchChange}
+                      value={searchValue}
+                      onChange={handleSearchChange}
                     />
-                    <Button variant="outline-success" type="submit">
+                    <Button
+                      onClick={handleSearchSubmit}
+                      variant="outline-success"
+                      type="submit"
+                    >
                       Search
                     </Button>
                   </Form>
@@ -354,24 +593,24 @@ function ProductCompany() {
           <div>
             <Space wrap>
               <Select
-                defaultValue="Giới tính"
+                defaultValue="Địa chỉ"
                 style={{
-                  width: 100,
+                  width: 120,
                   marginRight: 20,
                 }}
-                // onChange={handleFilterByGender}
+                onChange={handleFilterByAddress}
                 options={[
                   {
                     value: "",
-                    label: "Giới tính",
+                    label: "Địa chỉ",
                   },
                   {
-                    value: "Nam",
-                    label: "Nam",
+                    value: "Hà Nội",
+                    label: "Hà Nội",
                   },
                   {
-                    value: "Nữ",
-                    label: "Nữ",
+                    value: "Hồ Chí Minh",
+                    label: "Hồ Chí Minh",
                   },
                 ]}
               />
@@ -380,27 +619,35 @@ function ProductCompany() {
           <div>
             <Space wrap>
               <Select
-                defaultValue="Tên"
+                defaultValue="Mức lương"
                 style={{
-                  width: 80,
+                  width: 120,
                 }}
-                // onChange={handleSortByName}
+                onChange={handleFilterBySalary}
                 options={[
                   {
                     value: "",
-                    label: "Tên",
-                  },
-                  {
-                    value: "asc",
-                    label: "A - Z",
+                    label: "Mức lương",
                   },
                   {
                     value: "desc",
-                    label: "Z - A",
+                    label: "Cao đến thấp",
+                  },
+                  {
+                    value: "asc",
+                    label: "Thấp đến cao",
                   },
                 ]}
               />
             </Space>
+          </div>
+          <div>
+            <CustomButton
+              label={"Clear"}
+              type={"button"}
+              className={"btn btn-danger"}
+              onClick={handleClear}
+            />
           </div>
         </div>
         <div className="container mt-3">
@@ -409,6 +656,7 @@ function ProductCompany() {
             type={"button"}
             className={"btn btn-success"}
             onClick={handleShow}
+            // onClick={handleAddProduct}
           />
         </div>
         <table
@@ -458,6 +706,7 @@ function ProductCompany() {
                     label={"Xóa"}
                     type={"button"}
                     className={"btn btn-danger"}
+                    onClick={() => handleDeleteProduct(product.id)}
                   />
                 </td>
               </tr>

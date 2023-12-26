@@ -130,7 +130,8 @@ function Detail() {
       const currentPassword = currentUser.data.password;
 
       const { password, ...formDataWithoutPassword } = formData;
-
+      formDataWithoutPassword.applications = [];
+      
       const updateUser = await axiosConfig.patch(
         `/users/${user.id}`,
         formDataWithoutPassword
@@ -353,7 +354,12 @@ function Detail() {
       </div>
       <div className="container job-detail-body">
         <div className="job-detail__body-left">
-          <DetailBodyLeft job={job} setOpen={setOpen} isUserRole={isUserRole} isCompanyRole={isCompanyRole}/>
+          <DetailBodyLeft
+            job={job}
+            setOpen={setOpen}
+            isUserRole={isUserRole}
+            isCompanyRole={isCompanyRole}
+          />
         </div>
         <DetailBodyRight job={job} />
       </div>

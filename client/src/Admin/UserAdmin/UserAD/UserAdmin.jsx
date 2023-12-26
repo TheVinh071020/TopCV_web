@@ -177,6 +177,15 @@ function UserAdmin() {
     console.log(viewUser);
   };
 
+  const handleClear = () => {
+    if (!searchValue && !genderValue && !sortNameValue) {
+      return;
+    }
+    setSearchValue("");
+    setGenderValue("");
+    setSortNameValue("");
+    setSearchParams("");
+  };
   // Pagination
   let pageNumber = 5;
   const totalPages = Math.ceil(total / pageNumber);
@@ -267,6 +276,14 @@ function UserAdmin() {
                 ]}
               />
             </Space>
+          </div>
+          <div>
+            <CustomButton
+              label={"Clear"}
+              type={"button"}
+              className={"btn btn-danger"}
+              onClick={handleClear}
+            />
           </div>
         </div>
         <table

@@ -40,7 +40,7 @@ function EditJobCompany() {
         const jobData = res.data;
         setFormInput({
           name: jobData.name,
-          idCompany: jobData.idCompany,
+          idCompany: jobData.id,
           company: jobData.company,
           level: jobData.level,
           experience: jobData.experience,
@@ -65,7 +65,7 @@ function EditJobCompany() {
     axiosConfig
       .patch(`/jobs/${id}`, formInput)
       .then((res) => {
-        toast.success("Cập nhật thông tin thành công 👌");
+         
         navigate("/admin-company/product");
       })
       .catch((err) => {
@@ -88,7 +88,7 @@ function EditJobCompany() {
           >
             <Form.Group className="col-md-5" controlId="formGroupEmail">
               <Form.Control
-                value={formInput.name} // Gán giá trị từ formInput vào ô input
+                value={formInput.name} 
                 onChange={handleInputChange}
                 name="name"
                 type="text"
@@ -97,7 +97,7 @@ function EditJobCompany() {
             </Form.Group>
             <Form.Group className="col-md-6" controlId="formGroupPassword">
               <Form.Control
-                value={formInput.company} // Gán giá trị từ formInput vào ô input
+                value={formInput.company} 
                 onChange={handleInputChange}
                 name="company"
                 type="text"

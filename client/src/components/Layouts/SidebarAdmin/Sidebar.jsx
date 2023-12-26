@@ -1,6 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <div
       style={{ backgroundColor: "rgb(40 40 40)" }}
@@ -20,14 +27,14 @@ const Sidebar = () => {
           id="menu"
         >
           <li>
-            <Link to="/admin" className="nav-link px-0 align-middle">
+            <Link to="/admin/user" className="nav-link px-0 align-middle">
               <i className="fs-4 bi-people" />
               <span className="ms-1 d-none d-sm-inline">Users</span>
             </Link>
           </li>
 
           <li>
-            <Link to="" className="nav-link px-0 align-middle">
+            <Link to="/admin/company" className="nav-link px-0 align-middle">
               <i className="fs-4 bi-grid" />
               <span className="ms-1 d-none d-sm-inline">Company</span>
             </Link>
@@ -57,7 +64,7 @@ const Sidebar = () => {
             className="dropdown-menu dropdown-menu-dark text-small shadow"
             aria-labelledby="dropdownUser1"
           >
-            <li>
+            <li onClick={handleLogout}>
               <a className="dropdown-item" href="#">
                 Sign out
               </a>
