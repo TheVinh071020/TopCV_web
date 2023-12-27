@@ -1,7 +1,7 @@
 .main {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 4.7%;
     width: 100%;
     background-color: rgb(239, 239, 239);
@@ -24,7 +24,7 @@
     display: flex;
     gap: 24px;
     justify-content: flex-start;
-    margin: 0;
+    margin: 3% 0;
     padding-bottom: 16px;
 }
 .profile-avatar img{

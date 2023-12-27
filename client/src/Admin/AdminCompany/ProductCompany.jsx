@@ -24,8 +24,9 @@ function ProductCompany() {
 
   const navigate = useNavigate();
 
-  const companyLocal = JSON.parse(localStorage.getItem("user"));
+  const companyLocal = JSON.parse(localStorage.getItem("company"));
   const companyName = companyLocal.name;
+  // console.log(companyName);
 
   const [company, setCompany] = useState("");
   const [products, setProducts] = useState([]);
@@ -80,7 +81,8 @@ function ProductCompany() {
         console.log(err);
       });
   };
-
+  // console.log(company);
+  console.log(products);
   const [formInput, setFormInput] = useState({
     name: "",
     idCompany: company.id,
@@ -95,9 +97,10 @@ function ProductCompany() {
     benefit: "",
     address: company.address,
     location: company.location,
+    avatar: company.avatar,
     status: "Chờ xét duyệt",
   });
-
+  // console.log(formInput);
   //validate
   const [formErrors, setFormErrors] = useState({
     name: "",
@@ -185,15 +188,17 @@ function ProductCompany() {
         benefit: formInput.benefit,
         address: formInput.address,
         location: formInput.location,
+        avatar: formInput.avatar,
         status: formInput.status,
       };
+      console.log("payload", payload);
       axiosConfig
         .post("/jobs", payload)
         .then((response) => {
           console.log("Công việc đã được thêm:", response.data);
           toast.success("Tạo mới công việc thành công 👌");
           handleClose();
-          getListProducts();
+          getListProducts(1,4);
         })
         .catch((error) => {
           console.error("Lỗi khi thêm công việc:", error);
@@ -233,7 +238,6 @@ function ProductCompany() {
         console.log(err);
       });
   };
-  console.log(querySearch);
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
     if (searchValue === prevSearchValue) {
@@ -718,152 +722,6 @@ function ProductCompany() {
         <Pagination pageNumbers={pageNumbers} goToPage={goToPage} />
       </div>
 
-      {/* Edit job */}
-      {/* <Modal
-        size="lg"
-        aria-labelledby="example-modal-sizes-title-lg"
-        animation={false}
-        show={edit}
-        onHide={handleCloseEdit}
-      >
-        <Modal.Body>
-          <Form>
-            <h1 className="titleee">Sửa công việc</h1>
-            <Form.Group className="mb-3" controlId="formGroupEmail">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={name}
-                name="name"
-                type="text"
-                placeholder="Tên CV"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={company}
-                name="company"
-                type="text"
-                placeholder="Công ty"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={level}
-                name="level"
-                type="text"
-                placeholder="Chức vụ"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={experience}
-                name="experience"
-                type="text"
-                placeholder="Kinh nghiệm"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={salary}
-                name="salary"
-                type="number"
-                placeholder="Lương"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={scale}
-                name="scale"
-                type="number"
-                placeholder="Số lượng tuyển"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={description}
-                name="description"
-                type="textarea"
-                placeholder="Mô tả công việc "
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                value={requirement}
-                name="requirement"
-                type="textarea"
-                placeholder="Yêu cầu ứng viên "
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={benefit}
-                name="benefit"
-                type="textarea"
-                placeholder="Quyền lợi"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={time}
-                name="time"
-                type="text"
-                placeholder="Thời gian làm việc"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={location}
-                name="location"
-                type="text"
-                placeholder="Địa chỉ"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={address}
-                name="city"
-                type="text"
-                placeholder="Thành phố"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                // onChange={handleInputChange}
-                value={avatar}
-                name="avatar"
-                type="text"
-                placeholder="Avatar"
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <button className="btn btn-danger" onClick={handleCloseEdit}>
-            Close
-          </button>
-          <CustomButton
-            className={"btn btn-success"}
-            label={"Update job"}
-            type={"submit"}
-            // onClick={handleAddProduct}
-          />
-        </Modal.Footer>
-      </Modal> */}
       {/* View job */}
       <Modal
         size="xl "

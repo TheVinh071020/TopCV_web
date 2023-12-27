@@ -23,6 +23,7 @@ function EditJobCompany() {
     benefit: "",
     address: "",
     location: "",
+    avatar: "",
   });
 
   const handleInputChange = (e) => {
@@ -52,6 +53,7 @@ function EditJobCompany() {
           benefit: jobData.benefit,
           location: jobData.location,
           address: jobData.address,
+          avatart: jobData.avatar,
         });
       })
       .catch((err) => {

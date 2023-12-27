@@ -17,7 +17,7 @@ import CompanyProfile from "./Pages/CompanyProfile/CompanyProfile";
 import ProductCompany from "./Admin/AdminCompany/ProductCompany";
 import EditJobCompany from "./Admin/AdminCompany/EditJobCompany";
 import Company from "./Admin/UserAdmin/Company/Company";
-import CreateCompany from "./Admin/AdminCompany/CreateCompany";
+import EidtCompany from "./Admin/AdminCompany/EidtCompany";
 import ProfileCompany from "./Admin/AdminCompany/ProfileCompany";
 
 function App() {
@@ -55,8 +55,8 @@ function App() {
           <Route path="/admin-company/edit/:id" element={<EditJobCompany />} />
           <Route path="/admin-company/profile" element={<ProfileCompany />} />
           <Route
-            path="/admin-company/create-profile"
-            element={<CreateCompany />}
+            path="/admin-company/create-profile/:id"
+            element={<EidtCompany />}
           />
         </Route>
 

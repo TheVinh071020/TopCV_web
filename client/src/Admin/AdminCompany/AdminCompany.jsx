@@ -9,6 +9,8 @@ function AdminCompany() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("company");
+    localStorage.removeItem("companys");
     navigate("/login");
   };
   return (
@@ -34,7 +36,7 @@ function AdminCompany() {
               >
                 <li>
                   <Link
-                    to="/admin-company/create-profile"
+                    to="/admin-company/profile"
                     className="nav-link px-0 align-middle"
                   >
                     <i className="fs-4 bi-table" />

@@ -188,10 +188,6 @@ function RegisterUser() {
                       value: "Company",
                       label: "Company",
                     },
-                    {
-                      value: "Admin",
-                      label: "Admin",
-                    },
                   ]}
                 />
                 {formError.role && (

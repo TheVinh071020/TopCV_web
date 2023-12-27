@@ -87,18 +87,25 @@ function LoginUser() {
         .post("/login", formInput)
         .then((res) => {
           if (res.data.user.locked === false) {
-            toast.success("Đăng nhập thành công 👌");
-            dispatch({ type: "UPDATE_USER", payload: res.data.user });
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-            localStorage.setItem("token", JSON.stringify(res.data.accessToken));
-            setFormInput(res.data.user);
-            if (res.data.user.role === "Company") {
+            if (res.data.user.role === "User") {
+              toast.success("Đăng nhập thành công 👌");
+              dispatch({ type: "UPDATE_USER", payload: res.data.user });
+              localStorage.setItem("user", JSON.stringify(res.data.user));
+              localStorage.setItem(
+                "token",
+                JSON.stringify(res.data.accessToken)
+              );
+              navigate("/");
+            } else if (res.data.user.role === "Company") {
               navigate("/admin-company");
+              localStorage.setItem("company", JSON.stringify(res.data.user));
+              localStorage.setItem(
+                "token",
+                JSON.stringify(res.data.accessToken)
+              );
             } else if (res.data.user.role === "Admin") {
               navigate("/admin");
-            } else {
-              navigate("/");
-            } 
+            }
           }
         })
         .catch((err) => {

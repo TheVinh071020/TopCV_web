@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-function CustomButton({ className, variant, type, label, style, onClick }) {
+function CustomButton({ className, variant, type, label, style, onClick, disabled }) {
   return (
     <div>
       <Button
@@ -10,6 +10,7 @@ function CustomButton({ className, variant, type, label, style, onClick }) {
         variant={variant}
         type={type}
         style={style}
+        disabled={disabled}
       >
         {label}
       </Button>

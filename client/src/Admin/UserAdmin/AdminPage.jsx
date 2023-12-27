@@ -10,7 +10,6 @@ function AdminPage() {
         <div className="row flex-nowrap">
           <Sidebar />
           <Outlet />
-          {/* <UserAdmin /> */}
         </div>
       </div>
     </div>

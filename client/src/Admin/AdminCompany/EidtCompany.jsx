@@ -1,19 +1,20 @@
-import React, { useState } from "react";
-import CustomInput from "../../components/common/CustomInput";
+import React, { useEffect, useState } from "react";
 import CustomButton from "../../components/common/CustomButton";
 import Form from "react-bootstrap/Form";
 import { storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { toast } from "react-toastify";
 import { axiosConfig } from "../../axios/config";
+import { useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-function CreateCompany() {
-  const isCompany = JSON.parse(localStorage.getItem("user"));
-
-  const [formInput, setFormInput] = useState({
-    userId: isCompany.id,
-    name: isCompany.name,
-    email: isCompany.email,
+function EidtCompany() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [company, setCompany] = useState({
+    userId: "",
+    name: "",
+    email: "",
     phone: "",
     time: "",
     address: "",
@@ -22,18 +23,50 @@ function CreateCompany() {
     avatar: "",
   });
 
+  const [userId, setUserId] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [time, setTime] = useState("");
+  const [address, setAddress] = useState("");
+  const [location, setLocation] = useState("");
+
+  const [initialCompanyData, setInitialCompanyData] = useState({});
+
+  const getCompanyInfo = async () => {
+    await axiosConfig
+      .get(`/companies/${id}`)
+      .then((res) => {
+        setCompany(res.data);
+        setInitialCompanyData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getCompanyInfo();
+  }, [id]);
+
+  const isDataChanged = !Object.keys(company).every((key) => {
+    return company[key] === initialCompanyData[key];
+  });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormInput({
-      ...formInput,
+    setCompany({
+      ...company,
       [name]: value,
     });
   };
 
-  const updateProfile = async (e) => {
+  const editProfile = async (e) => {
     e.preventDefault();
-    const response = await axiosConfig.post("/companies", formInput);
+    const response = await axiosConfig.patch(`/companies/${id}`, company);
+    toast.success("Cập nhật thông tin công ty thành công!");
+    navigate("/admin-company/profile");
   };
+
   const handleAvatarUpload = (e) => {
     const selectedImage = e.target.files?.[0];
     if (selectedImage) {
@@ -59,13 +92,13 @@ function CreateCompany() {
     <div className="container ">
       <div className="col-md-8 offset-md-1">
         <Form type="submit">
-          <h1 className="titleee mb-4">Tạo Công ty</h1>
+          <h1 className="titleee mb-4">Sửa thông tin công ty</h1>
 
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
-              value={formInput.name}
+              value={company.name}
               onChange={handleInputChange}
-              name="company"
+              name="name"
               type="text"
               placeholder="Tên công ty"
             />
@@ -74,7 +107,7 @@ function CreateCompany() {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={formInput.email}
+              value={company.email}
               name="email"
               type="text"
               placeholder="Email"
@@ -83,7 +116,7 @@ function CreateCompany() {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={formInput.phone}
+              value={company.phone}
               name="phone"
               type="phone"
               placeholder="Số điện thoại"
@@ -92,7 +125,7 @@ function CreateCompany() {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={formInput.time}
+              value={company.time}
               name="time"
               type="text"
               placeholder="Thời gian làm việc"
@@ -101,7 +134,7 @@ function CreateCompany() {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={formInput.location}
+              value={company.location}
               name="location"
               type="text"
               placeholder="Địa chỉ"
@@ -110,7 +143,7 @@ function CreateCompany() {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={formInput.address}
+              value={company.address}
               name="address"
               type="text"
               placeholder="Thành phố"
@@ -123,7 +156,7 @@ function CreateCompany() {
           >
             <Form.Control
               onChange={handleInputChange}
-              value={formInput.introduce}
+              value={company.introduce}
               name="introduce"
               type="textarea"
               placeholder="Giới thiệu công ty"
@@ -143,7 +176,7 @@ function CreateCompany() {
                 placeholder="Avatar"
               />
             </Form.Group>
-            {formInput.avatar && (
+            {company.avatar && (
               <div
                 style={{
                   width: "100px",
@@ -154,7 +187,7 @@ function CreateCompany() {
                 className="d-flex align-items-center"
               >
                 <img
-                  src={formInput.avatar}
+                  src={company.avatar}
                   alt="Uploaded Avatar"
                   style={{
                     width: "100px",
@@ -170,8 +203,13 @@ function CreateCompany() {
               className={"btn btn-success"}
               label={"Submit"}
               type={"submit"}
-              onClick={updateProfile}
+              onClick={editProfile}
+              disabled={!isDataChanged}
             />
+
+            <Link to={"/admin-company/profile"}>
+              <CustomButton className={"btn btn-danger"} label={"Close"} />
+            </Link>
           </div>
         </Form>
       </div>
@@ -179,4 +217,4 @@ function CreateCompany() {
   );
 }
 
-export default CreateCompany;
+export default EidtCompany;

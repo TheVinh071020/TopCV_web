@@ -15,7 +15,7 @@ const Sidebar = () => {
     >
       <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
         <a
-          href="/"
+          href=""
           className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
         >
           <span style={{ color: "white" }} className="fs-5 d-none d-sm-inline">

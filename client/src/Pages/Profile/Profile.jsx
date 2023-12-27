@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Layouts/Headers/Header";
 import Footer from "../../components/Layouts/Footer/Footer";
 import "./Profile.css";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Helmet } from "react-helmet";
-import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { axiosConfig } from "../../axios/config";
 import CustomInput from "../../components/common/CustomInput";
 import CustomButton from "../../components/common/CustomButton";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../firebase";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ function Profile() {
     certification: "",
     address: "",
     gender: "",
+    avatar: "",
     applications: [],
   });
 
@@ -111,7 +112,6 @@ function Profile() {
         axiosConfig
           .patch(`/users/${userId}`, rest)
           .then((res) => {
-            console.log(res.data);
             res.data.password = currentPassword;
             dispatch({ type: "UPDATE_USER", payload: res.data });
             toast.success("Cập nhật thông tin thành công 👌");
@@ -126,6 +126,26 @@ function Profile() {
       });
   };
 
+  const handleAvatarUpload = (e) => {
+    const selectedImage = e.target.files?.[0];
+    if (selectedImage) {
+      const storageRef = ref(storage, `images/${selectedImage.name}`);
+      uploadBytes(storageRef, selectedImage)
+        .then((snapshot) => getDownloadURL(snapshot.ref))
+        .then((url) => {
+          setFormInput((prev) => ({ ...prev, avatar: url }));
+          const inputElement = document.getElementById("avatarInput");
+          if (inputElement) {
+            inputElement.value = url;
+          }
+        })
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+        });
+    }
+  };
+  console.log(user);
+
   return (
     <div>
       <Helmet>
@@ -137,24 +157,29 @@ function Profile() {
           <div>
             <h3>Cài đặt thông tin cá nhân</h3>
             <Form onSubmit={handleSubmit}>
-              <CustomInput
-                label={"Họ và tên"}
-                type={"text"}
-                name={"name"}
-                placeholder={"Họ và tên"}
-                value={formInput.name}
-                handleInputChange={handleInputChange}
-                formError={validationErrors.name}
-              />
-              <CustomInput
-                label={"Email"}
-                type={"text"}
-                name={"email"}
-                placeholder={"Nhập Email"}
-                value={formInput.email}
-                handleInputChange={handleInputChange}
-                disabled={formInput.email !== ""}
-              />
+              <Form.Group
+                className="d-flex justify-content-between w-100"
+                controlId="formGroupPassword"
+              >
+                <CustomInput
+                  label={"Họ và tên"}
+                  type={"text"}
+                  name={"name"}
+                  placeholder={"Họ và tên"}
+                  value={formInput.name}
+                  handleInputChange={handleInputChange}
+                  formError={validationErrors.name}
+                />
+                <CustomInput
+                  label={"Email"}
+                  type={"text"}
+                  name={"email"}
+                  placeholder={"Nhập Email"}
+                  value={formInput.email}
+                  handleInputChange={handleInputChange}
+                  disabled={formInput.email !== ""}
+                />
+              </Form.Group>
               <CustomInput
                 label={"Số điện thoại"}
                 type={"text"}
@@ -207,6 +232,7 @@ function Profile() {
                   {validationErrors.gender}
                 </div>
               </Form.Group>
+
               <CustomButton
                 style={{ width: "20%", backgroundColor: "#f07e1d" }}
                 className={"btn-login"}
@@ -217,27 +243,35 @@ function Profile() {
             </Form>
           </div>
         </div>
-        {/* <div className="main-right">
+        <div className="main-right">
           <div className="profile-avatar">
-            <img src="https://www.topcv.vn/images/avatar-default.jpg" alt="" />
+            {formInput.avatar ? (
+              <img src={formInput.avatar} alt="" />
+            ) : (
+              <img src={user.avatar} alt="" />
+            )}
           </div>
           <div>
             <div className="text-welcome">Chào bạn trở lại,</div>
             <div className="profile-fullname">{user.name}</div>
             <div>
-              <span
-                style={{
-                  backgroundColor: "gray",
-                  color: "white",
-                  padding: "2px 5px",
-                  borderRadius: "2px",
-                }}
+              <Form.Group
+                className="d-flex justify-content-between mb-3 w-100"
+                controlId="formGroupPassword"
               >
-                Tài khoản đã xác thực
-              </span>
+                <Form.Group className="col-md-6" controlId="formGroupPassword">
+                  <Form.Control
+                    onChange={handleAvatarUpload}
+                    name="avatar"
+                    type="file"
+                    placeholder="Avatar"
+                  />
+                </Form.Group>
+                
+              </Form.Group>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       <Footer />
     </div>
