@@ -58,9 +58,9 @@ function Header() {
 
   const gotoProfile = () => {
     if (isUser) {
-      if (isUserRole) {
+      if (users.role === "User") {
         navigate("/profile");
-      } else if (isCompanyRole) {
+      } else if (users.role === "Company") {
         navigate("/company-profile");
       } else {
         Swal.fire({
@@ -80,6 +80,20 @@ function Header() {
           }
         });
       }
+    }
+  };
+
+  const gotoRecruitment = () => {
+    if (users.role === "Company") {
+      Swal.fire({
+        text: "Bạn không có quyền truy cập",
+        icon: "warning",
+      });
+      navigate("");
+    } else if (users.role === "Admin") {
+      navigate("/recruitment");
+    } else {
+      navigate("/recruitment");
     }
   };
   // Đăng xuất
@@ -105,25 +119,21 @@ function Header() {
             <li>Việc làm</li>
           </Link>
           {isUserRole === true ? (
-            <Link
-              onClick={gotoProfile}
-              // to={"/profile"}
-              style={{ textDecoration: "none" }}
-            >
-              <li>Hồ sơ & CV</li>
-            </Link>
+            <>
+              <Link to={"/profile"} style={{ textDecoration: "none" }}>
+                <li>Hồ sơ & CV</li>
+              </Link>
+              <Link to={"/recruitment"} style={{ textDecoration: "none" }}>
+                <li>Đã ứng tuyển</li>
+              </Link>
+            </>
           ) : (
-            <Link
-              onClick={gotoProfile}
-              // to={"/company-profile"}
-              style={{ textDecoration: "none" }}
-            >
-              <li>Thông tin Công ty</li>
-            </Link>
+            <div onClick={gotoProfile}>
+              <Link style={{ textDecoration: "none" }}>
+                <li>Thông tin Công ty</li>
+              </Link>
+            </div>
           )}
-          <Link to={"/recruitment"} style={{ textDecoration: "none" }}>
-            <li>Đã ứng tuyển</li>
-          </Link>
         </ul>
       </div>
       <div className="header-page">

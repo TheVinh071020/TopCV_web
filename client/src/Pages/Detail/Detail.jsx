@@ -121,91 +121,38 @@ function Detail() {
     }
   }, [infoUser, job]);
 
+  const [hasApplied, setHasApplied] = useState(false);
+  const [isOrderCreated, setIsOrderCreated] = useState(false);
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await schema.validate(formData, { abortEarly: false });
-
-      const currentUser = await axiosConfig.get(`/users/${user.id}`);
-      const currentPassword = currentUser.data.password;
-
-      const { password, ...formDataWithoutPassword } = formData;
-      formDataWithoutPassword.applications = [];
-      
-      const updateUser = await axiosConfig.patch(
-        `/users/${user.id}`,
-        formDataWithoutPassword
-      );
-
-      updateUser.data.password = currentPassword;
-
-      const updatedUser = updateUser.data;
-
-      const newApplication = {
-        id: Number(jobId),
-        jobName: job?.name,
-        company: job?.company,
-        avatar: job?.avatar,
-        address: job?.address,
-        salary: job?.salary,
-        level: job?.level,
-        experience: job?.experience,
-        scale: job?.scale,
-        status: job?.status,
-        createdAt: Date.now(),
-        userId: formData.id,
-      };
-
-      const isAlreadyApplied = updatedUser.applications.some(
-        (application) => application.id === Number(jobId)
-      );
-
-      if (isAlreadyApplied) {
-        toast.warn("Bạn đã ứng tuyển cho công việc này trước đó.");
-        setOpen(false);
-      } else {
-        const updatedApplications = [
-          ...updatedUser.applications,
-          newApplication,
-        ];
-        const updatedUserWithApplications = {
-          ...updatedUser,
-          applications: updatedApplications,
-        };
-
-        const { password, ...updatedUserWithoutPassword } =
-          updatedUserWithApplications;
-
-        const updatedUserInfo = await axiosConfig.patch(
-          `/users/${user.id}`,
-          updatedUserWithoutPassword
-        );
-        updatedUserInfo.data.password = currentPassword;
-        console.log(updatedUserInfo.data.password);
-        console.log(currentPassword);
-        setInfoUser(updatedUserInfo.data);
-        dispatch({
-          type: "ADD_APPLICATION_USER",
-          payload: updatedUserInfo.data,
-        });
-        localStorage.setItem(
-          "applications",
-          JSON.stringify(updatedUserInfo.data)
-        );
-        setOpen(false);
-        toast.success("Gửi đơn ứng tuyển thành công 👌");
-      }
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        const validationErrors = {};
-        error.inner.forEach((e) => {
-          validationErrors[e.path] = e.message;
-        });
-        setFormErrors(validationErrors);
-      } else {
-        console.error("Có lỗi xảy ra khi gửi đơn ứng tuyển:", error);
-      }
-    }
+    // Tạo đơn
+    const newApplication = {
+      jobId: Number(jobId),
+      userId: formData.id,
+      companyId: job?.companyId,
+      userName: formData.name,
+      userEmail: formData.email,
+      userPhone: formData.phone,
+      userAddress: formData.address,
+      userAvatar: formData.avatar,
+      jobName: job?.name,
+      company: job?.company,
+      avatar: job?.avatar,
+      address: job?.address,
+      location: job?.location,
+      salary: job?.salary,
+      level: job?.level,
+      experience: job?.experience,
+      scale: job?.scale,
+      createdAt: Date.now(),
+      status: "Chờ xét duyệt",
+    };
+    const response = await axiosConfig.post("/applications", newApplication);
+    console.log(response.data);
+    setHasApplied(true);
+    setIsOrderCreated(true);
+    toast.success("Gửi đơn ứng tuyển thành công 👌");
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -359,6 +306,8 @@ function Detail() {
             setOpen={setOpen}
             isUserRole={isUserRole}
             isCompanyRole={isCompanyRole}
+            hasApplied={hasApplied}
+            isOrderCreated={isOrderCreated}
           />
         </div>
         <DetailBodyRight job={job} />

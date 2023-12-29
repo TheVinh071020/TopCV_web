@@ -11,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 import DetailItem from "../../components/Layouts/DetailItem";
 import Pagination from "../../components/common/Pagination";
 import SearchInput from "../../components/common/SearchInput";
+import CustomButton from "../../components/common/CustomButton";
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -50,7 +51,7 @@ function HomePage() {
   const getListJobsByQuerySearch = async (pageIndex, pageNumber) => {
     axiosConfig
       .get(
-        `/jobs?_page=${pageIndex}&_limit=${pageNumber}&&name_like=${querySearch}&address.city_like=${queryAddress}&&_sort=salary&_order=${querySalary}`
+        `/jobs?_page=${pageIndex}&_limit=${pageNumber}&&name_like=${querySearch}&address_like=${queryAddress}&&_sort=salary&_order=${querySalary}`
       )
       .then((res) => {
         setListJobs(res.data);
@@ -94,7 +95,7 @@ function HomePage() {
       salary: valueSalary,
     });
     await axiosConfig
-      .get(`/jobs?address.city_like=${value}`)
+      .get(`/jobs?address_like=${value}`)
       .then((res) => {
         setListJobs(res.data);
         setTotal(res.headers["x-total-count"]);
@@ -107,6 +108,7 @@ function HomePage() {
   // Lọc theo lương
   const handleFilterBySalary = async (value) => {
     setValueSalary(value);
+    console.log(value);
     setSearchParams({
       salary: value,
       address: valueAddress,
@@ -115,6 +117,7 @@ function HomePage() {
     await axiosConfig
       .get(`/jobs?_sort=salary&_order=${value}`)
       .then((res) => {
+        console.log(res.data);
         setListJobs(res.data);
         setTotal(res.headers["x-total-count"]);
       })
@@ -138,6 +141,16 @@ function HomePage() {
     }
   }, [searchParams, dispatch, querySearch, queryAddress, querySalary]);
 
+  // Clear filter
+  const handleClear = () => {
+    if (!searchValue && !valueAddress && !valueSalary) {
+      return;
+    }
+    setSearchValue("");
+    setValueAddress("");
+    setValueSalary("");
+    setSearchParams("");
+  };
   // Phân trang
   let pageNumber = 6;
   const totalPages = Math.ceil(total / pageNumber);
@@ -227,6 +240,12 @@ function HomePage() {
                 />
               </Space>
             </div>
+            <CustomButton
+              label={"Clear"}
+              type={"button"}
+              className={"btn btn-danger"}
+              onClick={handleClear}
+            />
           </div>
         </div>
         <div className="row feature_job">

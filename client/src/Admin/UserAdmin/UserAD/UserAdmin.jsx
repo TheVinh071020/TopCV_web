@@ -36,15 +36,12 @@ function UserAdmin() {
   // Lý danh sách user
   const getUsers = async (pageIndex, pageNumber) => {
     await axiosConfig
-      .get(`/users?_page=${pageIndex}&_limit=${pageNumber}`)
+      .get(`/users?_page=${pageIndex}&_limit=${pageNumber}&&role=User`)
       .then((res) => {
         setUsers(res.data);
         setTotal(res.headers["x-total-count"]);
       });
   };
-
-  const filteredUsers = users.filter((user) => user.role === "User");
-  console.log(filteredUsers);
 
   // Lấy job theo querySearch, queryAddress, querySalary khi search sort sẽ render
   const getListUsersByQuerySearch = async (pageIndex, pageNumber) => {
@@ -177,6 +174,7 @@ function UserAdmin() {
     console.log(viewUser);
   };
 
+  // CLear filter
   const handleClear = () => {
     if (!searchValue && !genderValue && !sortNameValue) {
       return;
@@ -302,7 +300,7 @@ function UserAdmin() {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers?.map((user, index) => (
+            {users?.map((user, index) => (
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{user.id}</td>

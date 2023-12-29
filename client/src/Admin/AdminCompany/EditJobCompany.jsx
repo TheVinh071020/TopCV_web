@@ -11,7 +11,7 @@ function EditJobCompany() {
 
   const [formInput, setFormInput] = useState({
     name: "",
-    idCompany: "",
+    companyId: "",
     company: "",
     level: "",
     experience: "",
@@ -41,7 +41,7 @@ function EditJobCompany() {
         const jobData = res.data;
         setFormInput({
           name: jobData.name,
-          idCompany: jobData.id,
+          companyId: jobData.id,
           company: jobData.company,
           level: jobData.level,
           experience: jobData.experience,

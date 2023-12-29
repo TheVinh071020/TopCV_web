@@ -14,7 +14,7 @@ function ProfileCompany() {
   const [isCompanyCreated, setIsCompanyCreated] = useState(false);
   const navigate = useNavigate();
 
-  const isCompany = JSON.parse(localStorage.getItem("company"));
+  const isCompany = JSON.parse(localStorage.getItem("company")) || {};
 
   const [companyProfile, setCompanyProfile] = useState(null);
 
@@ -26,11 +26,11 @@ function ProfileCompany() {
       setCompanyProfile(res.data[0]);
     }
   };
-  console.log(companyProfile);
+  // console.log(companyProfile);
   const [formInput, setFormInput] = useState({
-    userId: isCompany.id,
-    name: isCompany.name,
-    email: isCompany.email,
+    userId: isCompany?.id,
+    name: isCompany?.name,
+    email: isCompany?.email,
     phone: "",
     time: "",
     personnel: "",
@@ -125,7 +125,7 @@ function ProfileCompany() {
       <h1>Thông tin công ty</h1>
 
       <div className="col m-3 d-flex justify-content-center  gap-3">
-        <div className="col-md-6" >
+        <div className="col-md-6">
           {companyProfile?.avatar && (
             <div
               style={{

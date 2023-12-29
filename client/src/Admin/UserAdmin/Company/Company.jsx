@@ -17,21 +17,34 @@ function Company() {
   const [company, setCompany] = useState([]);
   const [viewCompany, setViewCompany] = useState({});
   const [total, setTotal] = useState(0);
+  const [isStatusDisabled, setIsStatusDisabled] = useState(false);
 
   // Lý danh sách company
   const getCompany = async (pageIndex, pageNumber) => {
     await axiosConfig
-      .get(`/companies?_page=${pageIndex}&_limit=${pageNumber}`)
+      .get(`/users?_page=${pageIndex}&_limit=${pageNumber}&&role=Company  `)
       .then((res) => {
         setCompany(res.data);
         setTotal(res.headers["x-total-count"]);
       });
   };
-  console.log(company);
 
   useEffect(() => {
     getCompany(1, 4);
   }, []);
+
+  const ChangeValueCompany = async (id) => {
+    await axiosConfig.patch(`/users/${id}`, {
+      status: "Đã xét duyệt",
+    });
+
+    const updatedCompanyList = company.map((comp) =>
+      comp.id === id ? { ...comp, status: "Đã xét duyệt" } : comp
+    );
+    setCompany(updatedCompanyList);
+  };
+
+  console.log(company);
 
   // Pagination
   let pageNumber = 4;
@@ -72,32 +85,7 @@ function Company() {
               </Container>
             </Navbar>
           </div>
-          <div>
-            <Space wrap>
-              <Select
-                defaultValue="Giới tính"
-                style={{
-                  width: 100,
-                  marginRight: 20,
-                }}
-                // onChange={handleFilterByGender}
-                options={[
-                  {
-                    value: "",
-                    label: "Giới tính",
-                  },
-                  {
-                    value: "Nam",
-                    label: "Nam",
-                  },
-                  {
-                    value: "Nữ",
-                    label: "Nữ",
-                  },
-                ]}
-              />
-            </Space>
-          </div>
+
           <div>
             <Space wrap>
               <Select
@@ -126,16 +114,24 @@ function Company() {
         </div>
         <table
           className="table table-striped table-hover"
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "20px", width: "80%" }}
         >
           <thead>
             <tr>
               <th scope="col">STT</th>
               <th scope="col">ID</th>
               <th scope="col">Tên</th>
-              <th scope="col">Địa chỉ</th>
-              <th scope="col">Avatar</th>
-              <th scope="col">Trạng thái</th>
+              <th scope="col">Email</th>
+              <th
+                scope="col"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                Trạng thái
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -144,44 +140,79 @@ function Company() {
                 <th scope="row">{index + 1}</th>
                 <td>{company.id}</td>
                 <td>{company.name}</td>
-                <td>{company.address}</td>
-                <td  style={{ width: "50px", height: "50px" }}>
-                  <div style={{ width: "50px", height: "50px" }}>
-                    <img
-                      style={{ width: "100%", height: "100%" }}
-                      src={company.avatar}
-                      alt=""
-                    />
-                  </div>
-                </td>
+                <td>{company.email}</td>
 
                 <td
-                  className="d-flex align-items-center"
-                  style={{ width: "auto", height: "70px" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "auto",
+                    height: "70px",
+                  }}
                 >
+                  {/* <Space wrap>
+                    <Select
+                      style={{
+                        width: 130,
+                        marginRight: 20,
+                      }}
+                      disabled={!isStatusDisabled}
+                      value={company.status}
+                      onChange={(selectedValue) =>
+                        ChangeValueCompany(company.id, selectedValue)
+                      }
+                      options={[
+                        {
+                          value: "Chờ xét duyệt",
+                          label: "Chờ xét duyệt",
+                        },
+                        {
+                          value: "Đã xét duyệt",
+                          label: "Đã xét duyệt",
+                        },
+                      ]}
+                    />
+                  </Space> */}
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                    onChange={(selectedValue) =>
+                      ChangeValueCompany(company.id, selectedValue)
+                    }
+                  >
+                    {company.status === "Chờ xét duyệt" ? (
+                      <option value="Chờ xét duyệt">Chờ xét duyệt</option>
+                    ) : (
+                      <option disabled value="Chờ xét duyệt">
+                        Chờ xét duyệt
+                      </option>
+                    )}
+
+                    {company.status === "Đã xét duyệt" ? (
+                      <option value="Đã xét duyệt">Đã xét duyệt</option>
+                    ) : (
+                      <option
+                        disabled={company.status !== "Chờ xét duyệt"}
+                        value="Đã xét duyệt"
+                      >
+                        Đã xét duyệt
+                      </option>
+                    )}
+                  </select>
                   <td
                     className="d-flex"
-                    //   onClick={() => handleViewUser(company.id)}
                     style={{ cursor: "pointer", marginRight: "15px" }}
                   >
                     <EyeOutlined />
                   </td>
-                  {/* {user.locked === false ? ( */}
+
                   <CustomButton
                     label={"Lock"}
                     type={"button"}
                     className={"btn btn-danger"}
                     style={{ margintop: "15px" }}
-                    //   onClick={() => handleLockUser(user.id)}
                   />
-                  {/* ) : (
-                    <CustomButton
-                      label={"UnLock"}
-                      type={"button"}
-                      className={"btn btn-success"}
-                      onClick={() => handleUnLockUser(user.id)}
-                    />
-                  )} */}
                 </td>
               </tr>
             ))}

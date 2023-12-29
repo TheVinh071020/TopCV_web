@@ -1,8 +1,25 @@
 import React from "react";
 import { Modal, Input, Button } from "antd";
+import { toast } from "react-toastify";
 
-function DetailBodyLeft({ job, setOpen, isUserRole, isCompanyRole }) {
-  console.log(job);
+const DetailBodyLeft = ({
+  job,
+  setOpen,
+  isUserRole,
+  isOrderCreated,
+  hasApplied,
+}) => {
+  const handleApply = () => {
+    if (hasApplied) {
+      toast.warn("Bạn đã ứng tuyển cho công việc này rồi");
+      return;
+    }
+    if (isOrderCreated) {
+      alert("Bạn đã tạo đơn hàng");
+      return;
+    }
+    setOpen(true);
+  };
   return (
     <div className="job-detail__body-left">
       <div className="job-detail__info">
@@ -45,7 +62,7 @@ function DetailBodyLeft({ job, setOpen, isUserRole, isCompanyRole }) {
                 className="btn-apply"
                 variant="outline-success"
                 type="primary"
-                onClick={() => setOpen(true)}
+                onClick={handleApply}
               >
                 <i
                   style={{ marginRight: "15px" }}
@@ -109,6 +126,6 @@ function DetailBodyLeft({ job, setOpen, isUserRole, isCompanyRole }) {
       </div>
     </div>
   );
-}
+};
 
 export default DetailBodyLeft;

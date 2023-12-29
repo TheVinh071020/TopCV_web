@@ -43,10 +43,23 @@ function RegisterUser() {
 
   console.log(formRegister);
   const handleChangeSelect = (value) => {
-    setFormRegister({
+    console.log(value);
+    let updatedFormRegister = {
       ...formRegister,
       role: value,
-    });
+    };
+
+    if (value === "Company") {
+      updatedFormRegister = {
+        ...updatedFormRegister,
+        status: "Chờ xét duyệt",
+      };
+    } else {
+      const { status, ...rest } = updatedFormRegister;
+      updatedFormRegister = { ...rest };
+    }
+
+    setFormRegister(updatedFormRegister);
   };
 
   const [formError, setFormError] = useState({});
@@ -98,6 +111,7 @@ function RegisterUser() {
 
   // Sự kiện click đăng nhập
   const handleSubmit = async (e) => {
+    console.log(formRegister);
     e.preventDefault();
     if (validateForm()) {
       await axiosConfig

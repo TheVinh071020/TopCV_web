@@ -49,7 +49,7 @@ function ProductCompany() {
   };
 
   const getListProducts = (pageNumber, pageIndex) => {
-    // Lấy idCompany theo cty
+    // Lấy companyId theo cty
     axiosConfig
       .get(`/companies?name_like=${companyName}`)
       .then((res) => {
@@ -57,7 +57,7 @@ function ProductCompany() {
         setCompany(fetchedCompany);
         setFormInput({
           ...formInput,
-          idCompany: fetchedCompany.id,
+          companyId: fetchedCompany.id,
           company: fetchedCompany.name,
           avatar: fetchedCompany.avatar,
           address: fetchedCompany.address,
@@ -85,7 +85,7 @@ function ProductCompany() {
   console.log(products);
   const [formInput, setFormInput] = useState({
     name: "",
-    idCompany: company.id,
+    companyId: company.id,
     company: company.name,
     level: "",
     experience: "",
@@ -176,7 +176,7 @@ function ProductCompany() {
     if (isFormValid) {
       const payload = {
         name: formInput.name,
-        idCompany: formInput.id,
+        companyId: formInput.id,
         company: formInput.company,
         level: formInput.level,
         experience: formInput.experience,
