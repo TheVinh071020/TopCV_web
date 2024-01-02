@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import ProductCompany from "./ProductCompany";
 
 function AdminCompany() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    // localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("company");
-    localStorage.removeItem("companys");
+    localStorage.removeItem("avatar");
     navigate("/login");
   };
   return (
@@ -39,8 +38,8 @@ function AdminCompany() {
                     to="/admin-company/profile"
                     className="nav-link px-0 align-middle"
                   >
-                    <i className="fs-4 bi-table" />
-                    <span className="ms-1 d-none d-sm-inline">Profile</span>
+                    <i className="fs-4 bi-table " />
+                    <span className="ms-1 d-none d-sm-inline ">Profile</span>
                   </Link>
                 </li>
                 <li>
@@ -50,6 +49,15 @@ function AdminCompany() {
                   >
                     <i className="fs-4 bi-grid" />
                     <span className="ms-1 d-none d-sm-inline">Products</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin-company/aplications"
+                    className="nav-link px-0 align-middle"
+                  >
+                    <i class="fs-4 bi-list-check"></i>
+                    <span className="ms-1 d-none d-sm-inline">Application</span>
                   </Link>
                 </li>
               </ul>

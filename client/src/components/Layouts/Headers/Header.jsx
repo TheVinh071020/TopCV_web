@@ -56,6 +56,8 @@ function Header() {
     }
   }, [dispatch]);
 
+  console.log(users);
+
   const gotoProfile = () => {
     if (isUser) {
       if (users.role === "User") {
@@ -83,24 +85,12 @@ function Header() {
     }
   };
 
-  const gotoRecruitment = () => {
-    if (users.role === "Company") {
-      Swal.fire({
-        text: "Bạn không có quyền truy cập",
-        icon: "warning",
-      });
-      navigate("");
-    } else if (users.role === "Admin") {
-      navigate("/recruitment");
-    } else {
-      navigate("/recruitment");
-    }
-  };
   // Đăng xuất
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("applications");
+    localStorage.removeItem("company");
     navigate("/login");
   };
   return (
@@ -140,11 +130,22 @@ function Header() {
         <CustomButton
           className={"profile"}
           variant={"outline-success"}
-          label={<i class="fa-solid fa-user"></i>}
-          style={{ width: "40px" }}
+          label={
+            <img
+              style={{ width: "40px", height: "40px", borderRadius: "30%" }}
+              src={users.avatar}
+              alt=""
+            />
+          }
+          style={{
+            width: "55px",
+            height: "55px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
           onClick={gotoProfile}
         />
-
         {isUser ? (
           <div
             style={{

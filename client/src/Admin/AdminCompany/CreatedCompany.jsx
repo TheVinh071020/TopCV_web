@@ -5,69 +5,97 @@ import { storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { toast } from "react-toastify";
 import { axiosConfig } from "../../axios/config";
-import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import { Link, useNavigate } from "react-router-dom";
 
-function EidtCompany() {
-  const { id } = useParams();
+function CreatedCompany() {
+  const isCompany = JSON.parse(localStorage.getItem("company")) || {};
+
+  const [companyProfile, setCompanyProfile] = useState(null);
+
+  const avtCompany = localStorage.getItem("avatar");
+  console.log(avtCompany);
+
   const navigate = useNavigate();
-  const [company, setCompany] = useState({
-    userId: "",
-    name: "",
-    email: "",
+
+  const getCompanyProfile = async () => {
+    if (isCompany.id) {
+      const res = await axiosConfig.get(
+        `/companies?email_like=${isCompany.email}`
+      );
+      setCompanyProfile(res.data[0]);
+    }
+  };
+
+  const [formInput, setFormInput] = useState({
+    userId: isCompany?.id,
+    name: isCompany?.name,
+    email: isCompany?.email,
     phone: "",
     time: "",
+    personnel: "",
     address: "",
     location: "",
     introduce: "",
     avatar: "",
   });
 
-  const avtCompany = localStorage.getItem("avatar");
-  console.log(company );
-
-  // const [userId, setUserId] = useState("");
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [time, setTime] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [location, setLocation] = useState("");
-
-  const [initialCompanyData, setInitialCompanyData] = useState({});
-
-  const getCompanyInfo = async () => {
-    await axiosConfig
-      .get(`/companies/${id}`)
-      .then((res) => {
-        setCompany(res.data);
-        setInitialCompanyData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    getCompanyInfo();
-  }, [id]);
-
-  const isDataChanged = !Object.keys(company).every((key) => {
-    return company[key] === initialCompanyData[key];
-  });
-
+  const [errors, setErrors] = useState({});
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setCompany({
-      ...company,
+    setFormInput({
+      ...formInput,
       [name]: value,
     });
   };
+  const validateForm = () => {
+    let errors = {};
+    let isValid = true;
 
-  const editProfile = async (e) => {
+    if (!formInput.phone.trim()) {
+      errors.phone = "Vui lòng nhập SĐT!";
+      isValid = false;
+    }
+    if (!formInput.time.trim()) {
+      errors.time = "Vui lòng nhập thời gian làm việc!";
+      isValid = false;
+    }
+    if (!formInput.address.trim()) {
+      errors.address = "Vui lòng nhập địa chỉ!";
+      isValid = false;
+    }
+    if (!formInput.location.trim()) {
+      errors.location = "Vui lòng nhập địa điểm!";
+      isValid = false;
+    }
+    if (!formInput.introduce.trim()) {
+      errors.introduce = "Vui lòng nhập giới thiệu!";
+      isValid = false;
+    }
+    if (!formInput.personnel.trim()) {
+      errors.personnel = "Vui lòng nhập nhân sự!";
+      isValid = false;
+    }
+
+    setErrors(errors);
+    return isValid;
+  };
+
+  const updateProfile = async (e) => {
     e.preventDefault();
-    const response = await axiosConfig.patch(`/companies/${id}`, company);
-    toast.success("Cập nhật thông tin công ty thành công!");
-    navigate("/admin-company/profile");
+    if (validateForm()) {
+      try {
+        const response = await axiosConfig.post("/companies", formInput);
+        setCompanyProfile(response.data);
+        console.log(response.data);
+        localStorage.setItem("companys", JSON.stringify(response.data));
+        toast.success("Tạo công ty thành công!");
+        navigate("/admin-company/profile");
+      } catch (error) {
+        console.log(error);
+        toast.error("Đã xảy ra lỗi khi tạo công ty!");
+      }
+    }
   };
 
   const handleAvatarUpload = (e) => {
@@ -77,30 +105,31 @@ function EidtCompany() {
       uploadBytes(storageRef, selectedImage)
         .then((snapshot) => getDownloadURL(snapshot.ref))
         .then((url) => {
-          console.log(url);
-          setCompany((prev) => ({ ...prev, avatar: url }));
+          setFormInput((prev) => ({ ...prev, avatar: url }));
           localStorage.setItem("avatar", url);
-          // Cập nhật giá trị URL vào ô input chọn ảnh
           const inputElement = document.getElementById("avatarInput");
           if (inputElement) {
             inputElement.value = url;
           }
-          // toast.success("Upload ảnh thành công");
         })
         .catch((error) => {
           console.error("Error uploading image:", error);
         });
     }
   };
+
+  useEffect(() => {
+    getCompanyProfile();
+  }, []);
   return (
     <div className="container ">
       <div className="col-md-8 offset-md-1">
         <Form type="submit">
-          <h1 className="titleee mb-4">Sửa thông tin công ty</h1>
+          <h1 className="titleee mb-4">Tạo Công ty</h1>
 
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
-              value={company.name}
+              value={formInput.name}
               onChange={handleInputChange}
               name="name"
               type="text"
@@ -111,7 +140,7 @@ function EidtCompany() {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={company.email}
+              value={formInput.email}
               name="email"
               type="text"
               placeholder="Email"
@@ -120,53 +149,72 @@ function EidtCompany() {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={company.phone}
+              value={formInput.phone}
               name="phone"
               type="phone"
               placeholder="Số điện thoại"
             />
+            {errors && <div className="error-feedback"> {errors.phone}</div>}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={company.time}
+              value={formInput.time}
               name="time"
               type="text"
               placeholder="Thời gian làm việc"
             />
+            {errors && <div className="error-feedback"> {errors.time}</div>}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={company.location}
+              value={formInput.personnel}
+              name="personnel"
+              type="text"
+              placeholder="Nhân sự"
+            />
+            {errors && (
+              <div className="error-feedback"> {errors.personnel}</div>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formGroupPassword">
+            <Form.Control
+              onChange={handleInputChange}
+              value={formInput.location}
               name="location"
               type="text"
               placeholder="Địa chỉ"
             />
+            {errors && <div className="error-feedback"> {errors.location}</div>}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control
               onChange={handleInputChange}
-              value={company.address}
+              value={formInput.address}
               name="address"
               type="text"
               placeholder="Thành phố"
             />
+            {errors && <div className="error-feedback"> {errors.address}</div>}
           </Form.Group>
 
           <Form.Group
-            className="mb-3 d-flex "
+            className="mb-3 "
             controlId="exampleForm.ControlTextarea1"
           >
             <Form.Control
               onChange={handleInputChange}
-              value={company.introduce}
+              value={formInput.introduce}
               name="introduce"
               type="textarea"
               placeholder="Giới thiệu công ty"
               as="textarea"
               rows={1}
-            />
+            />{" "}
+            {errors && (
+              <div className="error-feedback"> {errors.introduce}</div>
+            )}
           </Form.Group>
           <Form.Group
             className="d-flex justify-content-between mb-3 w-100"
@@ -189,9 +237,9 @@ function EidtCompany() {
               }}
               className="d-flex align-items-center"
             >
-              {company.avatar ? (
+              {formInput.avatar ? (
                 <img
-                  src={company.avatar}
+                  src={formInput.avatar}
                   alt="Uploaded Avatar"
                   style={{
                     width: "100px",
@@ -217,8 +265,8 @@ function EidtCompany() {
               className={"btn btn-success"}
               label={"Submit"}
               type={"submit"}
-              onClick={editProfile}
-              // disabled={!isDataChanged}
+              onClick={updateProfile}
+              //   disabled={!isDataChanged}
             />
 
             <Link to={"/admin-company/profile"}>
@@ -231,4 +279,4 @@ function EidtCompany() {
   );
 }
 
-export default EidtCompany;
+export default CreatedCompany;

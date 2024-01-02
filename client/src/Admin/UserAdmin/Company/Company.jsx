@@ -2,56 +2,204 @@ import React, { useEffect, useState } from "react";
 import CustomButton from "../../../components/common/CustomButton";
 import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined";
 import Modal from "react-bootstrap/Modal";
-import Pagination from "../../../components/common/Pagination";
+import PaginationPage from "../../../components/common/PaginationPage";
 import { Select, Space } from "antd";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { axiosConfig } from "../../../axios/config";
+import { useSearchParams } from "react-router-dom";
 
 function Company() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
 
-  const [company, setCompany] = useState([]);
-  const [viewCompany, setViewCompany] = useState({});
+  const [prevSearchValue, setPrevSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [sortNameValue, setSortNameValue] = useState("");
+  const [sortStatus, setSortStatus] = useState("");
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const querySearch = searchParams.get("name_like");
+  const querySortByName = searchParams.get("sort_name");
+  const querySortStatus = searchParams.get("status");
+
+  const [companies, setCompanies] = useState([]);
   const [total, setTotal] = useState(0);
-  const [isStatusDisabled, setIsStatusDisabled] = useState(false);
+
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   // Lý danh sách company
-  const getCompany = async (pageIndex, pageNumber) => {
-    await axiosConfig
-      .get(`/users?_page=${pageIndex}&_limit=${pageNumber}&&role=Company  `)
+  const getCompanies = async (pageIndex, pageNumber) => {
+    try {
+      const response = await axiosConfig.get(
+        `/users?_page=${pageIndex}&_limit=${pageNumber}&role=Company`
+      );
+      setCompanies(response.data);
+      setTotal(response.headers["x-total-count"]);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
+  };
+
+  // Lý job theo querySearch khi search sort sẽ render
+  const getListCompanysByQuerySearch = async (pageIndex, pageNumber) => {
+    axiosConfig
+      .get(
+        `/users?_page=${pageIndex}&_limit=${pageNumber}&&name_like=${querySearch}&&_sort=name&_order=${querySortByName}&&status=${querySortStatus}&role=Company`
+      )
       .then((res) => {
-        setCompany(res.data);
+        setCompanies(res.data);
         setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
-  useEffect(() => {
-    getCompany(1, 4);
-  }, []);
-
-  const ChangeValueCompany = async (id) => {
-    await axiosConfig.patch(`/users/${id}`, {
-      status: "Đã xét duyệt",
+  // Tim kiếm
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    if (searchValue === prevSearchValue) {
+      return;
+    }
+    setSearchParams({
+      name_like: searchValue,
+      sort_name: sortNameValue,
+      status: sortStatus,
     });
-
-    const updatedCompanyList = company.map((comp) =>
-      comp.id === id ? { ...comp, status: "Đã xét duyệt" } : comp
-    );
-    setCompany(updatedCompanyList);
+    await axiosConfig
+      .get(`/users?name_like=${querySearch}&role=Company`)
+      .then((res) => {
+        setCompanies(res.data);
+        setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setPrevSearchValue(searchValue);
   };
 
-  console.log(company);
+  // Sort theo name
+  const handleSortByName = async (value) => {
+    setSortNameValue(value);
+    setSearchParams({
+      name_like: searchValue,
+      sort_name: value,
+      status: sortStatus,
+    });
+    await axiosConfig
+      .get(`/users?_sort=name&_order=${value}&role=Company`)
+      .then((res) => {
+        setCompanies(res.data);
+        setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // Sort theo trạng thái
+  const handleSortByStatus = async (value) => {
+    setSortStatus(value);
+    setSearchParams({
+      name_like: searchValue,
+      status: value,
+    });
+    await axiosConfig
+      .get(`/users?status=${value}&role=Company`)
+      .then((res) => {
+        setCompanies(res.data);
+        setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleLockCompany = async (id) => {
+    console.log(id);
+    try {
+      await axiosConfig.patch(`/users/${id}`, {
+        locked: true,
+      });
+      const updateCompany = companies.map((companies) =>
+        companies.id === id ? { ...companies, locked: true } : companies
+      );
+      setCompanies(updateCompany);
+      console.log("Company locked successfully");
+    } catch (error) {
+      console.log("Failed to lock user", error);
+    }
+  };
+  const handleUnLockCompany = async (id) => {
+    console.log(id);
+    try {
+      await axiosConfig.patch(`/users/${id}`, {
+        locked: false,
+      });
+      const updateCompany = companies.map((companies) =>
+        companies.id === id ? { ...companies, locked: false } : companies
+      );
+      setCompanies(updateCompany);
+      console.log("companies unlocked successfully");
+    } catch (error) {
+      console.log("Failed to unlock companies", error);
+    }
+  };
+  useEffect(() => {
+    if (querySearch) {
+      setSearchValue(querySearch);
+      getListCompanysByQuerySearch(1, 4);
+    } else if (querySortByName) {
+      setSortNameValue(querySortByName);
+      getListCompanysByQuerySearch(1, 4);
+    } else if (querySortStatus) {
+      setSortStatus(querySortStatus);
+      getListCompanysByQuerySearch(1, 4);
+    } else {
+      getCompanies(1, 4);
+    }
+  }, [searchParams, querySearch, querySortByName, querySortStatus]);
+
+  // Thay đổi trạng thái duyệt
+  const handleStatusChange = async (selectedValue, id) => {
+    console.log(id);
+    console.log(selectedValue);
+    try {
+      await axiosConfig.patch(`/users/${id}`, {
+        status: selectedValue,
+      });
+
+      const updatedCompanies = companies.map((comp) =>
+        comp.id === id ? { ...comp, status: selectedValue } : comp
+      );
+      setCompanies(updatedCompanies);
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
+  // CLear filter
+  const handleClear = () => {
+    if (!searchValue && !sortNameValue && !sortStatus) {
+      return;
+    }
+    setSearchValue("");
+    setSortNameValue("");
+    setSortStatus("");
+    setSearchParams("");
+  };
 
   // Pagination
   let pageNumber = 4;
   const totalPages = Math.ceil(total / pageNumber);
 
   const goToPage = (page) => {
-    getCompany(page, pageNumber);
+    getCompanies(page, pageNumber);
   };
   const pageNumbers = Array.from(
     { length: totalPages },
@@ -63,19 +211,19 @@ function Company() {
         <div className="d-flex justify-content-center align-items-center">
           <h2>Quản lý Công ty</h2>
         </div>
-        <div className="container d-flex justify-content-flex-start align-items-center">
+        <div className="container d-flex justify-content-flex-start align-items-center gap-3">
           <div>
             <Navbar expand="lg" className="bg-body-tertiary">
               <Container fluid>
                 <Navbar.Collapse id="navbarScroll">
-                  <Form className="d-flex">
+                  <Form onSubmit={handleSearchSubmit} className="d-flex">
                     <Form.Control
                       type="search"
                       placeholder="Nhập vào để tìm kiếm"
                       className="me-2"
                       aria-label="Search"
-                      //   value={searchValue}
-                      //   onChange={handleSearchChange}
+                      value={searchValue}
+                      onChange={handleSearchChange}
                     />
                     <Button variant="outline-success" type="submit">
                       Search
@@ -85,7 +233,6 @@ function Company() {
               </Container>
             </Navbar>
           </div>
-
           <div>
             <Space wrap>
               <Select
@@ -93,7 +240,7 @@ function Company() {
                 style={{
                   width: 80,
                 }}
-                // onChange={handleSortByName}
+                onChange={handleSortByName}
                 options={[
                   {
                     value: "",
@@ -110,6 +257,39 @@ function Company() {
                 ]}
               />
             </Space>
+          </div>
+          <div>
+            <Space wrap>
+              <Select
+                defaultValue="Trạng thái"
+                style={{
+                  width: 140,
+                }}
+                onChange={handleSortByStatus}
+                options={[
+                  {
+                    value: "",
+                    label: "Trạng thái",
+                  },
+                  {
+                    value: "Đã xét duyệt",
+                    label: "Đã xét duyệt",
+                  },
+                  {
+                    value: "Chờ xét duyệt",
+                    label: "Chờ xét duyệt",
+                  },
+                ]}
+              />
+            </Space>
+          </div>
+          <div>
+            <CustomButton
+              label={"Clear"}
+              type={"button"}
+              className={"btn btn-danger"}
+              onClick={handleClear}
+            />
           </div>
         </div>
         <table
@@ -135,7 +315,7 @@ function Company() {
             </tr>
           </thead>
           <tbody>
-            {company?.map((company, index) => (
+            {companies?.map((company, index) => (
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{company.id}</td>
@@ -151,34 +331,12 @@ function Company() {
                     height: "70px",
                   }}
                 >
-                  {/* <Space wrap>
-                    <Select
-                      style={{
-                        width: 130,
-                        marginRight: 20,
-                      }}
-                      disabled={!isStatusDisabled}
-                      value={company.status}
-                      onChange={(selectedValue) =>
-                        ChangeValueCompany(company.id, selectedValue)
-                      }
-                      options={[
-                        {
-                          value: "Chờ xét duyệt",
-                          label: "Chờ xét duyệt",
-                        },
-                        {
-                          value: "Đã xét duyệt",
-                          label: "Đã xét duyệt",
-                        },
-                      ]}
-                    />
-                  </Space> */}
                   <select
                     className="form-select"
-                    aria-label="Default select example"
-                    onChange={(selectedValue) =>
-                      ChangeValueCompany(company.id, selectedValue)
+                    style={{ width: "150px", marginRight: "10px" }}
+                    value={company.status}
+                    onChange={(e) =>
+                      handleStatusChange(e.target.value, company.id)
                     }
                   >
                     {company.status === "Chờ xét duyệt" ? (
@@ -200,19 +358,21 @@ function Company() {
                       </option>
                     )}
                   </select>
-                  <td
-                    className="d-flex"
-                    style={{ cursor: "pointer", marginRight: "15px" }}
-                  >
-                    <EyeOutlined />
-                  </td>
-
-                  <CustomButton
-                    label={"Lock"}
-                    type={"button"}
-                    className={"btn btn-danger"}
-                    style={{ margintop: "15px" }}
-                  />
+                  {company.locked === false ? (
+                    <CustomButton
+                      label={"Lock"}
+                      type={"button"}
+                      className={"btn btn-danger"}
+                      onClick={() => handleLockCompany(company.id)}
+                    />
+                  ) : (
+                    <CustomButton
+                      label={"UnLock"}
+                      type={"button"}
+                      className={"btn btn-success"}
+                      onClick={() => handleUnLockCompany(company.id)}
+                    />
+                  )}
                 </td>
               </tr>
             ))}
@@ -220,7 +380,7 @@ function Company() {
         </table>
       </div>
       <div className="d-flex ">
-        <Pagination pageNumbers={pageNumbers} goToPage={goToPage} />
+        <PaginationPage pageNumbers={pageNumbers} goToPage={goToPage} />
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

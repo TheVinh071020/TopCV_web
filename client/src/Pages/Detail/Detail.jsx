@@ -31,7 +31,6 @@ function Detail() {
   const [open, setOpen] = useState(false);
   const [job, setJob] = useState(null);
   let { jobId } = useParams();
-  let dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user")) || null;
 
   const [infoUser, setInfoUser] = useState(null);
@@ -44,6 +43,8 @@ function Detail() {
     address: "",
     education: "",
     certification: "",
+    gender: "",
+    avatar: "",
   });
 
   const schema = yup.object().shape({
@@ -93,7 +94,6 @@ function Detail() {
       .catch((err) => {
         console.log(err);
       });
-  // console.log(infoUser);
 
   const renderJobs = async () => {
     await axiosConfig
@@ -116,6 +116,8 @@ function Detail() {
         address: infoUser.address,
         education: infoUser.education,
         certification: infoUser.certification,
+        gender: infoUser.gender,
+        avatar: infoUser.avatar,
         createdAt: Date.now(),
       });
     }
@@ -135,6 +137,9 @@ function Detail() {
       userPhone: formData.phone,
       userAddress: formData.address,
       userAvatar: formData.avatar,
+      education: formData.education,
+      certification: formData.certification,
+      gender: formData.gender,
       jobName: job?.name,
       company: job?.company,
       avatar: job?.avatar,
@@ -147,8 +152,8 @@ function Detail() {
       createdAt: Date.now(),
       status: "Chờ xét duyệt",
     };
+
     const response = await axiosConfig.post("/applications", newApplication);
-    console.log(response.data);
     setHasApplied(true);
     setIsOrderCreated(true);
     toast.success("Gửi đơn ứng tuyển thành công 👌");
@@ -303,6 +308,7 @@ function Detail() {
         <div className="job-detail__body-left">
           <DetailBodyLeft
             job={job}
+            userId={user?.id}
             setOpen={setOpen}
             isUserRole={isUserRole}
             isCompanyRole={isCompanyRole}

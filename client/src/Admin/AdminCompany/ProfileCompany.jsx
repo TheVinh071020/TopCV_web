@@ -26,7 +26,7 @@ function ProfileCompany() {
       setCompanyProfile(res.data[0]);
     }
   };
-  // console.log(companyProfile);
+  console.log(isCompany);
   const [formInput, setFormInput] = useState({
     userId: isCompany?.id,
     name: isCompany?.name,
@@ -87,7 +87,6 @@ function ProfileCompany() {
       try {
         const response = await axiosConfig.post("/companies", formInput);
         setCompanyProfile(response.data);
-        console.log(response.data);
         localStorage.setItem("companys", JSON.stringify(response.data));
         toast.success("Tạo công ty thành công!");
         setIsCompanyCreated(true);
@@ -126,117 +125,103 @@ function ProfileCompany() {
 
       <div className="col m-3 d-flex justify-content-center  gap-3">
         <div className="col-md-6">
-          {companyProfile?.avatar && (
-            <div
-              style={{
-                width: "110px",
-                height: "110px",
-                border: "1px ridge",
-                borderRadius: "20%",
-                margin: "30px auto",
-                backgroundColor: "red",
-              }}
-              className="d-flex align-items-center"
-            >
-              <img
-                src={companyProfile?.avatar}
-                alt="Uploaded Avatar"
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  borderRadius: "20px",
-                }}
-              />
-            </div>
-          )}
-          <Form type="submit">
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                value={companyProfile?.name}
-                name="company"
-                type="text"
-                placeholder="Tên công ty"
-                disabled
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                value={companyProfile?.email}
-                name="email"
-                type="text"
-                placeholder="Email"
-                disabled
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                value={companyProfile?.phone}
-                name="phone"
-                type="phone"
-                placeholder="Số điện thoại"
-                disabled
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                value={companyProfile?.time}
-                name="time"
-                type="text"
-                placeholder="Thời gian làm việc"
-                disabled
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                value={companyProfile?.personnel}
-                name="personnel"
-                type="text"
-                placeholder="Nhân sự"
-                disabled
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                value={companyProfile?.location}
-                name="location"
-                type="text"
-                placeholder="Địa chỉ"
-                disabled
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                value={companyProfile?.address}
-                name="address"
-                type="text"
-                placeholder="Thành phố"
-                disabled
-              />
-            </Form.Group>
-
-            <Form.Group
-              className="mb-3 d-flex "
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Control
-                value={companyProfile?.introduce}
-                name="introduce"
-                type="textarea"
-                placeholder="Giới thiệu công ty"
-                as="textarea"
-                disabled
-                rows={3}
-              />
-            </Form.Group>
-          </Form>
+          <div style={{ width: "100%" }}>
+            <ul style={{ width: "100%" }}>
+              <li name="company" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Tên công ty:</p>
+                {companyProfile ? (
+                  <span style={{ width: "368px", wordBreak: "break-all" }}>
+                    {companyProfile?.name}
+                  </span>
+                ) : (
+                  <span style={{ width: "368px", wordBreak: "break-all" }}>
+                    {isCompany?.name}
+                  </span>
+                )}
+              </li>
+              <li name="email" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}> Email:</p>
+                {companyProfile ? (
+                  <span style={{ width: "368px", wordBreak: "break-all" }}>
+                    {companyProfile?.email}
+                  </span>
+                ) : (
+                  <span style={{ width: "368px", wordBreak: "break-all" }}>
+                    {isCompany?.email}
+                  </span>
+                )}
+              </li>
+              <li name="phone" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Tên công ty:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.phone}
+                </span>
+              </li>
+              <li name="time" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Thời gian làm việc:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.time}
+                </span>
+              </li>
+              <li name="personnel" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Nhân sự:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.personnel}
+                </span>
+              </li>
+              <li name="location" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Địa chỉ:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.location}
+                </span>
+              </li>
+              <li name="address" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}> Thành phố:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.address}
+                </span>
+              </li>
+              <li name="introduce" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Giới thiệu công ty:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.introduce}
+                </span>
+              </li>
+              <li name="introduce" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Avatar</p>
+                {companyProfile?.avatar && (
+                  <div
+                    style={{
+                      width: "110px",
+                      height: "110px",
+                      border: "1px ridge",
+                      borderRadius: "20%",
+                      margin: "30px",
+                      backgroundColor: "#f1bbbb",
+                    }}
+                    className="d-flex align-items-center"
+                  >
+                    <img
+                      src={companyProfile?.avatar}
+                      alt="Uploaded Avatar"
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        borderRadius: "20px",
+                      }}
+                    />
+                  </div>
+                )}
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="col ">
           {companyProfile?.userId ? (
             <CustomButton
               label={"Tạo công ty"}
               className={"btn btn-success"}
-              onClick={() => setShowCreateModal(false)}
+              onClick={() => navigate(`/admin-company/create-profile`)}
               disabled={true}
               style={{ display: "none" }}
             />
@@ -244,7 +229,7 @@ function ProfileCompany() {
             <CustomButton
               label={"Tạo công ty"}
               className={"btn btn-success"}
-              onClick={() => setShowCreateModal(true)}
+              onClick={() => navigate(`/admin-company/create-profile`)}
             />
           )}
           {companyProfile?.userId ? (
@@ -253,9 +238,7 @@ function ProfileCompany() {
                 label={"Sửa thông tin"}
                 className={"btn btn-primary"}
                 onClick={() =>
-                  navigate(
-                    `/admin-company/create-profile/${companyProfile?.id}`
-                  )
+                  navigate(`/admin-company/edit-profile/${companyProfile?.id}`)
                 }
               />
             </div>
@@ -266,9 +249,7 @@ function ProfileCompany() {
                 className={"btn btn-primary"}
                 style={{ display: "none" }}
                 onClick={() =>
-                  navigate(
-                    `/admin-company/create-profile/${companyProfile?.id}`
-                  )
+                  navigate(`/admin-company/edit-profile/${companyProfile?.id}`)
                 }
               />
             </div>
@@ -286,8 +267,8 @@ function ProfileCompany() {
             <h1 className="titleee mb-4">Tạo Công ty</h1>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Control
-                value={formInput.name}
                 onChange={handleInputChange}
+                value={formInput.name}
                 name="company"
                 type="text"
                 placeholder="Tên công ty"
@@ -361,7 +342,7 @@ function ProfileCompany() {
             </Form.Group>
 
             <Form.Group
-              className="mb-3 d-flex "
+              className="mb-3  d-flex"
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Control

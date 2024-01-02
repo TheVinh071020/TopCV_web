@@ -23,9 +23,7 @@ function Recruitment() {
 
   // Lấy application theo user
   const getUserByApplication = async (status) => {
-    const response = await axiosConfig.get(
-      `/applications?userId_like=${userId}`
-    );
+    const response = await axiosConfig.get(`/applications?userId=${userId}`);
     const userApplications = response.data;
     setApplicationInfo(userApplications);
   };
@@ -57,7 +55,6 @@ function Recruitment() {
 
   // Xóa application
   const deleteApplication = async (id) => {
-    console.log(id);
     const response = await axiosConfig.delete(`/applications/${id}`);
     getUserByApplication();
     toast.success("Đã xóa ứng tuyển thành công");
@@ -65,9 +62,7 @@ function Recruitment() {
 
   const confirmDelete = (id) => {
     Swal.fire({
-      title: "Bạn chắc chắn muốn xóa?",
-      text: "Hành động này không thể hoàn tác!",
-      icon: "warning",
+      title: "Bạn chắc chắn muốn hủy?",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
@@ -78,14 +73,6 @@ function Recruitment() {
         deleteApplication(id);
       }
     });
-  };
-
-  const handleClear = () => {
-    if (!valueStatus) {
-      return;
-    }
-    setValueStatus("");
-    setSearchParams("");
   };
 
   useEffect(() => {
@@ -137,18 +124,12 @@ function Recruitment() {
                       label: "Chờ xét duyệt",
                     },
                     {
-                      value: "Đã xác nhận",
-                      label: "Đã xác nhận",
+                      value: "Đã xét duyệt",
+                      label: "Đã xét duyệt",
                     },
                   ]}
                 />{" "}
               </Space>
-              <CustomButton
-                label={"Clear"}
-                type={"button"}
-                className={"btn btn-danger"}
-                onClick={handleClear}
-              />
             </div>
           </div>
           {applicationInfo?.length === 0 ? (
@@ -191,11 +172,24 @@ function Recruitment() {
                         </div>
                       </div>
                     </div>
+
                     <div className="info-detail-title">
                       <div className="titless">Công ty: {item.company}</div>
                     </div>
                     <div className="info-detail-title">
-                      <div className="titless">{item.level}</div>
+                      <div className="titles">
+                        <div className="titless" width={{ width: "250px" }}>
+                          Chức vụ: {item.level}
+                        </div>
+                      </div>
+                      <div className="salary">
+                        <CustomButton
+                          onClick={() => confirmDelete(item.id)}
+                          label={"Hủy"}
+                          className={"btn btn-info"}
+                          style={{ marginLeft: "60%" }}
+                        />
+                      </div>
                     </div>
                     <div className="info-detail-title">
                       <div className="titless">
@@ -204,14 +198,10 @@ function Recruitment() {
                       </div>
                     </div>
                     <div className="info-detail-title">
-                      <div className="titless">Trạng thái: {item.status}</div>
+                      <div className="titless">
+                        Trạng thái: Công ty sẽ sớm liên hệ
+                      </div>
                     </div>
-                      <CustomButton
-                        onClick={() => confirmDelete(item.id)}
-                        label={"Hủy"}
-                        className={"btn btn-info"}
-                        style={{ marginLeft: "88%" }}
-                      />
                   </div>
                 </div>
               </div>

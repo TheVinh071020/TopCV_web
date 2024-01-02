@@ -1,15 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Input, Button } from "antd";
 import { toast } from "react-toastify";
+import { axiosConfig } from "../../../axios/config";
 
 const DetailBodyLeft = ({
   job,
+  userId,
   setOpen,
   isUserRole,
   isOrderCreated,
   hasApplied,
 }) => {
-  const handleApply = () => {
+  const jobId = job?.id;
+  const [hasAppliedForJob, setHasAppliedForJob] = useState(false);
+
+  const getApplicationsByJobId = async (jobId, userId) => {
+    try {
+      const response = await axiosConfig.get(`/applications?jobId=${jobId}`);
+      const applications = response.data;
+      const hasApplied = applications.some(
+        (application) => application.userId === userId
+      );
+      setHasAppliedForJob(hasApplied);
+    } catch (error) {
+      console.error("Error fetching applications by jobId: ", error);
+      setHasAppliedForJob(false);
+    }
+  };
+
+  useEffect(() => {
+    if (jobId) {
+      getApplicationsByJobId(jobId, userId);
+    }
+  }, [jobId, userId]);
+
+  const handleApply = async () => {
     if (hasApplied) {
       toast.warn("Bạn đã ứng tuyển cho công việc này rồi");
       return;
@@ -18,8 +43,13 @@ const DetailBodyLeft = ({
       alert("Bạn đã tạo đơn hàng");
       return;
     }
+    if (hasAppliedForJob) {
+      toast.warn("Bạn đã ứng tuyển cho công việc này rồi");
+      return;
+    }
     setOpen(true);
   };
+
   return (
     <div className="job-detail__body-left">
       <div className="job-detail__info">
@@ -76,7 +106,7 @@ const DetailBodyLeft = ({
                 variant="outline-success"
                 type="primary"
                 onClick={() => setOpen(true)}
-                disabled
+                hidden
               >
                 <i
                   style={{ marginRight: "15px" }}

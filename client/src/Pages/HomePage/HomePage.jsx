@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet";
 import { axiosConfig } from "../../axios/config";
 import { useSearchParams } from "react-router-dom";
 import DetailItem from "../../components/Layouts/DetailItem";
-import Pagination from "../../components/common/Pagination";
+import PaginationPage from "../../components/common/PaginationPage";
 import SearchInput from "../../components/common/SearchInput";
 import CustomButton from "../../components/common/CustomButton";
 
@@ -141,16 +141,6 @@ function HomePage() {
     }
   }, [searchParams, dispatch, querySearch, queryAddress, querySalary]);
 
-  // Clear filter
-  const handleClear = () => {
-    if (!searchValue && !valueAddress && !valueSalary) {
-      return;
-    }
-    setSearchValue("");
-    setValueAddress("");
-    setValueSalary("");
-    setSearchParams("");
-  };
   // Phân trang
   let pageNumber = 6;
   const totalPages = Math.ceil(total / pageNumber);
@@ -203,7 +193,7 @@ function HomePage() {
                   options={[
                     {
                       value: "",
-                      label: "Địa chỉ",
+                      label: "Tất cả",
                     },
                     {
                       value: "Hà Nội",
@@ -226,7 +216,7 @@ function HomePage() {
                   options={[
                     {
                       value: "",
-                      label: "Mức lương",
+                      label: "Tất cả",
                     },
                     {
                       value: "desc",
@@ -240,12 +230,6 @@ function HomePage() {
                 />
               </Space>
             </div>
-            <CustomButton
-              label={"Clear"}
-              type={"button"}
-              className={"btn btn-danger"}
-              onClick={handleClear}
-            />
           </div>
         </div>
         <div className="row feature_job">
@@ -271,7 +255,7 @@ function HomePage() {
           </div>
         </div>
         <div className="d-flex justify-content-center align-items-center">
-          <Pagination pageNumbers={pageNumbers} goToPage={goToPage} />
+          <PaginationPage pageNumbers={pageNumbers} goToPage={goToPage} />
         </div>
       </div>
 

@@ -19,6 +19,9 @@ import EditJobCompany from "./Admin/AdminCompany/EditJobCompany";
 import Company from "./Admin/UserAdmin/Company/Company";
 import EidtCompany from "./Admin/AdminCompany/EidtCompany";
 import ProfileCompany from "./Admin/AdminCompany/ProfileCompany";
+import Applications from "./Admin/AdminCompany/Applications";
+import CreatedCompany from "./Admin/AdminCompany/CreatedCompany";
+import CreateJobCompany from "./Admin/AdminCompany/CreateJobCompany";
 
 function App() {
   const navigate = useNavigate();
@@ -50,18 +53,22 @@ function App() {
           <Route path="/admin/company" element={<Company />} />
         </Route>
         <Route path="/admin-company" element={<AdminCompany />}>
-          <Route path="/admin-company/product" element={<ProductCompany />} />
-          <Route path="/admin-company/add" element={<EditJobCompany />} />
-          <Route path="/admin-company/edit/:id" element={<EditJobCompany />} />
           <Route path="/admin-company/profile" element={<ProfileCompany />} />
           <Route
-            path="/admin-company/create-profile/:id"
+            path="/admin-company/create-profile"
+            element={<CreatedCompany />}
+          />
+          <Route
+            path="/admin-company/edit-profile/:id"
             element={<EidtCompany />}
           />
+          <Route path="/admin-company/product" element={<ProductCompany />} />
+          <Route path="/admin-company/create" element={<CreateJobCompany />} />
+          <Route path="/admin-company/edit/:id" element={<EditJobCompany />} />
+          <Route path="/admin-company/aplications" element={<Applications />} />
         </Route>
-
         <Route path="/company-profile" element={<CompanyProfile />} />
-
+        {/* User */}
         <Route element={<PrivateRouter />}>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

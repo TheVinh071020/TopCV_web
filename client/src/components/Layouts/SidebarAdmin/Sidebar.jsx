@@ -1,6 +1,16 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const [textColor, setTextColor] = useState("blue");
+  const handleClick = () => {
+    setTextColor(textColor === "blue" ? "white" : "blue");
+  };
+
+  const linkStyle = {
+    color: textColor,
+  };
+
   const navigate = useNavigate();
 
   const handleLogout = () => {

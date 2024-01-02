@@ -18,6 +18,8 @@ function Profile() {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
 
+  const avatarUser = localStorage.getItem("avatar");
+
   // Lấy giá  trị ô input
   const [formInput, setFormInput] = useState({
     name: user.name,
@@ -134,6 +136,7 @@ function Profile() {
         .then((snapshot) => getDownloadURL(snapshot.ref))
         .then((url) => {
           setFormInput((prev) => ({ ...prev, avatar: url }));
+          localStorage.setItem("avatar", url);
           const inputElement = document.getElementById("avatarInput");
           if (inputElement) {
             inputElement.value = url;
@@ -144,7 +147,6 @@ function Profile() {
         });
     }
   };
-  console.log(user);
 
   return (
     <div>
@@ -248,7 +250,10 @@ function Profile() {
             {formInput.avatar ? (
               <img src={formInput.avatar} alt="" />
             ) : (
-              <img src={user.avatar} alt="" />
+              <img
+                src="https://www.svgrepo.com/show/382109/male-avatar-boy-face-man-user-7.svg"
+                alt=""
+              />
             )}
           </div>
           <div>
@@ -267,7 +272,6 @@ function Profile() {
                     placeholder="Avatar"
                   />
                 </Form.Group>
-                
               </Form.Group>
             </div>
           </div>

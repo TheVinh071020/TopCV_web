@@ -3,7 +3,7 @@ import CustomButton from "../../../components/common/CustomButton";
 import { axiosConfig } from "../../../axios/config";
 import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined";
 import Modal from "react-bootstrap/Modal";
-import Pagination from "../../../components/common/Pagination";
+import PaginationPage from "../../../components/common/PaginationPage";
 import { Select, Space } from "antd";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
@@ -71,7 +71,7 @@ function UserAdmin() {
     } else {
       getUsers(1, 5);
     }
-  }, [searchParams, querySearch, queryGender]);
+  }, [searchParams, querySearch, queryGender, querySortByName]);
 
   // Tim kiếm
   const handleSearchSubmit = async (e) => {
@@ -149,7 +149,7 @@ function UserAdmin() {
       console.log("Failed to lock user", error);
     }
   };
-
+  console.log(users);
   const handleUnLockUser = async (id) => {
     try {
       await axiosConfig.patch(`/users/${id}`, {
@@ -339,7 +339,7 @@ function UserAdmin() {
         </table>
       </div>
       <div className="d-flex ">
-        <Pagination pageNumbers={pageNumbers} goToPage={goToPage} />
+        <PaginationPage pageNumbers={pageNumbers} goToPage={goToPage} />
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

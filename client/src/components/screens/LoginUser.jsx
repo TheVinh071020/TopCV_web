@@ -97,15 +97,23 @@ function LoginUser() {
               );
               navigate("/");
             } else if (res.data.user.role === "Company") {
-              navigate("/admin-company");
-              localStorage.setItem("company", JSON.stringify(res.data.user));
-              localStorage.setItem(
-                "token",
-                JSON.stringify(res.data.accessToken)
-              );
+              if (res.data.user.status === "Chờ xét duyệt") {
+                toast.warning("Tài khoản của bạn đang chờ Admin xét duyệt");
+              } else if (res.data.user.status === "Đã xét duyệt") {
+                navigate("/admin-company");
+                localStorage.setItem("company", JSON.stringify(res.data.user));
+                localStorage.setItem(
+                  "token",
+                  JSON.stringify(res.data.accessToken)
+                );
+                toast.success("Đăng nhập Admin Company thành công 👌");
+              }
             } else if (res.data.user.role === "Admin") {
               navigate("/admin");
+              toast.success("Đăng nhập Admin thành công 👌");
             }
+          } else if (res.data.user.locked === true) {
+            toast.error("Tai khoan đã bị khóa, vui lòng liên hệ: 0936763839");
           }
         })
         .catch((err) => {

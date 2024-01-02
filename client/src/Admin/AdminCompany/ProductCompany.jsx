@@ -3,7 +3,7 @@ import CustomButton from "../../components/common/CustomButton";
 import { axiosConfig } from "../../axios/config";
 import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined";
 import Modal from "react-bootstrap/Modal";
-import Pagination from "../../components/common/Pagination";
+import PaginationPage from "../../components/common/PaginationPage";
 import { Select, Space } from "antd";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
@@ -11,12 +11,9 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 function ProductCompany() {
-  // View Add job
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   // View job
   const [view, setView] = useState(false);
   const handleCloseView = () => setView(false);
@@ -26,7 +23,6 @@ function ProductCompany() {
 
   const companyLocal = JSON.parse(localStorage.getItem("company"));
   const companyName = companyLocal.name;
-  // console.log(companyName);
 
   const [company, setCompany] = useState("");
   const [products, setProducts] = useState([]);
@@ -48,28 +44,19 @@ function ProductCompany() {
     setSearchValue(e.target.value);
   };
 
-  const getListProducts = (pageNumber, pageIndex) => {
+  const getListProducts = async (pageNumber, pageIndex) => {
     // Lấy companyId theo cty
-    axiosConfig
+    await axiosConfig
       .get(`/companies?name_like=${companyName}`)
       .then((res) => {
-        const fetchedCompany = res.data[0];
-        setCompany(fetchedCompany);
-        setFormInput({
-          ...formInput,
-          companyId: fetchedCompany.id,
-          company: fetchedCompany.name,
-          avatar: fetchedCompany.avatar,
-          address: fetchedCompany.address,
-          location: fetchedCompany.location,
-          time: fetchedCompany.time,
-        });
+        setCompany(res.data[0]);
       })
       .catch((err) => {
         console.log(err);
       });
+
     // Lấy jobs theo tên cty
-    axiosConfig
+    await axiosConfig
       .get(
         `/jobs?_page=${pageNumber}&_limit=${pageIndex}&company_like=${companyName}`
       )
@@ -80,132 +67,6 @@ function ProductCompany() {
       .catch((err) => {
         console.log(err);
       });
-  };
-  // console.log(company);
-  console.log(products);
-  const [formInput, setFormInput] = useState({
-    name: "",
-    companyId: company.id,
-    company: company.name,
-    level: "",
-    experience: "",
-    salary: "",
-    scale: "",
-    time: company.time,
-    description: "",
-    requirement: "",
-    benefit: "",
-    address: company.address,
-    location: company.location,
-    avatar: company.avatar,
-    status: "Chờ xét duyệt",
-  });
-  // console.log(formInput);
-  //validate
-  const [formErrors, setFormErrors] = useState({
-    name: "",
-    level: "",
-    experience: "",
-    salary: "",
-    scale: "",
-    description: "",
-    requirement: "",
-    benefit: "",
-    time: "",
-    location: "",
-    address: "",
-  });
-  const validateForm = () => {
-    const errors = {};
-
-    if (!formInput.name.trim()) {
-      errors.name = "Name is required";
-    }
-    if (!formInput.level.trim()) {
-      errors.level = "Level is required";
-    }
-    if (!formInput.experience.trim()) {
-      errors.experience = "Experience is required";
-    }
-    if (!formInput.salary.trim()) {
-      errors.salary = "Salary is required";
-    } else if (isNaN(formInput.salary)) {
-      errors.salary = "Salary must be a number";
-    }
-    if (!formInput.scale.trim()) {
-      errors.scale = "Scale is required";
-    } else if (isNaN(formInput.scale)) {
-      errors.scale = "Scale must be a number";
-    }
-    if (!formInput.description.trim()) {
-      errors.description = "Description is required";
-    }
-    if (!formInput.requirement.trim()) {
-      errors.requirement = "Requirement is required";
-    }
-    if (!formInput.benefit.trim()) {
-      errors.benefit = "Benefit is required";
-    }
-    if (!formInput.time.trim()) {
-      errors.time = "Time is required";
-    }
-    if (!formInput.location.trim()) {
-      errors.location = "Location is required";
-    }
-    if (!formInput.address.trim()) {
-      errors.address = "Address is required";
-    }
-    setFormErrors(errors);
-
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormInput({
-      ...formInput,
-      [name]: value,
-    });
-  };
-
-  // Add job
-  const handleAddProduct = () => {
-    // navigate(`/admin-company/add`);
-
-    const isFormValid = validateForm();
-    if (isFormValid) {
-      const payload = {
-        name: formInput.name,
-        companyId: formInput.id,
-        company: formInput.company,
-        level: formInput.level,
-        experience: formInput.experience,
-        salary: Number(formInput.salary),
-        scale: Number(formInput.scale),
-        time: formInput.time,
-        description: formInput.description,
-        requirement: formInput.requirement,
-        benefit: formInput.benefit,
-        address: formInput.address,
-        location: formInput.location,
-        avatar: formInput.avatar,
-        status: formInput.status,
-      };
-      console.log("payload", payload);
-      axiosConfig
-        .post("/jobs", payload)
-        .then((response) => {
-          console.log("Công việc đã được thêm:", response.data);
-          toast.success("Tạo mới công việc thành công 👌");
-          handleClose();
-          getListProducts(1,4);
-        })
-        .catch((error) => {
-          console.error("Lỗi khi thêm công việc:", error);
-        });
-    } else {
-      console.log("Form has errors. Please check the fields.");
-    }
   };
 
   const handleEditProduct = (id) => {
@@ -226,6 +87,16 @@ function ProductCompany() {
   };
 
   const getListJobByQuerySearch = async (pageIndex, pageNumber) => {
+    // Lấy companyId theo cty
+    await axiosConfig
+      .get(`/companies?name_like=${companyName}`)
+      .then((res) => {
+        setCompany(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     await axiosConfig
       .get(
         `/jobs?_page=${pageIndex}&_limit=${pageNumber}&company_like=${companyName}&&name_like=${querySearch}&&address_like=${queryAddress}&&_sort=salary&_order=${querySalary}`
@@ -298,16 +169,6 @@ function ProductCompany() {
       });
   };
 
-  const handleClear = () => {
-    if (!searchValue && !valueAddress && !valueSalary) {
-      return;
-    }
-    setSearchValue("");
-    setValueAddress("");
-    setValueSalary("");
-    setSearchParams("");
-  };
-
   useEffect(() => {
     if (querySearch) {
       setSearchValue(querySearch);
@@ -324,17 +185,26 @@ function ProductCompany() {
   }, [searchParams, querySearch, queryAddress]);
 
   // Delete job
-  const handleDeleteProduct = (id) => {
-    axiosConfig
-      .delete(`/jobs/${id}`)
-      .then((res) => {
-        console.log(res.data);
-        getListProducts(1, 4);
-        toast.success("Xóa công việc thành công 👌");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const handleDeleteProduct = async (id) => {
+    const res = await axiosConfig.delete(`/jobs/${id}`);
+    getListProducts(1, 4);
+    toast.success("Xóa công việc thành công 👌");
+  };
+  const confirmDelete = (id) => {
+    Swal.fire({
+      title: "Bạn chắc chắn muốn xóa?",
+      text: "Hành động này không thể hoàn tác!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Đồng ý",
+      cancelButtonText: "Hủy",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDeleteProduct(id);
+      }
+    });
   };
 
   // Pagination
@@ -352,7 +222,7 @@ function ProductCompany() {
   return (
     <div className="container">
       {/* Add Job */}
-      <Modal
+      {/* <Modal
         size="lg"
         aria-labelledby="example-modal-sizes-title-lg"
         animation={false}
@@ -563,7 +433,7 @@ function ProductCompany() {
             onClick={handleAddProduct}
           />
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
       <div className="mt-3" style={{ width: "97%" }}>
         <div className="d-flex justify-content-center align-items-center">
           <h2>Quản lý công việc</h2>
@@ -606,7 +476,7 @@ function ProductCompany() {
                 options={[
                   {
                     value: "",
-                    label: "Địa chỉ",
+                    label: "Tất cả",
                   },
                   {
                     value: "Hà Nội",
@@ -631,7 +501,7 @@ function ProductCompany() {
                 options={[
                   {
                     value: "",
-                    label: "Mức lương",
+                    label: "Tất cả",
                   },
                   {
                     value: "desc",
@@ -645,82 +515,94 @@ function ProductCompany() {
               />
             </Space>
           </div>
-          <div>
-            <CustomButton
-              label={"Clear"}
-              type={"button"}
-              className={"btn btn-danger"}
-              onClick={handleClear}
-            />
-          </div>
         </div>
         <div className="container mt-3">
-          <CustomButton
-            label={"Thêm công việc"}
-            type={"button"}
-            className={"btn btn-success"}
-            onClick={handleShow}
-            // onClick={handleAddProduct}
-          />
+          {!company ? (
+            <CustomButton
+              label={"Thêm công việc"}
+              type={"button"}
+              className={"btn btn-success"}
+              onClick={() => navigate("/admin-company/create")}
+              disabled={true}
+            />
+          ) : (
+            <CustomButton
+              label={"Thêm công việc"}
+              type={"button"}
+              className={"btn btn-success"}
+              // onClick={handleShow}
+              onClick={() => navigate("/admin-company/create")}
+            />
+          )}
         </div>
-        <table
-          className="table table-striped table-hover"
-          style={{ marginTop: "20px" }}
-        >
-          <thead>
-            <tr>
-              <th scope="col">STT</th>
-              <th scope="col">ID</th>
-              <th scope="col">Công ty</th>
-              <th scope="col">Tên CV</th>
-              <th scope="col">Chức vụ</th>
-              <th scope="col">Kinh nghiệm</th>
-              <th scope="col">Lương</th>
-              <th scope="col">Thành phố</th>
-              <th scope="col">Thao tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product, i) => (
-              <tr key={i}>
-                <th scope="row">{i + 1}</th>
-                <td>{product.id}</td>
-                <td>{product.company}</td>
-                <td>{product.name}</td>
-                <td>{product.level}</td>
-                <td>{product.experience}</td>
-                <td>{product.salary}</td>
-                <td>{product.address}</td>
-
-                <td className="d-flex gap-3">
-                  <td
-                    className="d-flex justify-content-center align-items-center"
-                    style={{ cursor: "pointer", marginRight: "15px" }}
-                    onClick={() => handleViewUser(product.id)}
-                  >
-                    <EyeOutlined />
-                  </td>
-                  <CustomButton
-                    label={"Sửa"}
-                    type={"button"}
-                    className={"btn btn-primary"}
-                    onClick={() => handleEditProduct(product.id)}
-                  />
-                  <CustomButton
-                    label={"Xóa"}
-                    type={"button"}
-                    className={"btn btn-danger"}
-                    onClick={() => handleDeleteProduct(product.id)}
-                  />
-                </td>
+        {!company ? (
+          <div className="d-flex justify-content-center">
+            <h3>Bạn chưa tạo công ty</h3>
+          </div>
+        ) : (
+          <table
+            className="table table-striped table-hover"
+            style={{ marginTop: "20px" }}
+          >
+            <thead>
+              <tr>
+                <th scope="col">STT</th>
+                <th scope="col">ID</th>
+                <th scope="col">Công ty</th>
+                <th scope="col">Tên CV</th>
+                <th scope="col">Chức vụ</th>
+                <th scope="col">Kinh nghiệm</th>
+                <th scope="col">Lương</th>
+                <th scope="col">Thành phố</th>
+                <th scope="col">Thao tác</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {products.map((product, i) => (
+                <tr key={i}>
+                  <th scope="row">{i + 1}</th>
+                  <td>{product.id}</td>
+                  <td>{product.company}</td>
+                  <td>{product.name}</td>
+                  <td>{product.level}</td>
+                  <td>{product.experience}</td>
+                  <td>{product.salary}</td>
+                  <td>{product.address}</td>
+
+                  <td className="d-flex gap-3">
+                    <td
+                      className="d-flex justify-content-center align-items-center"
+                      style={{ cursor: "pointer", marginRight: "15px" }}
+                      onClick={() => handleViewUser(product.id)}
+                    >
+                      <EyeOutlined />
+                    </td>
+                    <CustomButton
+                      label={"Sửa"}
+                      type={"button"}
+                      className={"btn btn-primary"}
+                      onClick={() => handleEditProduct(product.id)}
+                    />
+                    <CustomButton
+                      label={"Xóa"}
+                      type={"button"}
+                      className={"btn btn-danger"}
+                      onClick={() => confirmDelete(product.id)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
-      <div className="d-flex ">
-        <Pagination pageNumbers={pageNumbers} goToPage={goToPage} />
-      </div>
+      {company ? (
+        <div className="d-flex ">
+          <PaginationPage pageNumbers={pageNumbers} goToPage={goToPage} />
+        </div>
+      ) : (
+        <></>
+      )}
 
       {/* View job */}
       <Modal
