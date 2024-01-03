@@ -22,6 +22,10 @@ import ProfileCompany from "./Admin/AdminCompany/ProfileCompany";
 import Applications from "./Admin/AdminCompany/Applications";
 import CreatedCompany from "./Admin/AdminCompany/CreatedCompany";
 import CreateJobCompany from "./Admin/AdminCompany/CreateJobCompany";
+import JobDetail from "./Admin/AdminCompany/JobDetail";
+import PageNotFound from "./Pages/PageNotFound/PageNotFound";
+import AdminRouter from "./components/PrivateRouter/AdminGuard";
+import AdminGuard from "./components/PrivateRouter/AdminGuard";
 
 function App() {
   const navigate = useNavigate();
@@ -32,22 +36,20 @@ function App() {
     scrollToTop();
   }, [navigate]);
 
-  const [isUser, setIsUser] = useState(false);
-  const [isCompany, setIsCompany] = useState(false);
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.role === "User") {
-      setIsUser(true);
-    }
-    if (user && user.role === "Admin") {
-      setIsCompany(true);
-    }
-  }, []);
-
   return (
     <>
       <Routes>
+        {/* <Route
+          path="/admin"
+          element={
+            <AdminGuard>
+              <AdminPage />
+            </AdminGuard>
+          }
+        >
+          <Route path="/admin/user" element={<UserAdmin />} />
+          <Route path="/admin/company" element={<Company />} />
+        </Route> */}
         <Route path="/admin" element={<AdminPage />}>
           <Route path="/admin/user" element={<UserAdmin />} />
           <Route path="/admin/company" element={<Company />} />
@@ -79,7 +81,9 @@ function App() {
         </Route>
         <Route path="/detail/:jobId" element={<Detail />} />
         <Route path="/recruitment" element={<Recruitment />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
+
       <ToastContainer />
     </>
   );

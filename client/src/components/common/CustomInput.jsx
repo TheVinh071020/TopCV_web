@@ -25,7 +25,11 @@ function CustomInput({
           className={formError ? "error-input" : ""}
           disabled={disabled}
         />
-        {formError && <div className="error-feedback">{formError}</div>}
+        {formError && (
+          <div className="error-feedback" style={{ color: "red" }}>
+            {formError}
+          </div>
+        )}
       </Form.Group>
     </div>
   );

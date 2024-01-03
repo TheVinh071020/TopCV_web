@@ -20,7 +20,7 @@ function Applications() {
   const handleCloseView = () => setView(false);
   const handleShowView = () => setView(true);
 
-  const companyLocal = JSON.parse(localStorage.getItem("company"));
+  const companyLocal = JSON.parse(localStorage.getItem("user"));
   const companyName = companyLocal.name;
 
   const [company, setCompany] = useState("");
@@ -69,7 +69,7 @@ function Applications() {
     console.log(companyName, querySearch, queryAddress);
     await axiosConfig
       .get(
-        `/applications?_page=${pageNumber}&_limit=${pageIndex}company_like=${companyName}&&userEmail_like=${querySearch}&&address_like=${queryAddress}`
+        `/applications?_page=${pageNumber}&_limit=${pageIndex}company_like=${companyName}&&userEmail_like=${querySearch}&&userName_like=${searchValue}&&address_like=${queryAddress}`
       )
       .then((res) => {
         setApplications(res.data);
@@ -91,7 +91,7 @@ function Applications() {
     });
     await axiosConfig
       .get(
-        `/applications?company_like=${companyName}&&userEmail_like=${searchValue}`
+        `/applications?company_like=${companyName}&&userEmail_like=${searchValue}&&userName_like=${searchValue}`
       )
       .then((res) => {
         setApplications(res.data);
@@ -200,7 +200,7 @@ function Applications() {
                     />
                     <Button
                       onClick={handleSearchSubmit}
-                      variant="outline-success"
+                      variant="outline-info"
                       type="submit"
                     >
                       Search
@@ -250,7 +250,6 @@ function Applications() {
             <thead>
               <tr>
                 <th scope="col">STT</th>
-                <th scope="col">ID</th>
                 <th scope="col">Tên</th>
                 <th scope="col">Email</th>
                 <th scope="col">Công ty</th>
@@ -267,12 +266,56 @@ function Applications() {
               {applications?.map((app, index) => (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
-                  <td>{app?.id}</td>
-                  <td>{app?.userName}</td>
-                  <td>{app?.userEmail}</td>
-                  <td>{app?.company}</td>
-                  <td>{app?.jobName}</td>
-                  <td>{app?.location}</td>
+                  <td
+                    style={{
+                      maxWidth: "125px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {app?.userName}
+                  </td>
+                  <td
+                    style={{
+                      maxWidth: "170px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {app?.userEmail}
+                  </td>
+                  <td
+                    style={{
+                      maxWidth: "200px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {app?.company}
+                  </td>
+                  <td
+                    style={{
+                      maxWidth: "200px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {app?.jobName}
+                  </td>
+                  <td
+                    style={{
+                      maxWidth: "200px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {app?.location}
+                  </td>
                   <td>{app?.address}</td>
                   <td>{app?.gender}</td>
                   <td
@@ -291,12 +334,12 @@ function Applications() {
                     >
                       <EyeOutlined />
                     </td>
-                    <CustomButton
+                    {/* <CustomButton
                       label={"Hủy"}
                       type={"button"}
                       className={"btn btn-danger"}
                       onClick={() => confirmDelete(app.id)}
-                    />
+                    /> */}
                   </td>
                 </tr>
               ))}
@@ -340,7 +383,7 @@ function Applications() {
                     <th scope="col" style={{ width: "180px" }}>
                       Học vấn
                     </th>
-                    <th scope="col" style={{ width: "100px" }}>
+                    <th scope="col" style={{ width: "120px" }}>
                       Chứng chỉ
                     </th>
                     <th scope="col" style={{ width: "180px" }}>
@@ -367,7 +410,7 @@ function Applications() {
                         href={`https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${viewApplication?.userEmail}`}
                         target="_blank"
                       >
-                        Gửi Email liên hệ
+                        Liên hệ
                       </a>
                     </td>
 

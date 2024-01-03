@@ -24,15 +24,6 @@ function EidtCompany() {
   });
 
   const avtCompany = localStorage.getItem("avatar");
-  console.log(company );
-
-  // const [userId, setUserId] = useState("");
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [time, setTime] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [location, setLocation] = useState("");
 
   const [initialCompanyData, setInitialCompanyData] = useState({});
 
@@ -93,7 +84,13 @@ function EidtCompany() {
     }
   };
   return (
-    <div className="container ">
+    <div className="container d-flex justify-content-space-between">
+      <Link to={"/admin-company/profile"}>
+        <CustomButton
+          className={"btn btn-danger mt-3"}
+          label={<i class="fa-solid fa-left-long"></i>}
+        />
+      </Link>
       <div className="col-md-8 offset-md-1">
         <Form type="submit">
           <h1 className="titleee mb-4">Sửa thông tin công ty</h1>
@@ -214,16 +211,12 @@ function EidtCompany() {
           </Form.Group>
           <div className="d-flex gap-3">
             <CustomButton
-              className={"btn btn-success"}
+              className={"btn btn-info"}
               label={"Submit"}
               type={"submit"}
               onClick={editProfile}
               // disabled={!isDataChanged}
             />
-
-            <Link to={"/admin-company/profile"}>
-              <CustomButton className={"btn btn-danger"} label={"Close"} />
-            </Link>
           </div>
         </Form>
       </div>

@@ -9,7 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import { Link, useNavigate } from "react-router-dom";
 
 function CreatedCompany() {
-  const isCompany = JSON.parse(localStorage.getItem("company")) || {};
+  const isCompany = JSON.parse(localStorage.getItem("user")) || {};
 
   const [companyProfile, setCompanyProfile] = useState(null);
 
@@ -87,8 +87,8 @@ function CreatedCompany() {
       try {
         const response = await axiosConfig.post("/companies", formInput);
         setCompanyProfile(response.data);
-        console.log(response.data);
         localStorage.setItem("companys", JSON.stringify(response.data));
+        localStorage.removeItem("avatar");
         toast.success("Tạo công ty thành công!");
         navigate("/admin-company/profile");
       } catch (error) {
@@ -122,7 +122,13 @@ function CreatedCompany() {
     getCompanyProfile();
   }, []);
   return (
-    <div className="container ">
+    <div className="container d-flex justify-content-space-between">
+      <Link to={"/admin-company/profile"}>
+        <CustomButton
+          className={"btn btn-danger mt-3"}
+          label={<i class="fa-solid fa-left-long"></i>}
+        />
+      </Link>
       <div className="col-md-8 offset-md-1">
         <Form type="submit">
           <h1 className="titleee mb-4">Tạo Công ty</h1>
@@ -188,14 +194,17 @@ function CreatedCompany() {
             />
             {errors && <div className="error-feedback"> {errors.location}</div>}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formGroupPassword">
-            <Form.Control
+          <Form.Group className="col mb-3" controlId="formGroupPassword">
+            <Form.Select
               onChange={handleInputChange}
               value={formInput.address}
               name="address"
-              type="text"
-              placeholder="Thành phố"
-            />
+              aria-label="Default select example"
+            >
+              <option value="">Thành phố</option>
+              <option value="Hà Nội">Hà Nội</option>
+              <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+            </Form.Select>
             {errors && <div className="error-feedback"> {errors.address}</div>}
           </Form.Group>
 
@@ -210,7 +219,7 @@ function CreatedCompany() {
               type="textarea"
               placeholder="Giới thiệu công ty"
               as="textarea"
-              rows={1}
+              rows={2}
             />{" "}
             {errors && (
               <div className="error-feedback"> {errors.introduce}</div>
@@ -262,16 +271,12 @@ function CreatedCompany() {
           </Form.Group>
           <div className="d-flex gap-3">
             <CustomButton
-              className={"btn btn-success"}
-              label={"Submit"}
+              className={"btn btn-info"}
+              label={"Thêm công việc"}
               type={"submit"}
               onClick={updateProfile}
               //   disabled={!isDataChanged}
             />
-
-            <Link to={"/admin-company/profile"}>
-              <CustomButton className={"btn btn-danger"} label={"Close"} />
-            </Link>
           </div>
         </Form>
       </div>

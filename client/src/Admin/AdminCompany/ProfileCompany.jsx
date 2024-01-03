@@ -14,7 +14,7 @@ function ProfileCompany() {
   const [isCompanyCreated, setIsCompanyCreated] = useState(false);
   const navigate = useNavigate();
 
-  const isCompany = JSON.parse(localStorage.getItem("company")) || {};
+  const isCompany = JSON.parse(localStorage.getItem("user")) || {};
 
   const [companyProfile, setCompanyProfile] = useState(null);
 
@@ -124,99 +124,7 @@ function ProfileCompany() {
       <h1>Thông tin công ty</h1>
 
       <div className="col m-3 d-flex justify-content-center  gap-3">
-        <div className="col-md-6">
-          <div style={{ width: "100%" }}>
-            <ul style={{ width: "100%" }}>
-              <li name="company" style={{ display: "flex", gap: "10px" }}>
-                <p style={{ width: "145px" }}>Tên công ty:</p>
-                {companyProfile ? (
-                  <span style={{ width: "368px", wordBreak: "break-all" }}>
-                    {companyProfile?.name}
-                  </span>
-                ) : (
-                  <span style={{ width: "368px", wordBreak: "break-all" }}>
-                    {isCompany?.name}
-                  </span>
-                )}
-              </li>
-              <li name="email" style={{ display: "flex", gap: "10px" }}>
-                <p style={{ width: "145px" }}> Email:</p>
-                {companyProfile ? (
-                  <span style={{ width: "368px", wordBreak: "break-all" }}>
-                    {companyProfile?.email}
-                  </span>
-                ) : (
-                  <span style={{ width: "368px", wordBreak: "break-all" }}>
-                    {isCompany?.email}
-                  </span>
-                )}
-              </li>
-              <li name="phone" style={{ display: "flex", gap: "10px" }}>
-                <p style={{ width: "145px" }}>Tên công ty:</p>
-                <span style={{ width: "368px", wordBreak: "break-all" }}>
-                  {companyProfile?.phone}
-                </span>
-              </li>
-              <li name="time" style={{ display: "flex", gap: "10px" }}>
-                <p style={{ width: "145px" }}>Thời gian làm việc:</p>
-                <span style={{ width: "368px", wordBreak: "break-all" }}>
-                  {companyProfile?.time}
-                </span>
-              </li>
-              <li name="personnel" style={{ display: "flex", gap: "10px" }}>
-                <p style={{ width: "145px" }}>Nhân sự:</p>
-                <span style={{ width: "368px", wordBreak: "break-all" }}>
-                  {companyProfile?.personnel}
-                </span>
-              </li>
-              <li name="location" style={{ display: "flex", gap: "10px" }}>
-                <p style={{ width: "145px" }}>Địa chỉ:</p>
-                <span style={{ width: "368px", wordBreak: "break-all" }}>
-                  {companyProfile?.location}
-                </span>
-              </li>
-              <li name="address" style={{ display: "flex", gap: "10px" }}>
-                <p style={{ width: "145px" }}> Thành phố:</p>
-                <span style={{ width: "368px", wordBreak: "break-all" }}>
-                  {companyProfile?.address}
-                </span>
-              </li>
-              <li name="introduce" style={{ display: "flex", gap: "10px" }}>
-                <p style={{ width: "145px" }}>Giới thiệu công ty:</p>
-                <span style={{ width: "368px", wordBreak: "break-all" }}>
-                  {companyProfile?.introduce}
-                </span>
-              </li>
-              <li name="introduce" style={{ display: "flex", gap: "10px" }}>
-                <p style={{ width: "145px" }}>Avatar</p>
-                {companyProfile?.avatar && (
-                  <div
-                    style={{
-                      width: "110px",
-                      height: "110px",
-                      border: "1px ridge",
-                      borderRadius: "20%",
-                      margin: "30px",
-                      backgroundColor: "#f1bbbb",
-                    }}
-                    className="d-flex align-items-center"
-                  >
-                    <img
-                      src={companyProfile?.avatar}
-                      alt="Uploaded Avatar"
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        borderRadius: "20px",
-                      }}
-                    />
-                  </div>
-                )}
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="col ">
+        <div className="col-2 align-items-center">
           {companyProfile?.userId ? (
             <CustomButton
               label={"Tạo công ty"}
@@ -254,6 +162,95 @@ function ProfileCompany() {
               />
             </div>
           )}
+          {companyProfile?.avatar && (
+            <div
+              style={{
+                width: "110px",
+                height: "110px",
+                border: "1px ridge",
+                borderRadius: "20%",
+                margin: "30px 0",
+                backgroundColor: "#f1bbbb",
+              }}
+              className="d-flex align-items-center"
+            >
+              <img
+                src={companyProfile?.avatar}
+                alt="Uploaded Avatar"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  borderRadius: "20px",
+                }}
+              />
+            </div>
+          )}
+        </div>
+        <div className="col-md-8">
+          <div style={{ width: "100%" }}>
+            <ul style={{ width: "100%" }}>
+              <li name="company" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Tên công ty:</p>
+                {companyProfile ? (
+                  <span style={{ width: "368px", wordBreak: "break-all" }}>
+                    {companyProfile?.name}
+                  </span>
+                ) : (
+                  <span style={{ width: "368px", wordBreak: "break-all" }}>
+                    {isCompany?.name}
+                  </span>
+                )}
+              </li>
+              <li name="email" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}> Email:</p>
+                {companyProfile ? (
+                  <span style={{ width: "368px", wordBreak: "break-all" }}>
+                    {companyProfile?.email}
+                  </span>
+                ) : (
+                  <span style={{ width: "368px", wordBreak: "break-all" }}>
+                    {isCompany?.email}
+                  </span>
+                )}
+              </li>
+              <li name="phone" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>SĐT:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.phone}
+                </span>
+              </li>
+              <li name="time" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Thời gian làm việc:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.time}
+                </span>
+              </li>
+              <li name="personnel" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Nhân sự:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.personnel}
+                </span>
+              </li>
+              <li name="location" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Địa chỉ:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.location}
+                </span>
+              </li>
+              <li name="address" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}> Thành phố:</p>
+                <span style={{ width: "368px", wordBreak: "break-all" }}>
+                  {companyProfile?.address}
+                </span>
+              </li>
+              <li name="introduce" style={{ display: "flex", gap: "10px" }}>
+                <p style={{ width: "145px" }}>Giới thiệu công ty:</p>
+                <span style={{ maxWidth: "360px" }}>
+                  {companyProfile?.introduce}
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <Modal

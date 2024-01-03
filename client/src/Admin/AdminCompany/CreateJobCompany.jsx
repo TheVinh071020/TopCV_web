@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import CustomButton from "../../components/common/CustomButton";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Router, useNavigate } from "react-router-dom";
 import { axiosConfig } from "../../axios/config";
 import { toast } from "react-toastify";
 
 function CreateJobCompany() {
-  const companyLocal = JSON.parse(localStorage.getItem("company"));
+  const companyLocal = JSON.parse(localStorage.getItem("user"));
   const companyName = companyLocal.name;
 
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ function CreateJobCompany() {
   };
 
   const [company, setCompany] = useState("");
+
   const [formInput, setFormInput] = useState({
     name: "",
     companyId: company?.id,
@@ -165,7 +166,13 @@ function CreateJobCompany() {
   }, []);
 
   return (
-    <div className="container ">
+    <div className="container d-flex justify-content-space-between">
+      <Link to={"/admin-company/product"}>
+        <CustomButton
+          className={"btn btn-danger mt-3"}
+          label={<i class="fa-solid fa-left-long"></i>}
+        />
+      </Link>
       <div className="col-md-8 offset-md-1">
         <Form type="submit">
           <h1 className="titleee mb-4">Tạo công việc</h1>
@@ -193,7 +200,7 @@ function CreateJobCompany() {
                 value={formInput.company}
                 name="company"
                 type="text"
-                disabled    
+                disabled
                 placeholder="Công ty"
               />
             </Form.Group>
@@ -349,18 +356,22 @@ function CreateJobCompany() {
               <span className="error">{formErrors.location}</span>
             )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formGroupPassword">
-            <Form.Control
+          <Form.Group className="col mb-3" controlId="formGroupPassword">
+            <Form.Select
               onChange={handleInputChange}
               value={formInput.address}
               name="address"
-              type="text"
-              placeholder="Thành phố"
-            />
+              aria-label="Default select example"
+            >
+              <option value="">Thành phố</option>
+              <option value="Hà Nội">Hà Nội</option>
+              <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+            </Form.Select>
             {formErrors.address && (
               <span className="error">{formErrors.address}</span>
             )}
           </Form.Group>
+
           <div className="d-flex gap-3">
             <CustomButton
               className={"btn btn-success"}
@@ -369,9 +380,6 @@ function CreateJobCompany() {
               disabled={!isFormEdited}
               onClick={handleAddProduct}
             />
-            <Link to={"/admin-company/product"}>
-              <CustomButton className={"btn btn-danger"} label={"Close"} />
-            </Link>
           </div>
         </Form>
       </div>

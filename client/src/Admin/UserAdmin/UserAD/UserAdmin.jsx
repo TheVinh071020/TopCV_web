@@ -174,16 +174,6 @@ function UserAdmin() {
     console.log(viewUser);
   };
 
-  // CLear filter
-  const handleClear = () => {
-    if (!searchValue && !genderValue && !sortNameValue) {
-      return;
-    }
-    setSearchValue("");
-    setGenderValue("");
-    setSortNameValue("");
-    setSearchParams("");
-  };
   // Pagination
   let pageNumber = 5;
   const totalPages = Math.ceil(total / pageNumber);
@@ -198,11 +188,11 @@ function UserAdmin() {
 
   return (
     <div className="container">
-      <div className="mt-3" style={{ width: "97%" }}>
+      <div className="mt-3" style={{ width: "110%" }}>
         <div className="d-flex justify-content-center align-items-center">
           <h2>Quản lý người dùng</h2>
         </div>
-        <div className="container d-flex justify-content-flex-start align-items-center">
+        <div className="container d-flex justify-content-flex-start align-items-center gap-3">
           <div>
             <Navbar expand="lg" className="bg-body-tertiary">
               <Container fluid>
@@ -216,7 +206,7 @@ function UserAdmin() {
                       value={searchValue}
                       onChange={handleSearchChange}
                     />
-                    <Button variant="outline-success" type="submit">
+                    <Button variant="outline-info" type="submit">
                       Search
                     </Button>
                   </Form>
@@ -274,14 +264,6 @@ function UserAdmin() {
                 ]}
               />
             </Space>
-          </div>
-          <div>
-            <CustomButton
-              label={"Clear"}
-              type={"button"}
-              className={"btn btn-danger"}
-              onClick={handleClear}
-            />
           </div>
         </div>
         <table

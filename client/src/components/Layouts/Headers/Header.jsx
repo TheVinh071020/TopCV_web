@@ -8,13 +8,14 @@ import CustomButton from "../../common/CustomButton";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { axiosConfig } from "../../../axios/config";
+import { Button } from "react-bootstrap";
 
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-  const [isUser, setIsUser] = useState(false);
 
+  const [isUser, setIsUser] = useState(false);
   const [isUserRole, setIsUserRole] = useState(false);
   const [isCompanyRole, setIsCompanyRole] = useState(false);
 
@@ -25,8 +26,8 @@ function Header() {
     } else if (user && user.role === "Company") {
       setIsCompanyRole(true);
     } else if (user && user.role === "Admin") {
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
+      // localStorage.removeItem("user");
+      // localStorage.removeItem("token");
       setIsUserRole(true);
     }
   }, []);
@@ -55,8 +56,6 @@ function Header() {
       setIsUser(false);
     }
   }, [dispatch]);
-
-  console.log(users);
 
   const gotoProfile = () => {
     if (isUser) {
@@ -93,6 +92,30 @@ function Header() {
     localStorage.removeItem("company");
     navigate("/login");
   };
+
+  const [companys, setCompanies] = useState([]);
+
+  const companyLocal = JSON.parse(localStorage.getItem("user"));
+  const companyName = companyLocal?.name;
+
+  const getCompany = async () => {
+    if (companyName) {
+      axiosConfig
+        .get(`/companies?name_like=${companyName}`)
+        .then((res) => {
+          setCompanies(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return null;
+    }
+  };
+  console.log(companys.length);
+  useEffect(() => {
+    getCompany();
+  }, []);
   return (
     <div className="header-container">
       <div className="header-img">
@@ -127,47 +150,49 @@ function Header() {
         </ul>
       </div>
       <div className="header-page">
-        <CustomButton
-          className={"profile"}
-          variant={"outline-success"}
-          label={
-            <img
-              style={{ width: "40px", height: "40px", borderRadius: "30%" }}
-              src={users.avatar}
-              alt=""
-            />
-          }
-          style={{
-            width: "55px",
-            height: "55px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onClick={gotoProfile}
-        />
         {isUser ? (
           <div
             style={{
               display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
               width: "100%",
               color: "black",
               textDecoration: "none",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                width: "50%",
-                color: "black",
-                textDecoration: "none",
-                marginLeft: "15px",
-              }}
-            >
-              {users?.name}
-            </div>
+            {!companys.length > 0 ? (
+              <div className="profile-user" onClick={gotoProfile}>
+                {" "}
+                <img
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "30%",
+                  }}
+                  src={users.avatar}
+                  alt=""
+                />
+                <div style={{ marginLeft: "10px", fontFamily: "Tahoma" }}>
+                  {users?.name}
+                </div>
+              </div>
+            ) : (
+              <div className="profile-user" onClick={gotoProfile}>
+                <img
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "30%",
+                  }}
+                  src={companys[0]?.avatar}
+                  alt=""
+                />
+                <div style={{ marginLeft: "10px", fontFamily: "Tahoma" }}>
+                  {companys[0]?.name}
+                </div>
+              </div>
+            )}
             <Link
               style={{
                 width: "50%",
@@ -179,8 +204,8 @@ function Header() {
             >
               <CustomButton
                 onClick={handleLogout}
-                variant={"success"}
-                style={{ backgroundColor: "#f07e1d" }}
+                variant={"outline-info"}
+                style={{ backgroundColor: "#00d8ee", color: "black" }}
                 label={"Đăng xuất"}
               />
             </Link>{" "}
@@ -197,15 +222,19 @@ function Header() {
           >
             <Link to="/login" style={{ width: "47%" }}>
               <CustomButton
-                style={{ backgroundColor: "#f07e1d" }}
-                variant={"success"}
+                style={{ backgroundColor: "#00d8ee", color: "black" }}
+                variant={"outline-info"}
                 label={"Đăng nhập"}
               />
             </Link>
             <Link to="/register" style={{ width: "50%" }}>
               <CustomButton
-                style={{ width: "73%", backgroundColor: "#f07e1d" }}
-                variant={"success"}
+                style={{
+                  width: "73%",
+                  backgroundColor: "#00d8ee",
+                  color: "black",
+                }}
+                variant={"outline-info"}
                 label={"Đăng ký"}
               />
             </Link>

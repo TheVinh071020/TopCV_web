@@ -101,7 +101,7 @@ function LoginUser() {
                 toast.warning("Tài khoản của bạn đang chờ Admin xét duyệt");
               } else if (res.data.user.status === "Đã xét duyệt") {
                 navigate("/admin-company");
-                localStorage.setItem("company", JSON.stringify(res.data.user));
+                localStorage.setItem("user", JSON.stringify(res.data.user));
                 localStorage.setItem(
                   "token",
                   JSON.stringify(res.data.accessToken)
@@ -110,6 +110,7 @@ function LoginUser() {
               }
             } else if (res.data.user.role === "Admin") {
               navigate("/admin");
+              localStorage.setItem("user", JSON.stringify(res.data.user));
               toast.success("Đăng nhập Admin thành công 👌");
             }
           } else if (res.data.user.locked === true) {

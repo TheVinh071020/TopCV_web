@@ -20,10 +20,11 @@ function Detail() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
+    const amdin = JSON.parse(localStorage.getItem("amdin"));
     if (user && user.role === "User") {
       setIsUserRole(true);
     }
-    if (user && user.role === "Admin") {
+    if (amdin && amdin.role === "Admin") {
       setIsCompanyRole(true);
     }
   }, []);

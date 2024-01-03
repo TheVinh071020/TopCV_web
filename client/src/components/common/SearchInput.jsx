@@ -19,7 +19,7 @@ function SearchInput({ onSubmit, onChange, value }) {
                 value={value}
                 onChange={onChange}
               />
-              <Button variant="outline-success" type="submit">
+              <Button variant="outline-info" type="submit">
                 Search
               </Button>
             </Form>

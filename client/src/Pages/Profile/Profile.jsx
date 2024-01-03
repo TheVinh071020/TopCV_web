@@ -12,16 +12,15 @@ import CustomInput from "../../components/common/CustomInput";
 import CustomButton from "../../components/common/CustomButton";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../firebase";
+import { schema } from "../../components/common/ValidateForm";
 
 function Profile() {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
+  console.log(user);
 
-  const avatarUser = localStorage.getItem("avatar");
-
-  // Lấy giá  trị ô input
-  const [formInput, setFormInput] = useState({
+  const [initialFormInput, setInitialFormInput] = useState({
     name: user.name,
     phone: "",
     email: user.email,
@@ -33,11 +32,15 @@ function Profile() {
     applications: [],
   });
 
+  // Lấy giá trị ô input
+  const [formInput, setFormInput] = useState({ ...initialFormInput });
+
   // load user theo id
   useEffect(() => {
     axiosConfig
       .get(`/users/${userId}`)
       .then((res) => {
+        setInitialFormInput(res.data);
         setFormInput(res.data);
       })
       .catch((err) => {
@@ -45,89 +48,60 @@ function Profile() {
       });
   }, []);
 
+  const [isFormChanged, setIsFormChanged] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormInput({
       ...formInput,
       [name]: value,
     });
+
+    setIsFormChanged(true);
   };
 
   // Validate form
-  const [validationErrors, setValidationErrors] = useState({
-    name: "",
-    phone: "",
-    address: "",
-    education: "",
-    certification: "",
-    gender: "",
-  });
+  const [validationErrors, setValidationErrors] = useState({});
 
-  const isValidPhoneNumber = (phoneNumber) => {
-    const phonePattern = /^\d{10}$/;
-    return phonePattern.test(phoneNumber);
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const maxValue = 225;
+    try {
+      await schema.validate(formInput, { abortEarly: false });
 
-    const errors = {
-      name: !formInput.name
-        ? "Vui lòng nhập họ và tên."
-        : formInput.name.length > maxValue
-        ? `Tên không được vượt quá ${maxValue} ký tự.`
-        : "",
-      phone: !formInput.phone
-        ? "Vui lòng nhập số điện thoại."
-        : !isValidPhoneNumber(formInput.phone)
-        ? "Số điện thoại không hợp lệ."
-        : "",
-      address: !formInput.address
-        ? "Vui lòng nhập địa chỉ."
-        : formInput.address.length > maxValue
-        ? `Địa chỉ không được vượt quá ${maxValue} ký tự.`
-        : "",
-      education: !formInput.education
-        ? "Vui là chọn học vấn"
-        : formInput.education.length > maxValue
-        ? `Học vấn không được viết quá ${maxValue} ký tự.`
-        : "",
-      certification: !formInput.certification
-        ? "Vui là chọn chứng dụ"
-        : formInput.certification.length > maxValue
-        ? `Chứng dụ không được viết quá ${maxValue} ký tự.`
-        : "",
-      gender: !formInput.gender ? "Vui lòng chọn giới tính." : "",
-    };
-    setValidationErrors(errors);
-    if (Object.values(errors).some((error) => error !== "")) {
-      return;
-    }
-    axiosConfig
-      .get(`/users/${userId}`)
-      .then((res) => {
-        const currentUserData = res.data;
-        const currentPassword = currentUserData.password;
+      axiosConfig
+        .get(`/users/${userId}`)
+        .then((res) => {
+          const currentUserData = res.data;
+          const currentPassword = currentUserData.password;
 
-        const { password, ...rest } = formInput;
-        rest.applications = [];
-        axiosConfig
-          .patch(`/users/${userId}`, rest)
-          .then((res) => {
-            res.data.password = currentPassword;
-            dispatch({ type: "UPDATE_USER", payload: res.data });
-            toast.success("Cập nhật thông tin thành công 👌");
-            localStorage.setItem("user", JSON.stringify(res.data));
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+          const { password, ...rest } = formInput;
+          rest.applications = [];
+          axiosConfig
+            .patch(`/users/${userId}`, rest)
+            .then((res) => {
+              res.data.password = currentPassword;
+              dispatch({ type: "UPDATE_USER", payload: res.data });
+              toast.success("Cập nhật thông tin thành công 👌");
+              localStorage.setItem("user", JSON.stringify(res.data));
+              setInitialFormInput(res.data);
+              setIsFormChanged(false);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      const errors = {};
+      error.inner.forEach((err) => {
+        errors[err.path] = err.message;
       });
+      setValidationErrors(errors);
+    }
   };
-
+  console.log(validationErrors);
   const handleAvatarUpload = (e) => {
     const selectedImage = e.target.files?.[0];
     if (selectedImage) {
@@ -168,10 +142,11 @@ function Profile() {
                   type={"text"}
                   name={"name"}
                   placeholder={"Họ và tên"}
-                  value={formInput.name}
+                  value={formInput.name || ""}
                   handleInputChange={handleInputChange}
                   formError={validationErrors.name}
                 />
+
                 <CustomInput
                   label={"Email"}
                   type={"text"}
@@ -187,7 +162,7 @@ function Profile() {
                 type={"text"}
                 name={"phone"}
                 placeholder={"Nhập số điện thoại"}
-                value={formInput.phone}
+                value={formInput.phone || ""}
                 handleInputChange={handleInputChange}
                 formError={validationErrors.phone}
               />
@@ -196,7 +171,7 @@ function Profile() {
                 type={"text"}
                 name={"address"}
                 placeholder={"Nhập địa chỉ"}
-                value={formInput.address}
+                value={formInput.address || ""}
                 handleInputChange={handleInputChange}
                 formError={validationErrors.address}
               />
@@ -205,7 +180,7 @@ function Profile() {
                 type={"text"}
                 name={"education"}
                 placeholder={"Nhập học vấn"}
-                value={formInput.education}
+                value={formInput.education || ""}
                 handleInputChange={handleInputChange}
                 formError={validationErrors.education}
               />
@@ -214,7 +189,7 @@ function Profile() {
                 type={"text"}
                 name={"certification"}
                 placeholder={"Nhập chứng chỉ"}
-                value={formInput.certification}
+                value={formInput.certification || ""}
                 handleInputChange={handleInputChange}
                 formError={validationErrors.certification}
               />
@@ -236,7 +211,7 @@ function Profile() {
               </Form.Group>
 
               <CustomButton
-                style={{ width: "20%", backgroundColor: "#f07e1d" }}
+                style={{ width: "20%", backgroundColor: "#00d8ee" }}
                 className={"btn-login"}
                 variant={"success"}
                 type={"submit"}

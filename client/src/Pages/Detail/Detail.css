@@ -79,7 +79,7 @@
 
 .job-detail__body-left .job-detail__info .info-section .icon-section{
     align-items: center;
-    background: linear-gradient(11deg, #80b309, #acf72a);
+    background: linear-gradient(11deg, #00d8ee, #12666f);
     border-radius: 30px;
     display: flex;
     flex-direction: column;
@@ -94,7 +94,7 @@
     margin-top: 35px;
 }
 .job-detail__info .box-apply-current .btn-apply{
-    background: #f07e1d;
+    background: #00d8ee;
     color: #fff;
     width: calc(100%);
 }
@@ -130,7 +130,7 @@
     line-height: 28px;
     margin: 0;
     padding-left: 10px;
-    border-left: 6px solid #00b14f;
+    border-left: 6px solid #00d8ee;
 }
 
 .job-detail__information-detail--content{
@@ -151,9 +151,7 @@
     flex-direction: column;
 }
 
-.job-description__item--content{
-    
-}
+
 
 .job-detail__body-right {
     background: #f4f5f5;
@@ -290,7 +288,7 @@
     gap: 16px;
 }
 .job-detail__body-info .box-general-content .group-icon{
-    background: #f07e1d;
+    background: #00d8ee;
     border-radius: 30px;
     display: flex;
     flex-direction: column;

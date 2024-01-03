@@ -12,8 +12,11 @@ import Form from "react-bootstrap/Form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import JobDetail from "./JobDetail";
 
 function ProductCompany() {
+  const jobDetailProp = { title: "Thêm công việc" };
+
   // View job
   const [view, setView] = useState(false);
   const handleCloseView = () => setView(false);
@@ -21,7 +24,7 @@ function ProductCompany() {
 
   const navigate = useNavigate();
 
-  const companyLocal = JSON.parse(localStorage.getItem("company"));
+  const companyLocal = JSON.parse(localStorage.getItem("user"));
   const companyName = companyLocal.name;
 
   const [company, setCompany] = useState("");
@@ -33,12 +36,10 @@ function ProductCompany() {
   const [prevSearchValue, setPrevSearchValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [valueAddress, setValueAddress] = useState("");
-  const [valueSalary, setValueSalary] = useState("");
 
   const [searchParams, setSearchParams] = useSearchParams();
   const querySearch = searchParams.get("name_like");
   const queryAddress = searchParams.get("address");
-  const querySalary = searchParams.get("salary");
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -99,7 +100,7 @@ function ProductCompany() {
 
     await axiosConfig
       .get(
-        `/jobs?_page=${pageIndex}&_limit=${pageNumber}&company_like=${companyName}&&name_like=${querySearch}&&address_like=${queryAddress}&&_sort=salary&_order=${querySalary}`
+        `/jobs?_page=${pageIndex}&_limit=${pageNumber}&company_like=${companyName}&&name_like=${querySearch}&&address_like=${queryAddress}`
       )
       .then((res) => {
         setProducts(res.data);
@@ -117,7 +118,6 @@ function ProductCompany() {
     setSearchParams({
       name_like: searchValue,
       address: valueAddress,
-      salary: valueSalary,
     });
     await axiosConfig
       .get(
@@ -138,28 +138,9 @@ function ProductCompany() {
     setSearchParams({
       name_like: searchValue,
       address: value,
-      salary: valueSalary,
     });
     await axiosConfig
       .get(`/jobs?address_like=${value}&company_like=${companyName}`)
-      .then((res) => {
-        setProducts(res.data);
-        setTotal(res.headers["x-total-count"]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleFilterBySalary = async (value) => {
-    setValueSalary(value);
-    setSearchParams({
-      salary: value,
-      name_like: searchValue,
-      address: valueAddress,
-    });
-    await axiosConfig
-      .get(`/jobs?salary=${value}&company_like=${companyName}`)
       .then((res) => {
         setProducts(res.data);
         setTotal(res.headers["x-total-count"]);
@@ -175,9 +156,6 @@ function ProductCompany() {
       getListJobByQuerySearch(1, 4);
     } else if (queryAddress) {
       setValueAddress(queryAddress);
-      getListJobByQuerySearch(1, 4);
-    } else if (querySalary) {
-      setValueSalary(querySalary);
       getListJobByQuerySearch(1, 4);
     } else {
       getListProducts(1, 4);
@@ -454,7 +432,7 @@ function ProductCompany() {
                     />
                     <Button
                       onClick={handleSearchSubmit}
-                      variant="outline-success"
+                      variant="outline-info"
                       type="submit"
                     >
                       Search
@@ -490,7 +468,7 @@ function ProductCompany() {
               />
             </Space>
           </div>
-          <div>
+          {/* <div>
             <Space wrap>
               <Select
                 defaultValue="Mức lương"
@@ -514,14 +492,14 @@ function ProductCompany() {
                 ]}
               />
             </Space>
-          </div>
+          </div> */}
         </div>
         <div className="container mt-3">
           {!company ? (
             <CustomButton
               label={"Thêm công việc"}
               type={"button"}
-              className={"btn btn-success"}
+              className={"btn btn-info"}
               onClick={() => navigate("/admin-company/create")}
               disabled={true}
             />
@@ -529,10 +507,10 @@ function ProductCompany() {
             <CustomButton
               label={"Thêm công việc"}
               type={"button"}
-              className={"btn btn-success"}
-              // onClick={handleShow}
+              className={"btn btn-info"}
               onClick={() => navigate("/admin-company/create")}
             />
+            // <JobDetail jobDetailProp={jobDetailProp} />
           )}
         </div>
         {!company ? (
@@ -562,8 +540,26 @@ function ProductCompany() {
                 <tr key={i}>
                   <th scope="row">{i + 1}</th>
                   <td>{product.id}</td>
-                  <td>{product.company}</td>
-                  <td>{product.name}</td>
+                  <td
+                    style={{
+                      maxWidth: "170px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {product.company}
+                  </td>
+                  <td
+                    style={{
+                      maxWidth: "200px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {product.name}
+                  </td>
                   <td>{product.level}</td>
                   <td>{product.experience}</td>
                   <td>{product.salary}</td>

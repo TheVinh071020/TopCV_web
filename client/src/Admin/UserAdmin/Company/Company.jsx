@@ -183,17 +183,6 @@ function Company() {
     }
   };
 
-  // CLear filter
-  const handleClear = () => {
-    if (!searchValue && !sortNameValue && !sortStatus) {
-      return;
-    }
-    setSearchValue("");
-    setSortNameValue("");
-    setSortStatus("");
-    setSearchParams("");
-  };
-
   // Pagination
   let pageNumber = 4;
   const totalPages = Math.ceil(total / pageNumber);
@@ -225,7 +214,7 @@ function Company() {
                       value={searchValue}
                       onChange={handleSearchChange}
                     />
-                    <Button variant="outline-success" type="submit">
+                    <Button variant="outline-info" type="submit">
                       Search
                     </Button>
                   </Form>
@@ -283,18 +272,10 @@ function Company() {
               />
             </Space>
           </div>
-          <div>
-            <CustomButton
-              label={"Clear"}
-              type={"button"}
-              className={"btn btn-danger"}
-              onClick={handleClear}
-            />
-          </div>
         </div>
         <table
           className="table table-striped table-hover"
-          style={{ marginTop: "20px", width: "80%" }}
+          style={{ marginTop: "20px", width: "100%" }}
         >
           <thead>
             <tr>
@@ -319,8 +300,26 @@ function Company() {
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{company.id}</td>
-                <td>{company.name}</td>
-                <td>{company.email}</td>
+                <td
+                  style={{
+                    maxWidth: "200px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {company.name}
+                </td>
+                <td
+                  style={{
+                    maxWidth: "200px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {company.email}
+                </td>
 
                 <td
                   style={{
