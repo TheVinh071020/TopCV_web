@@ -26,7 +26,6 @@ function ProfileCompany() {
       setCompanyProfile(res.data[0]);
     }
   };
-  console.log(isCompany);
   const [formInput, setFormInput] = useState({
     userId: isCompany?.id,
     name: isCompany?.name,

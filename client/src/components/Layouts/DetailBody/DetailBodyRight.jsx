@@ -1,6 +1,7 @@
 import React from 'react'
 
-function DetailBodyRight({job}) {
+function DetailBodyRight({ job }) {
+  console.log(job);
   return (
     <div className="job-detail__body-right">
       <div className="job-detail__company">

@@ -183,11 +183,13 @@ function Company() {
     }
   };
 
+  const [activePage, setActivePage] = useState(1);
   // Pagination
   let pageNumber = 4;
   const totalPages = Math.ceil(total / pageNumber);
 
   const goToPage = (page) => {
+    setActivePage(page);
     getCompanies(page, pageNumber);
   };
   const pageNumbers = Array.from(
@@ -379,7 +381,11 @@ function Company() {
         </table>
       </div>
       <div className="d-flex ">
-        <PaginationPage pageNumbers={pageNumbers} goToPage={goToPage} />
+        <PaginationPage
+          pageNumbers={pageNumbers}
+          goToPage={goToPage}
+          activePage={activePage}
+        />
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

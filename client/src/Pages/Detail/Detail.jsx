@@ -151,7 +151,7 @@ function Detail() {
       experience: job?.experience,
       scale: job?.scale,
       createdAt: Date.now(),
-      status: "Chờ xét duyệt",
+      status: "Chờ liên hệ",
     };
 
     const response = await axiosConfig.post("/applications", newApplication);

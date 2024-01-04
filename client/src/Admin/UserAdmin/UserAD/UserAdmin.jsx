@@ -174,17 +174,19 @@ function UserAdmin() {
     console.log(viewUser);
   };
 
-  // Pagination
-  let pageNumber = 5;
-  const totalPages = Math.ceil(total / pageNumber);
+ const [activePage, setActivePage] = useState(1);
+ // Pagination
+ let pageNumber = 4;
+ const totalPages = Math.ceil(total / pageNumber);
 
-  const goToPage = (page) => {
-    getUsers(page, pageNumber);
-  };
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
-  );
+ const goToPage = (page) => {
+   setActivePage(page);
+   getUsers(page, pageNumber);
+ };
+ const pageNumbers = Array.from(
+   { length: totalPages },
+   (_, index) => index + 1
+ );
 
   return (
     <div className="container">
@@ -321,7 +323,11 @@ function UserAdmin() {
         </table>
       </div>
       <div className="d-flex ">
-        <PaginationPage pageNumbers={pageNumbers} goToPage={goToPage} />
+        <PaginationPage
+          pageNumbers={pageNumbers}
+          goToPage={goToPage}
+          activePage={activePage}
+        />
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

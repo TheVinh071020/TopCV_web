@@ -40,6 +40,7 @@ function CreatedCompany() {
     avatar: "",
   });
 
+  console.log(formInput);
   const [errors, setErrors] = useState({});
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -97,7 +98,6 @@ function CreatedCompany() {
       }
     }
   };
-
   const handleAvatarUpload = (e) => {
     const selectedImage = e.target.files?.[0];
     if (selectedImage) {

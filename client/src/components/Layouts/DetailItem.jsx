@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 
 function DetailItem({ job, i }) {
   return (
-    <div key={i} className="feature_job_item">
+    <div key={i} className="col-sm-3 feature_job_item">
       <div className="job">
         <div className="nav1">
           <div className="avatar">

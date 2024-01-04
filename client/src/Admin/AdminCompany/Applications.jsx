@@ -146,11 +146,11 @@ function Applications() {
   };
 
   // Delete application
-  const handleDeleteApp = async (id) => {
-    const res = await axiosConfig.delete(`/applications/${id}`);
-    getListApplications(1, 4);
-    toast.success("Hủy đơn ứng tuyển thành công 👌");
-  };
+  // const handleDeleteApp = async (id) => {
+  //   const res = await axiosConfig.delete(`/applications/${id}`);
+  //   getListApplications(1, 4);
+  //   toast.success("Hủy đơn ứng tuyển thành công 👌");
+  // };
   const confirmDelete = (id) => {
     Swal.fire({
       title: "Bạn chắc chắn muốn hủy?",
@@ -162,16 +162,32 @@ function Applications() {
       cancelButtonText: "Hủy",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleDeleteApp(id);
       }
     });
   };
 
+  const handleStatusChange = async (selectedValue, id) => {
+    try {
+      await axiosConfig.patch(`/applications/${id}`, {
+        status: selectedValue,
+      });
+
+      const updateStatus = applications.map((app) =>
+        app.id === id ? { ...app, status: selectedValue } : app
+      );
+      getListApplications(updateStatus);
+    } catch (lỗi) {
+      console.error("Lỗi khi cập nhật trạng thái:", lỗi);
+    }
+  };
+
+  const [activePage, setActivePage] = useState(1);
   // Pagination
   let pageNumber = 4;
   const totalPages = Math.ceil(total / pageNumber);
 
   const goToPage = (page) => {
+    setActivePage(page);
     getListApplications(page, pageNumber);
   };
   const pageNumbers = Array.from(
@@ -256,7 +272,7 @@ function Applications() {
                 <th scope="col">Tên CV</th>
                 <th scope="col">Địa chỉ</th>
                 <th scope="col">Thành phố</th>
-                <th scope="col">Giới tính</th>
+                <th scope="col">Liên hệ</th>
                 <th scope="col" className="d-flex justify-content-center">
                   Thao tác
                 </th>
@@ -317,7 +333,14 @@ function Applications() {
                     {app?.location}
                   </td>
                   <td>{app?.address}</td>
-                  <td>{app?.gender}</td>
+                  <td>
+                    <a
+                      href={`https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${viewApplication?.userEmail}`}
+                      target="_blank"
+                    >
+                      Liên hệ
+                    </a>
+                  </td>
                   <td
                     style={{
                       display: "flex",
@@ -327,6 +350,32 @@ function Applications() {
                       height: "70px",
                     }}
                   >
+                    <td>
+                      <select
+                        className="form-select"
+                        style={{ width: "150px", marginRight: "10px" }}
+                        value={app.status}
+                        onChange={(e) =>
+                          handleStatusChange(e.target.value, app.id)
+                        }
+                      >
+                        {app.status === "Chờ liên hệ" ? (
+                          <>
+                            <option disabled value="Chờ liên hệ">
+                              Chờ liên hệ
+                            </option>
+                            <option value="Đã liên hệ">Đã liên hệ</option>
+                          </>
+                        ) : (
+                          <>
+                            <option disabled value="Chờ liên hệ">
+                              Chờ liên hệ
+                            </option>
+                            <option value="Đã liên hệ">Đã liên hệ</option>
+                          </>
+                        )}
+                      </select>
+                    </td>
                     <td
                       className="d-flex justify-content-center align-items-center"
                       style={{ cursor: "pointer", marginRight: "15px" }}
@@ -350,7 +399,11 @@ function Applications() {
           <></>
         ) : (
           <div className="d-flex ">
-            <PaginationPage pageNumbers={pageNumbers} goToPage={goToPage} />
+            <PaginationPage
+              pageNumbers={pageNumbers}
+              goToPage={goToPage}
+              activePage={activePage}
+            />
           </div>
         )}
       </div>
@@ -389,9 +442,9 @@ function Applications() {
                     <th scope="col" style={{ width: "180px" }}>
                       Địa chỉ
                     </th>
-                    <th scope="col" style={{ width: "180px" }}>
+                    {/* <th scope="col" style={{ width: "180px" }}>
                       Liên hệ
-                    </th>
+                    </th> */}
                     <th scope="col" style={{ width: "160px" }}>
                       Avatar
                     </th>
@@ -405,14 +458,7 @@ function Applications() {
                     <td>{viewApplication?.education}</td>
                     <td>{viewApplication?.certification}</td>
                     <td>{viewApplication?.userAddress}</td>
-                    <td>
-                      <a
-                        href={`https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${viewApplication?.userEmail}`}
-                        target="_blank"
-                      >
-                        Liên hệ
-                      </a>
-                    </td>
+                    {/* <td></td> */}
 
                     <td>
                       <img

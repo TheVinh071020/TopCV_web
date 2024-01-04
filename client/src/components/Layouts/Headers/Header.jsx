@@ -112,7 +112,6 @@ function Header() {
       return null;
     }
   };
-  console.log(companys.length);
   useEffect(() => {
     getCompany();
   }, []);

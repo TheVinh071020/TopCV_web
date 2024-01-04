@@ -3,16 +3,19 @@ import Header from "../../components/Layouts/Headers/Header";
 import { Helmet } from "react-helmet";
 import "./CompanyProfile.css";
 import { axiosConfig } from "../../axios/config";
+import PaginationPage from "../../components/common/PaginationPage";
 
 function CompanyProfile() {
   const [companys, setCompanies] = useState([]);
+  const [listJobs, setListJobs] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const companyLocal = JSON.parse(localStorage.getItem("user"));
-  const companyId = companyLocal?.id;
+  const companyName = companyLocal?.name;
 
   const getCompany = async () => {
     axiosConfig
-      .get(`/companies?userId_like=${companyId}`)
+      .get(`/companies?name_like=${companyName}`)
       .then((res) => {
         setCompanies(res.data);
       })
@@ -21,10 +24,38 @@ function CompanyProfile() {
       });
   };
 
-  console.log(companys);
+  const getListJobs = async (pageNumber, pageIndex) => {
+    axiosConfig
+      .get(
+        `/jobs?_page=${pageNumber}&_limit=${pageIndex}&&company=${companyName}`
+      )
+      .then((res) => {
+        setListJobs(res.data);
+        setTotal(res.headers["x-total-count"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getCompany();
+    getListJobs(1, 4);
   }, []);
+
+  const [activePage, setActivePage] = useState(1);
+  // Pagination
+  let pageNumber = 4;
+  const totalPages = Math.ceil(total / pageNumber);
+
+  const goToPage = (page) => {
+    setActivePage(page);
+    getListJobs(page, pageNumber);
+  };
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
   return (
     <div>
       <Helmet>
@@ -46,31 +77,53 @@ function CompanyProfile() {
                 Tuyển dụng
               </h1>
             </div>
-            <div className="company-feature">
-              <div className="feature_item">
-                <div className="jobs">
-                  <div className="nav1">
-                    <div className="avatar">
-                      <img
-                        src="https://techviec.com/wp-content/uploads/2019/09/rikkeisoft-logo-1.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="nav2">
-                    <div className="job_item1">
-                      <h5 style={{ fontSize: "15px" }}>aa</h5>
-                      <div style={{ fontSize: "13px" }}>aa</div>
-                    </div>
-                    <div className="nav3">
-                      <div className="job_item2">8 triệu</div>
-                      <div className="job_item3">ha noi</div>
+
+            {listJobs.length > 0 &&
+              listJobs.map((job, i) => (
+                <div key={i} className="company-feature">
+                  <div className="feature_item">
+                    <div className="jobs">
+                      <div className="nav1">
+                        <div className="avatar">
+                          <img src={job.avatar} alt="" />
+                        </div>
+                      </div>
+                      <div className="nav2">
+                        <div className="job_item1">
+                          <h5
+                            className="text-space"
+                            style={{ fontSize: "17px", width: "400px" }}
+                          >
+                            {job.name}
+                          </h5>
+                          <div
+                            className="text-space"
+                            style={{ fontSize: "13px" }}
+                          >
+                            {job.company}
+                          </div>
+                        </div>
+                        <div className="nav3">
+                          <div className="job_item2">8 triệu</div>
+                          <div className="job_item3">ha noi</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              ))}
           </div>
+          {listJobs ? (
+          <div className="d-flex justify-content-center">
+            <PaginationPage
+              pageNumbers={pageNumbers}
+              goToPage={goToPage}
+              activePage={activePage}
+            />
+          </div>
+          ) : (
+            <></>
+          )} 
         </div>
         <div className="job-detail__body-right">
           <div className="job-detail__company">

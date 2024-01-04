@@ -141,11 +141,13 @@ function HomePage() {
     }
   }, [searchParams, dispatch, querySearch, queryAddress, querySalary]);
 
+  const [activePage, setActivePage] = useState(1);
   // Phân trang
   let pageNumber = 6;
   const totalPages = Math.ceil(total / pageNumber);
 
   const goToPage = (page) => {
+    setActivePage(page);
     if (querySearch) {
       getListJobsByQuerySearch(page, pageNumber);
     } else if (queryAddress) {
@@ -232,8 +234,8 @@ function HomePage() {
             </div>
           </div>
         </div>
-        <div className="row feature_job">
-          <div className="container row-detail ">
+        <div className="row d-flex justify-content-center align-items-center feature_job">
+          <div className="row container row-detail ">
             {listJobs.length > 0 ? (
               listJobs.map((job, i) => <DetailItem job={job} key={i} />)
             ) : (
@@ -255,7 +257,11 @@ function HomePage() {
           </div>
         </div>
         <div className="d-flex justify-content-center align-items-center">
-          <PaginationPage pageNumbers={pageNumbers} goToPage={goToPage} />
+          <PaginationPage
+            pageNumbers={pageNumbers}
+            goToPage={goToPage}
+            activePage={activePage}
+          />
         </div>
       </div>
 

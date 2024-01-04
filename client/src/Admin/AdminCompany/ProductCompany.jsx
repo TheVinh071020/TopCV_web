@@ -15,8 +15,6 @@ import Swal from "sweetalert2";
 import JobDetail from "./JobDetail";
 
 function ProductCompany() {
-  const jobDetailProp = { title: "Thêm công việc" };
-
   // View job
   const [view, setView] = useState(false);
   const handleCloseView = () => setView(false);
@@ -68,6 +66,10 @@ function ProductCompany() {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleAddJobs = () => {
+    navigate("/admin-company/create");
   };
 
   const handleEditProduct = (id) => {
@@ -185,233 +187,21 @@ function ProductCompany() {
     });
   };
 
+  const [activePage, setActivePage] = useState(1);
   // Pagination
   let pageNumber = 4;
   const totalPages = Math.ceil(total / pageNumber);
 
   const goToPage = (page) => {
+    setActivePage(page);
     getListProducts(page, pageNumber);
   };
   const pageNumbers = Array.from(
     { length: totalPages },
     (_, index) => index + 1
   );
-
   return (
     <div className="container">
-      {/* Add Job */}
-      {/* <Modal
-        size="lg"
-        aria-labelledby="example-modal-sizes-title-lg"
-        animation={false}
-        show={show}
-        onHide={handleClose}
-      >
-        <Modal.Body>
-          <Form>
-            <h1 className="titleee">Tạo công việc</h1>
-            <Form.Group className="mb-3" controlId="formGroupEmail">
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.name}
-                name="name"
-                type="text"
-                placeholder="Tên CV"
-              />
-              {formErrors.name && (
-                <span className="error" style={{ color: "red" }}>
-                  {formErrors.name}
-                </span>
-              )}
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.company}
-                name="company"
-                type="text"
-                placeholder="Công ty"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Select
-                onChange={handleInputChange}
-                value={formInput.level}
-                name="level"
-                aria-label="Default select example"
-              >
-                <option value="">Chức vụ</option>
-                <option value="Nhân viên">Nhân viên</option>
-                <option value="Trưởng nhóm">Trưởng nhóm</option>
-                <option value="Quản lý">Quản lý</option>
-                <option value="Trưởng bộ phận">Trưởng bộ phận</option>
-              </Form.Select>
-              {formErrors.level && (
-                <span className="error" style={{ color: "red" }}>
-                  {formErrors.level}
-                </span>
-              )}
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Select
-                onChange={handleInputChange}
-                value={formInput.experience}
-                name="experience"
-                type="text"
-                placeholder="Kinh nghiệm"
-                aria-label="Default select example"
-              >
-                <option value="">Kinh nghiệm</option>
-                <option value="Chưa có kinh nghiệm">Chưa có kinh nghiệm</option>
-                <option value="6 tháng - 1 năm">6 tháng - 1 năm</option>
-                <option value="1 - 2 năm">1 - 2 năm</option>
-                <option value="trên 2 năm">trên 2 năm</option>
-              </Form.Select>
-              {formErrors.experience && (
-                <span className="error" style={{ color: "red" }}>
-                  {formErrors.experience}
-                </span>
-              )}
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.salary}
-                name="salary"
-                type="text"
-                placeholder="Lương"
-              />
-              {formErrors.salary && (
-                <span className="error" style={{ color: "red" }}>
-                  {formErrors.salary}
-                </span>
-              )}
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.scale}
-                name="scale"
-                type="text"
-                placeholder="Số lượng tuyển"
-              />
-              {formErrors.scale && (
-                <span className="error" style={{ color: "red" }}>
-                  {formErrors.scale}
-                </span>
-              )}
-            </Form.Group>
-
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.description}
-                name="description"
-                type="textarea"
-                placeholder="Mô tả công việc "
-                as="textarea"
-                rows={3}
-              />
-              {formErrors.description && (
-                <span className="error" style={{ color: "red" }}>
-                  {formErrors.description}
-                </span>
-              )}
-            </Form.Group>
-
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.requirement}
-                name="requirement"
-                type="textarea"
-                placeholder="Yêu cầu ứng viên "
-                as="textarea"
-                rows={3}
-              />
-              {formErrors.requirement && (
-                <span className="error" style={{ color: "red" }}>
-                  {formErrors.requirement}
-                </span>
-              )}
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.benefit}
-                name="benefit"
-                type="textarea"
-                placeholder="Quyền lợi"
-                as="textarea"
-                rows={3}
-              />
-              {formErrors.benefit && (
-                <span className="error" style={{ color: "red" }}>
-                  {formErrors.benefit}
-                </span>
-              )}
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.time}
-                name="time"
-                type="text"
-                placeholder="Thời gian làm việc"
-              />
-              {formErrors.time && (
-                <span className="error">{formErrors.time}</span>
-              )}
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.location}
-                name="location"
-                type="text"
-                placeholder="Địa chỉ"
-              />
-              {formErrors.location && (
-                <span className="error">{formErrors.location}</span>
-              )}
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Control
-                onChange={handleInputChange}
-                value={formInput.address}
-                name="address"
-                type="text"
-                placeholder="Thành phố"
-              />
-              {formErrors.address && (
-                <span className="error">{formErrors.address}</span>
-              )}
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <button className="btn btn-danger" onClick={handleClose}>
-            Close
-          </button>
-          <CustomButton
-            className={"btn btn-success"}
-            label={"Create"}
-            type={"submit"}
-            onClick={handleAddProduct}
-          />
-        </Modal.Footer>
-      </Modal> */}
       <div className="mt-3" style={{ width: "97%" }}>
         <div className="d-flex justify-content-center align-items-center">
           <h2>Quản lý công việc</h2>
@@ -508,7 +298,7 @@ function ProductCompany() {
               label={"Thêm công việc"}
               type={"button"}
               className={"btn btn-info"}
-              onClick={() => navigate("/admin-company/create")}
+              onClick={handleAddJobs}
             />
             // <JobDetail jobDetailProp={jobDetailProp} />
           )}
@@ -594,7 +384,11 @@ function ProductCompany() {
       </div>
       {company ? (
         <div className="d-flex ">
-          <PaginationPage pageNumbers={pageNumbers} goToPage={goToPage} />
+          <PaginationPage
+            pageNumbers={pageNumbers}
+            goToPage={goToPage}
+            activePage={activePage}
+          />
         </div>
       ) : (
         <></>

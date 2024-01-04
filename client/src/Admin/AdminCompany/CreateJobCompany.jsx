@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 function CreateJobCompany() {
   const companyLocal = JSON.parse(localStorage.getItem("user"));
+  const [company, setCompany] = useState("");
   const companyName = companyLocal.name;
 
   const navigate = useNavigate();
@@ -23,8 +24,6 @@ function CreateJobCompany() {
           companyId: fetchedCompany.id,
           company: fetchedCompany.name,
           avatar: fetchedCompany.avatar,
-          // address: fetchedCompany.address,
-          // location: fetchedCompany.location,
           time: fetchedCompany.time,
         });
       })
@@ -32,8 +31,6 @@ function CreateJobCompany() {
         console.log(err);
       });
   };
-
-  const [company, setCompany] = useState("");
 
   const [formInput, setFormInput] = useState({
     name: "",
@@ -50,9 +47,10 @@ function CreateJobCompany() {
     address: company?.address,
     location: company?.location,
     avatar: company?.avatar,
-    status: "Chờ xét duyệt",
+    status: "Chờ liên hệ",
   });
 
+  console.log(formInput);
   //validate
   const [formErrors, setFormErrors] = useState({
     name: "",

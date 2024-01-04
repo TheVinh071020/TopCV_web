@@ -6,6 +6,9 @@ import { Helmet } from "react-helmet";
 function AdminPage() {
   const user = JSON.parse(localStorage.getItem("user"));
   const isAdmin = user && user.role === "Admin";
+  if (!isAdmin) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="AdminPage">

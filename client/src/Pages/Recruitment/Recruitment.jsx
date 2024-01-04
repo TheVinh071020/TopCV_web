@@ -12,7 +12,7 @@ import { useSearchParams } from "react-router-dom";
 
 function Recruitment() {
   const userCurrent = JSON.parse(localStorage.getItem("user"));
-  const userId = userCurrent.id;
+  const userName = userCurrent.name;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const queryStatus = searchParams.get("status");
@@ -23,7 +23,9 @@ function Recruitment() {
 
   // Lấy application theo user
   const getUserByApplication = async (status) => {
-    const response = await axiosConfig.get(`/applications?userId=${userId}`);
+    const response = await axiosConfig.get(
+      `/applications?userName=${userName}`
+    );
     const userApplications = response.data;
     setApplicationInfo(userApplications);
   };
@@ -32,7 +34,7 @@ function Recruitment() {
 
   const getAppByFilter = async () => {
     const response = await axiosConfig.get(
-      `/applications?userId_like=${userId}&status_like=${queryStatus}`
+      `/applications?userName_like=${userName}&&status_like=${queryStatus}`
     );
     const userApplications = response.data;
     setApplicationInfo(userApplications);
@@ -44,8 +46,9 @@ function Recruitment() {
       status: value,
     });
     await axiosConfig
-      .get(`/applications?status_like=${value}`)
+      .get(`/applications?userName_like=${userName}&&status_like=${value}`)
       .then((res) => {
+        console.log(res.data);
         setApplicationInfo(res.data);
       })
       .catch((err) => {
@@ -120,12 +123,16 @@ function Recruitment() {
                   onChange={filterByStatus}
                   options={[
                     {
-                      value: "Chờ xét duyệt",
-                      label: "Chờ xét duyệt",
+                      value: "",
+                      label: "Trạng thái",
                     },
                     {
-                      value: "Đã xét duyệt",
-                      label: "Đã xét duyệt",
+                      value: "Chờ liên hệ",
+                      label: "Chờ liên hệ",
+                    },
+                    {
+                      value: "Đã liên hệ",
+                      label: "Đã liên hệ",
                     },
                   ]}
                 />{" "}
@@ -179,7 +186,7 @@ function Recruitment() {
                     <div className="info-detail-title">
                       <div className="titles">
                         <div className="titless" width={{ width: "250px" }}>
-                          Chức vụ: {item.level}
+                          Chức vụ : {item.level}
                         </div>
                       </div>
                       <div className="salary">
@@ -193,14 +200,12 @@ function Recruitment() {
                     </div>
                     <div className="info-detail-title">
                       <div className="titless">
-                        Thời gian ứng tuyển:
+                        Thời gian ứng tuyển :
                         {new Date(item.createdAt).toLocaleString()}
                       </div>
                     </div>
                     <div className="info-detail-title">
-                      <div className="titless">
-                        Trạng thái: Công ty sẽ sớm liên hệ
-                      </div>
+                      <div className="titless">Trạng thái : {item.status}</div>
                     </div>
                   </div>
                 </div>

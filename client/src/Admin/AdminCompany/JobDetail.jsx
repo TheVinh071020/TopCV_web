@@ -4,21 +4,6 @@ import CustomButton from "../../components/common/CustomButton";
 import { Link, useLocation } from "react-router-dom";
 
 function JobDetail() {
-  const location = useLocation();
-  const strUrl = location.pathname;
-  const arrUrl = strUrl.split("/");
-
-  let status = "";
-
-  if (arrUrl.includes("create")) {
-    console.log("create");
-    status = "create";
-  } else if (arrUrl.includes("edit")) {
-    console.log("edit");
-    status = "edit";
-  }
-  console.log(status);
-
   return (
     <div className="container">
       <div className="col-md-8 offset-md-1">

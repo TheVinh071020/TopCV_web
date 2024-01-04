@@ -31,6 +31,7 @@
     padding: 20px 24px;
     width: 100%;
     border-radius: 8px;
+    /* margin-left: 20%; */
 }
 
 .job-detail__body-right {
@@ -108,7 +109,7 @@
 .jobs .nav3{
     margin-top: 20px;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     gap: 40px;
 }
@@ -139,3 +140,10 @@
     font-size: 14px;
     
 } 
+
+.text-space{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 250px;
+}

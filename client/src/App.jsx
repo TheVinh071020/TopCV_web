@@ -39,17 +39,6 @@ function App() {
   return (
     <>
       <Routes>
-        {/* <Route
-          path="/admin"
-          element={
-            <AdminGuard>
-              <AdminPage />
-            </AdminGuard>
-          }
-        >
-          <Route path="/admin/user" element={<UserAdmin />} />
-          <Route path="/admin/company" element={<Company />} />
-        </Route> */}
         <Route path="/admin" element={<AdminPage />}>
           <Route path="/admin/user" element={<UserAdmin />} />
           <Route path="/admin/company" element={<Company />} />
